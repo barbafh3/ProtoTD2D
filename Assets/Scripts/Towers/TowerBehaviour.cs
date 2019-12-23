@@ -72,6 +72,12 @@ public class TowerBehaviour : MonoBehaviour
     projectileSprite = tower.projectileSprite;
   }
 
+  void ShowTowerUI()
+  {
+    var canvas = GetComponent<Canvas>();
+    canvas.enabled = !canvas.enabled;
+  }
+
   void Start()
   {
     LoadTowerInfo();

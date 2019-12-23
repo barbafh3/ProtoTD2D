@@ -8,9 +8,13 @@ public class TowerPlacement : MonoBehaviour
   [SerializeField]
   List<GameObject> towerList;
 
+  Canvas canvas;
+
+  GameObject tower;
+
   bool isSlotAvalable = true;
 
-  void OnMouseUp()
+  void OnMouseDown()
   {
     if (isSlotAvalable)
     {
@@ -18,7 +22,7 @@ public class TowerPlacement : MonoBehaviour
       if (GameManager.Instance.currentPlayerCurrency >= 75)
       {
         GameManager.Instance.SpendCurrency(75);
-        var tower = Instantiate(towerList[0], transform.position, Quaternion.identity);
+        tower = Instantiate(towerList[0], transform.position, Quaternion.identity);
         tower.GetComponent<SpriteRenderer>().sortingOrder = 5;
         isSlotAvalable = false;
       }
@@ -27,5 +31,22 @@ public class TowerPlacement : MonoBehaviour
         Debug.Log("Not enough gold.");
       }
     }
+    else
+    {
+      canvas.enabled = true;
+    }
+  }
+
+  public void SellTower()
+  {
+    canvas.enabled = false;
+    Destroy(tower);
+    isSlotAvalable = true;
+  }
+
+  void Start()
+  {
+    canvas = gameObject.GetComponentInChildren<Canvas>();
+    canvas.enabled = false;
   }
 }
