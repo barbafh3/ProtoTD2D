@@ -13,33 +13,33 @@ public class GameManager : MonoBehaviour
   public int currentPlayerCurrency { get; set; }
   private int startingPlayerCurrency = 200;
 
-  private static GameManager instance;
+  private static GameManager _instance;
 
   public static GameManager Instance
   {
     get
     {
-      if (instance == null)
+      if (_instance == null)
       {
-        instance = FindObjectOfType<GameManager>();
-        if (instance == null)
+        _instance = FindObjectOfType<GameManager>();
+        if (_instance == null)
         {
           GameObject obj = new GameObject();
           obj.name = typeof(GameManager).Name;
-          instance = obj.AddComponent<GameManager>();
+          _instance = obj.AddComponent<GameManager>();
         }
       }
-      return instance;
+      return _instance;
     }
   }
 
   void Awake()
   {
-    if (instance != this && instance != null)
+    if (_instance != this && _instance != null)
     {
       Destroy(gameObject);
     }
-    instance = this;
+    _instance = this;
     mapLoadList = new
     {
       mainMenu = new Action(() => { SceneManager.LoadScene("MainMenu"); }),
@@ -53,7 +53,7 @@ public class GameManager : MonoBehaviour
 
   void OnDisable()
   {
-    instance = null;
+    _instance = null;
   }
 
   private object mapLoadList;

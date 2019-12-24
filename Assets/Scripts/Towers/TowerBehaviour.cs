@@ -22,7 +22,6 @@ public class TowerBehaviour : MonoBehaviour
 
   void FindAndUpdateTarget()
   {
-    Debug.Log("Find Start");
     GameObject[] enemyList = GameObject.FindGameObjectsWithTag("Enemy");
     float shortestDistance = Mathf.Infinity;
     GameObject nearestEnemy = null;
@@ -30,20 +29,15 @@ public class TowerBehaviour : MonoBehaviour
     foreach (GameObject enemy in enemyList)
     {
       float distanceToEnemy = Vector3.Distance(enemy.transform.position, transform.position);
-      Debug.Log("Distance: " + distanceToEnemy);
-      Debug.Log("Shortest: " + shortestDistance);
       if (distanceToEnemy < shortestDistance)
       {
-        Debug.Log("New Shortest");
         shortestDistance = distanceToEnemy;
         nearestEnemy = enemy;
       }
     }
 
-    Debug.Log("Shortest: " + shortestDistance + " - Range: " + range);
     if (nearestEnemy != null && shortestDistance <= range)
     {
-      Debug.Log("Target Found");
       currentTarget = nearestEnemy;
     }
     else
@@ -62,7 +56,6 @@ public class TowerBehaviour : MonoBehaviour
   {
     if (currentTarget)
     {
-      Debug.Log("Shot");
       var monsterScript = currentTarget.GetComponent<MonsterBehaviour>();
       SpawnProjectile();
       if (monsterScript.currentHealth <= 0)
