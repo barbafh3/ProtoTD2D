@@ -8,6 +8,8 @@ public class TowerBehaviour : MonoBehaviour
   [SerializeField]
   Tower tower;
 
+  float range;
+
   float baseDamage;
 
   float fireRate;
@@ -18,27 +20,35 @@ public class TowerBehaviour : MonoBehaviour
 
   private GameObject currentTarget = null;
 
-  void OnTriggerEnter2D(Collider2D collider)
+  void FindAndUpdateTarget()
   {
-    if (currentTarget == null)
-    {
-      currentTarget = collider.gameObject;
-    }
-  }
+    Debug.Log("Find Start");
+    GameObject[] enemyList = GameObject.FindGameObjectsWithTag("Enemy");
+    float shortestDistance = Mathf.Infinity;
+    GameObject nearestEnemy = null;
 
-  void OnTriggerExit2D(Collider2D collider)
-  {
-    if (collider.gameObject == currentTarget)
+    foreach (GameObject enemy in enemyList)
+    {
+      float distanceToEnemy = Vector3.Distance(enemy.transform.position, transform.position);
+      Debug.Log("Distance: " + distanceToEnemy);
+      Debug.Log("Shortest: " + shortestDistance);
+      if (distanceToEnemy < shortestDistance)
+      {
+        Debug.Log("New Shortest");
+        shortestDistance = distanceToEnemy;
+        nearestEnemy = enemy;
+      }
+    }
+
+    Debug.Log("Shortest: " + shortestDistance + " - Range: " + range);
+    if (nearestEnemy != null && shortestDistance <= range)
+    {
+      Debug.Log("Target Found");
+      currentTarget = nearestEnemy;
+    }
+    else
     {
       currentTarget = null;
-    }
-  }
-
-  void OnTriggerStay2D(Collider2D collider)
-  {
-    if (currentTarget == null)
-    {
-      currentTarget = collider.gameObject;
     }
   }
 
@@ -48,26 +58,24 @@ public class TowerBehaviour : MonoBehaviour
     projectileObject.GetComponent<ProjectileBehaviour>().target = currentTarget;
   }
 
-  IEnumerator DoDamage()
+  void DoDamage()
   {
-    while (true)
+    if (currentTarget)
     {
-      if (currentTarget)
+      Debug.Log("Shot");
+      var monsterScript = currentTarget.GetComponent<MonsterBehaviour>();
+      SpawnProjectile();
+      if (monsterScript.currentHealth <= 0)
       {
-        var monsterScript = currentTarget.GetComponent<MonsterBehaviour>();
-        SpawnProjectile();
-        if (monsterScript.currentHealth <= 0)
-        {
-          currentTarget = null;
-        }
+        currentTarget = null;
       }
-      yield return new WaitForSeconds(1);
     }
   }
 
   void LoadTowerInfo()
   {
     fireRate = tower.fireRate;
+    range = tower.range;
     upgradeList = tower.upgradeList;
     projectileSprite = tower.projectileSprite;
   }
@@ -81,16 +89,8 @@ public class TowerBehaviour : MonoBehaviour
   void Start()
   {
     LoadTowerInfo();
-    StartCoroutine("DoDamage");
+    InvokeRepeating("FindAndUpdateTarget", 0f, 0.5f);
+    InvokeRepeating("DoDamage", 0f, 1f);
   }
 
-  // Update is called once per frame
-  void Update()
-  {
-    // yield return new WaitForSeconds(1);
-    // if (currentTarget != null)
-    // {
-    //   print(currentTarget.tag);
-    // }
-  }
 }

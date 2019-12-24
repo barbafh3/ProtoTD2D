@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb1660fef7464c998496cf522549f4d, type: 3}
   m_Name: ArrowTower
   m_EditorClassIdentifier: 
-  baseDamage: 1
   fireRate: 1
+  range: 2.2
   upgradeList: []
   projectileSprite: {fileID: 5284901980819178094, guid: 091a5f144ab05187688e6c4dc9f9376b,
     type: 3}

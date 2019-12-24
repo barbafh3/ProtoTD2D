@@ -1,39 +1,45 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
 
 public class UITextBehaviour : MonoBehaviour
 {
 
   string healthValue;
+  TextMeshProUGUI healthTextObj = null;
   string currencyValue;
+  TextMeshProUGUI currencyTextObj = null;
 
-  void SetHealthText()
+  void SetInfoTexts()
   {
-    GameObject healthTextObj = GameObject.Find("HealthValue");
-    healthValue = GameManager.Instance.currentPlayerHealth.ToString();
-    healthTextObj.GetComponent<Text>().text = healthValue;
+    // if (healthTextObj == null || currencyTextObj == null)
+    // {
+    //   LoadTextObjects();
+    // }
+    // else
+    // {
+    healthTextObj.text = GameManager.Instance.currentPlayerHealth.ToString();
+    currencyTextObj.text = GameManager.Instance.currentPlayerCurrency.ToString();
+    // }
   }
 
-  void SetCurrencyText()
+  void LoadTextObjects()
   {
-    GameObject currencyTextObj = GameObject.Find("CurrencyValue");
-    currencyValue = GameManager.Instance.currentPlayerCurrency.ToString();
-    currencyTextObj.GetComponent<Text>().text = currencyValue;
+    healthTextObj = gameObject.transform.Find("HealthValue").GetComponent<TextMeshProUGUI>();
+    currencyTextObj = gameObject.transform.Find("CurrencyValue").GetComponent<TextMeshProUGUI>();
   }
 
   // Start is called before the first frame update
   void Start()
   {
-    SetHealthText();
-    SetCurrencyText();
+    LoadTextObjects();
+    SetInfoTexts();
   }
 
   // Update is called once per frame
   void Update()
   {
-    SetHealthText();
-    SetCurrencyText();
+    SetInfoTexts();
   }
 }

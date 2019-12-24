@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class TowerPlacement : MonoBehaviour
+public class TowerPlacement : MonoBehaviour, IPointerClickHandler
 {
 
   [SerializeField]
@@ -14,11 +15,11 @@ public class TowerPlacement : MonoBehaviour
 
   bool isSlotAvalable = true;
 
-  void OnMouseDown()
+  // void OnMouseDown()
+  public void OnPointerClick(PointerEventData pointer)
   {
     if (isSlotAvalable)
     {
-      Debug.Log(GameManager.Instance.currentPlayerCurrency);
       if (GameManager.Instance.currentPlayerCurrency >= 75)
       {
         GameManager.Instance.SpendCurrency(75);

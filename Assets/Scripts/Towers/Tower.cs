@@ -8,6 +8,8 @@ public class Tower : ScriptableObject
 
   public float fireRate;
 
+  public float range;
+
   public Tower[] upgradeList;
 
   public GameObject projectileSprite;
