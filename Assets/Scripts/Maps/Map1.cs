@@ -90,7 +90,8 @@ public class Map1 : MonoBehaviour
     //  load next map.
     if (remainingWaves <= 0)
     {
-      GameManager.Instance.LoadNextMap("gameOver");
+      // GameManager.Instance.LoadNextMap("gameOver");
+      SceneLoader.LoadScene(GameScenes.GameOver);
     }
   }
 

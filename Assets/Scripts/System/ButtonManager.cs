@@ -7,14 +7,12 @@ public class ButtonManager : MonoBehaviour
 
   public void GoToMap1()
   {
-
-    GameManager.Instance.LoadNextMap("map1");
+    SceneLoader.LoadScene(GameScenes.Map1);
   }
 
   public void GoToMainMenu()
   {
-
-    GameManager.Instance.LoadNextMap("mainMenu");
+    SceneLoader.LoadScene(GameScenes.MainMenu);
   }
 
   public void QuitGame()
