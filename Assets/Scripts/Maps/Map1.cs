@@ -27,14 +27,12 @@ public class Map1 : MonoBehaviour
 
   int remainingWaves;
 
-  void OpenMenuUI()
-  {
-
-  }
-
+  //  When monster OnDeath event is called,
+  //  removes one monster from the controle list.
+  //  If there are no remaining monsters alive,
+  //  remove one wave from the wave counter.
   void OnMonsterDeath(GameObject obj, int? value)
   {
-    // print(spawnedMonsters.Contains(obj));
     spawnedMonsters.RemoveAt(spawnedMonsters.Count - 1);
     if (spawnedMonsters.Count <= 0)
     {
@@ -42,6 +40,9 @@ public class Map1 : MonoBehaviour
     }
   }
 
+  //  MapRuntime uses 3 timers, startup,
+  //  delay between waves and delay between
+  //  enemy spawns.
   private IEnumerator MapRuntime()
   {
     WaitForSeconds waitStart = new WaitForSeconds(startupTime);
@@ -50,14 +51,18 @@ public class Map1 : MonoBehaviour
     foreach (Wave wave in monsterWaves)
     {
       WaitForSeconds waitSpawn = new WaitForSeconds(spawnDelay);
+      //  Adds the wave to a control list used to
+      //  check if the wave is fully killed.
       spawnedMonsters.AddRange(wave.monsterPrefabList);
       foreach (GameObject monster in wave.monsterPrefabList)
       {
+        //  Spawns monsters from the wave and sets
+        //  the local method OnMonsterDeath as listener
+        //  to the monster OnDeath event handler.
         var monsterInstance = Instantiate(monster, new Vector2(startPosition.position.x, startPosition.position.y), Quaternion.identity);
         monsterInstance.GetComponent<MonsterBehaviour>().OnDeath += new MonsterBehaviour.OnDeathEventHandler(OnMonsterDeath);
         yield return waitSpawn;
       };
-      // monsterWaves.Remove(wave);
       yield return waitWave;
     }
   }
@@ -70,14 +75,19 @@ public class Map1 : MonoBehaviour
 
   void Start()
   {
+    //  Enables mouse cursor.
     Cursor.visible = true;
+    //  Sets remaning waves as the number of waves
+    //  on the waves list.
     remainingWaves = monsterWaves.Count;
+    //  Starts the map runtime.
     StartCoroutine(MapRuntime());
   }
 
   void Update()
   {
-    Debug.Log("Waves remaining: " + remainingWaves);
+    //  If there are no remaining waves,
+    //  load next map.
     if (remainingWaves <= 0)
     {
       GameManager.Instance.LoadNextMap("gameOver");
