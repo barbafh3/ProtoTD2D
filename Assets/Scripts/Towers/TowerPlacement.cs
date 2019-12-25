@@ -25,6 +25,7 @@ public class TowerPlacement : MonoBehaviour
       tower.GetComponent<SpriteRenderer>().sortingOrder = 5;
       isSlotAvalable = false;
       optionsCanvas.enabled = false;
+      MouseManager.Instance.selectedObject = null;
     }
     else
     {
@@ -45,7 +46,6 @@ public class TowerPlacement : MonoBehaviour
     Canvas[] canvasList = gameObject.GetComponentsInChildren<Canvas>();
     foreach (Canvas canvas in canvasList)
     {
-      Debug.Log(canvas.name);
       switch (canvas.name)
       {
         case "SellUI":
@@ -77,7 +77,6 @@ public class TowerPlacement : MonoBehaviour
       if (isSlotAvalable)
       {
         optionsCanvas.enabled = true;
-        MouseManager.Instance.selectedObject = null;
       }
       // If false, shows sell button instead.
       else
@@ -89,6 +88,7 @@ public class TowerPlacement : MonoBehaviour
     else
     {
       sellCanvas.enabled = false;
+      optionsCanvas.enabled = false;
     }
   }
 }

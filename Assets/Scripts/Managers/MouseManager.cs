@@ -39,25 +39,25 @@ public class MouseManager : MonoBehaviour
 
   void Update()
   {
-    if (Input.GetMouseButtonUp(0))
+    //  If left mouse button was clicked do the following
+    if (Input.GetMouseButtonDown(0))
     {
-      // Ray traces to mouse position on click
-      //   RaycastHit2D hit = new ddRaycastHit2D();
-      //   Ray2D ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+      //  Ray traces from screen to mouse position on click
       Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+      // Return hit if any object was hit by the ray trace
       RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
 
-      // Set selected to null if no object is hit
+      //  If the hit exists, set the selected object as the hit collider
       if (hit.collider != null)
       {
         Debug.Log(hit.collider.gameObject);
         selectedObject = hit.collider.gameObject;
       }
-      else
-      {
-        Debug.Log("No object");
-        selectedObject = null;
-      }
+      //  Set selected to null if no object is hit
+      //   else
+      //   {
+      //     selectedObject = null;
+      //   }
     }
   }
 

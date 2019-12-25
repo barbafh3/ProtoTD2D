@@ -27,6 +27,11 @@ public class Map1 : MonoBehaviour
 
   int remainingWaves;
 
+  void OpenMenuUI()
+  {
+
+  }
+
   void OnMonsterDeath(GameObject obj, int? value)
   {
     // print(spawnedMonsters.Contains(obj));
@@ -72,6 +77,7 @@ public class Map1 : MonoBehaviour
 
   void Update()
   {
+    Debug.Log("Waves remaining: " + remainingWaves);
     if (remainingWaves <= 0)
     {
       GameManager.Instance.LoadNextMap("gameOver");

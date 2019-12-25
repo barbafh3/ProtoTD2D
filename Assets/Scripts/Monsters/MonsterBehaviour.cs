@@ -70,7 +70,7 @@ public class MonsterBehaviour : MonoBehaviour
 
   void Awake()
   {
-    customTypesObject = GameObject.Find("2DTDObject");
+    customTypesObject = GameObject.Find("MapController");
     waypoints = customTypesObject.GetComponent<Map1>().GetMapNodes();
     moveSpeed = 1f;
     currentHealth = maxHealth;

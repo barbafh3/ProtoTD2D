@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 13312, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: DirtPath_64x64
+  m_Name: DirtPath_Turn_TopLeft_BottomLeft_64x64
   m_EditorClassIdentifier: 
-  m_Sprite: {fileID: 21300000, guid: 4323d0e954452af6ebeee2bc5bb80760, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dd58b11f7c7e66c8ba1b3803d29bc22b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Transform:
     e00: 1
