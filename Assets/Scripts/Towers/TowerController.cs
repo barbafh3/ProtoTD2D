@@ -2,27 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TowerBehaviour : MonoBehaviour
+public class TowerController : MonoBehaviour
 {
 
   [SerializeField]
-  Tower tower;
+  Tower _towerInfo;
 
-  float range;
+  float _range;
 
-  float baseDamage;
+  float _baseDamage;
 
-  float fireRate;
+  float _fireRate;
 
-  Tower[] upgradeList;
+  Tower[] _upgradeList;
 
-  GameObject projectileSprite;
+  GameObject _projectileSprite;
 
-  private GameObject currentTarget = null;
+  private GameObject _currentTarget = null;
 
   void FindAndUpdateTarget()
   {
+    //  Retrieves a list of all objects with tag 'Enemy'.
     GameObject[] enemyList = GameObject.FindGameObjectsWithTag("Enemy");
+    //  Sets initial shortest distance to infinity.
     float shortestDistance = Mathf.Infinity;
     GameObject nearestEnemy = null;
 
@@ -36,41 +38,41 @@ public class TowerBehaviour : MonoBehaviour
       }
     }
 
-    if (nearestEnemy != null && shortestDistance <= range)
+    if (nearestEnemy != null && shortestDistance <= _range)
     {
-      currentTarget = nearestEnemy;
+      _currentTarget = nearestEnemy;
     }
     else
     {
-      currentTarget = null;
+      _currentTarget = null;
     }
   }
 
   void SpawnProjectile()
   {
-    var projectileObject = Instantiate<GameObject>(projectileSprite, transform.position, Quaternion.identity);
-    projectileObject.GetComponent<ProjectileBehaviour>().target = currentTarget;
+    var projectileObject = Instantiate<GameObject>(_projectileSprite, transform.position, Quaternion.identity);
+    projectileObject.GetComponent<ProjectileController>().target = _currentTarget;
   }
 
   void DoDamage()
   {
-    if (currentTarget)
+    if (_currentTarget)
     {
-      var monsterScript = currentTarget.GetComponent<MonsterBehaviour>();
+      var monsterScript = _currentTarget.GetComponent<EnemyController>();
       SpawnProjectile();
       if (monsterScript.currentHealth <= 0)
       {
-        currentTarget = null;
+        _currentTarget = null;
       }
     }
   }
 
   void LoadTowerInfo()
   {
-    fireRate = tower.fireRate;
-    range = tower.range;
-    upgradeList = tower.upgradeList;
-    projectileSprite = tower.projectileSprite;
+    _fireRate = _towerInfo.fireRate;
+    _range = _towerInfo.range;
+    _upgradeList = _towerInfo.upgradeList;
+    _projectileSprite = _towerInfo.projectileSprite;
   }
 
   void ShowTowerUI()

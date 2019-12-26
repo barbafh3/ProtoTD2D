@@ -6,25 +6,25 @@ public class PlayerScript : MonoBehaviour
 {
 
   [SerializeField] float speed = 2f;
-  Rigidbody2D playerBody;
-  float moveH, moveV;
+  Rigidbody2D _playerBody;
+  float _moveH, _moveV;
 
   // Start is called before the first frame update
   void Start()
   {
-    playerBody = GetComponent<Rigidbody2D>();
+    _playerBody = GetComponent<Rigidbody2D>();
 
   }
 
   // Update is called once per frame
   void Update()
   {
-    moveH = Input.GetAxisRaw("Horizontal") * speed;
-    moveV = Input.GetAxisRaw("Vertical") * speed;
+    _moveH = Input.GetAxisRaw("Horizontal") * speed;
+    _moveV = Input.GetAxisRaw("Vertical") * speed;
   }
 
   void FixedUpdate()
   {
-    playerBody.velocity = new Vector2(moveH, moveV);
+    _playerBody.velocity = new Vector2(_moveH, _moveV);
   }
 }

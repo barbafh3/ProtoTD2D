@@ -21,11 +21,11 @@ public class Map1 : MonoBehaviour
   [SerializeField]
   float waveDelay;
 
-  Transform startPosition;
+  Transform _startPosition;
 
-  List<GameObject> spawnedMonsters;
+  List<GameObject> _spawnedMonsters;
 
-  int remainingWaves;
+  int _remainingWaves;
 
   //  When monster OnDeath event is called,
   //  removes one monster from the controle list.
@@ -33,10 +33,10 @@ public class Map1 : MonoBehaviour
   //  remove one wave from the wave counter.
   void OnMonsterDeath(GameObject obj, int? value)
   {
-    spawnedMonsters.RemoveAt(spawnedMonsters.Count - 1);
-    if (spawnedMonsters.Count <= 0)
+    _spawnedMonsters.RemoveAt(_spawnedMonsters.Count - 1);
+    if (_spawnedMonsters.Count <= 0)
     {
-      remainingWaves--;
+      _remainingWaves--;
     }
   }
 
@@ -53,14 +53,14 @@ public class Map1 : MonoBehaviour
       WaitForSeconds waitSpawn = new WaitForSeconds(spawnDelay);
       //  Adds the wave to a control list used to
       //  check if the wave is fully killed.
-      spawnedMonsters.AddRange(wave.monsterPrefabList);
+      _spawnedMonsters.AddRange(wave.monsterPrefabList);
       foreach (GameObject monster in wave.monsterPrefabList)
       {
         //  Spawns monsters from the wave and sets
         //  the local method OnMonsterDeath as listener
         //  to the monster OnDeath event handler.
-        var monsterInstance = Instantiate(monster, new Vector2(startPosition.position.x, startPosition.position.y), Quaternion.identity);
-        monsterInstance.GetComponent<MonsterBehaviour>().OnDeath += new MonsterBehaviour.OnDeathEventHandler(OnMonsterDeath);
+        var monsterInstance = Instantiate(monster, new Vector2(_startPosition.position.x, _startPosition.position.y), Quaternion.identity);
+        monsterInstance.GetComponent<EnemyController>().OnDeath += new EnemyController.OnDeathEventHandler(OnMonsterDeath);
         yield return waitSpawn;
       };
       yield return waitWave;
@@ -69,8 +69,8 @@ public class Map1 : MonoBehaviour
 
   void Awake()
   {
-    startPosition = mapNodes[0];
-    spawnedMonsters = new List<GameObject>();
+    _startPosition = mapNodes[0];
+    _spawnedMonsters = new List<GameObject>();
   }
 
   void Start()
@@ -79,7 +79,7 @@ public class Map1 : MonoBehaviour
     Cursor.visible = true;
     //  Sets remaning waves as the number of waves
     //  on the waves list.
-    remainingWaves = monsterWaves.Count;
+    _remainingWaves = monsterWaves.Count;
     //  Starts the map runtime.
     StartCoroutine(MapRuntime());
   }
@@ -88,7 +88,7 @@ public class Map1 : MonoBehaviour
   {
     //  If there are no remaining waves,
     //  load next map.
-    if (remainingWaves <= 0)
+    if (_remainingWaves <= 0)
     {
       // GameManager.Instance.LoadNextMap("gameOver");
       SceneLoader.LoadScene(GameScenes.GameOver);

@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
-public class MonsterBehaviour : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
 
   public int id;
 
-  GameObject customTypesObject;
+  GameObject _customTypesObject;
 
   [SerializeField]
   public float currentHealth { get; set; }
@@ -22,12 +22,12 @@ public class MonsterBehaviour : MonoBehaviour
   [SerializeField]
   ParticleSystem damageParticle;
 
-  Animator animator;
+  Animator _animator;
 
-  float moveSpeed;
+  float _moveSpeed;
 
-  int waypointIndex = 0;
-  bool targetReached = false;
+  int _waypointIndex = 0;
+  bool _targetReached = false;
 
   public delegate void OnDeathEventHandler(GameObject obj, int? value);
   public event OnDeathEventHandler OnDeath;
@@ -48,15 +48,15 @@ public class MonsterBehaviour : MonoBehaviour
   void MoveToWaypoints()
   {
     transform.position = Vector2.MoveTowards(transform.position,
-                                             waypoints[waypointIndex].transform.position,
-                                             moveSpeed * Time.deltaTime);
-    if (transform.position == waypoints[waypointIndex].transform.position)
+                                             waypoints[_waypointIndex].transform.position,
+                                             _moveSpeed * Time.deltaTime);
+    if (transform.position == waypoints[_waypointIndex].transform.position)
     {
-      waypointIndex += 1;
+      _waypointIndex += 1;
     }
-    if (waypointIndex == waypoints.Length)
+    if (_waypointIndex == waypoints.Length)
     {
-      targetReached = true;
+      _targetReached = true;
       OnTargetReached();
       OnDeath(gameObject, null);
       Destroy(gameObject);
@@ -70,11 +70,11 @@ public class MonsterBehaviour : MonoBehaviour
 
   void Awake()
   {
-    customTypesObject = GameObject.Find("MapController");
-    waypoints = customTypesObject.GetComponent<Map1>().GetMapNodes();
-    moveSpeed = 1f;
+    _customTypesObject = GameObject.Find("MapController");
+    waypoints = _customTypesObject.GetComponent<Map1>().GetMapNodes();
+    _moveSpeed = 1f;
     currentHealth = maxHealth;
-    animator = GetComponent<Animator>();
+    _animator = GetComponent<Animator>();
   }
 
   // Start is called before the first frame update
@@ -92,7 +92,7 @@ public class MonsterBehaviour : MonoBehaviour
     // transform.position = Vector2.MoveTowards(transform.position,
     //                                          waypoint.transform.position,
     //                                          moveSpeed * Time.deltaTime);
-    if (!targetReached)
+    if (!_targetReached)
     {
       MoveToWaypoints();
     }

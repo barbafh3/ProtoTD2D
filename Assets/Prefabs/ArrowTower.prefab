@@ -92,10 +92,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3408061076371864720}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f93637851e191d6db2ac5204ae76cee, type: 3}
+  m_Script: {fileID: 11500000, guid: e19dbe4f488cf6f0690bb8749545fe6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tower: {fileID: 11400000, guid: 7c8dc464fafa55a0fa0a54d415fc064a, type: 2}
+  _towerInfo: {fileID: 11400000, guid: 7c8dc464fafa55a0fa0a54d415fc064a, type: 2}
 --- !u!58 &7313799151316026775
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -9,10 +9,10 @@ public class GameManager : MonoBehaviour
 
 
   public int currentPlayerHealth { get; set; }
-  private int maxPlayerHealth = 100;
+  private int _maxPlayerHealth = 100;
 
   public int currentPlayerCurrency { get; set; }
-  private int startingPlayerCurrency = 200;
+  private int _startingPlayerCurrency = 200;
 
   private static GameManager _instance;
 
@@ -48,8 +48,8 @@ public class GameManager : MonoBehaviour
       map2 = new Action(() => { SceneManager.LoadScene("Map2"); }),
       gameOver = new Action(() => { SceneManager.LoadScene("GameOver"); }),
     };
-    currentPlayerHealth = maxPlayerHealth;
-    currentPlayerCurrency = startingPlayerCurrency;
+    currentPlayerHealth = _maxPlayerHealth;
+    currentPlayerCurrency = _startingPlayerCurrency;
   }
 
   void OnDisable()

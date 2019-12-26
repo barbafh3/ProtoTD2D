@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class TowerPlacement : MonoBehaviour
 {
@@ -9,22 +9,24 @@ public class TowerPlacement : MonoBehaviour
   [SerializeField]
   List<GameObject> towerList;
 
-  Canvas sellCanvas;
-  Canvas optionsCanvas;
+  Canvas _sellCanvas;
+  Canvas _optionsCanvas;
 
-  GameObject tower;
+  GameObject _tower;
 
-  bool isSlotAvalable = true;
+  bool _isSlotAvalable = true;
 
   public void PlaceTower()
   {
+    Debug.Log("Place tower clicked");
     if (GameManager.Instance.currentPlayerCurrency >= 75)
     {
+      Debug.Log("Placing");
       GameManager.Instance.SpendCurrency(75);
-      tower = Instantiate(towerList[0], transform.position, Quaternion.identity);
-      tower.GetComponent<SpriteRenderer>().sortingOrder = 5;
-      isSlotAvalable = false;
-      optionsCanvas.enabled = false;
+      _tower = Instantiate(towerList[0], transform.position, Quaternion.identity);
+      _tower.GetComponent<SpriteRenderer>().sortingOrder = 5;
+      _isSlotAvalable = false;
+      _optionsCanvas.enabled = false;
       MouseManager.Instance.selectedObject = null;
     }
     else
@@ -35,9 +37,9 @@ public class TowerPlacement : MonoBehaviour
 
   public void SellTower()
   {
-    sellCanvas.enabled = false;
-    isSlotAvalable = true;
-    Destroy(tower);
+    _sellCanvas.enabled = false;
+    _isSlotAvalable = true;
+    Destroy(_tower);
     MouseManager.Instance.selectedObject = null;
   }
 
@@ -49,15 +51,21 @@ public class TowerPlacement : MonoBehaviour
       switch (canvas.name)
       {
         case "SellUI":
-          sellCanvas = canvas;
-          sellCanvas.enabled = false;
+          _sellCanvas = canvas;
+          _sellCanvas.enabled = false;
           break;
         case "OptionsUI":
-          optionsCanvas = canvas;
-          optionsCanvas.enabled = false;
+          _optionsCanvas = canvas;
+          _optionsCanvas.enabled = false;
           break;
       }
     }
+  }
+
+  void ToggleButton(bool state)
+  {
+    var button = _optionsCanvas.GetComponentInChildren<Button>();
+    button.interactable = state;
   }
 
   void Start()
@@ -74,21 +82,29 @@ public class TowerPlacement : MonoBehaviour
     {
       // If current slot is available, opens store
       // and removes current object from selection.
-      if (isSlotAvalable)
+      if (_isSlotAvalable)
       {
-        optionsCanvas.enabled = true;
+        _optionsCanvas.enabled = true;
       }
       // If false, shows sell button instead.
       else
       {
-        sellCanvas.enabled = true;
+        _sellCanvas.enabled = true;
       }
     }
     // If false, disables sellCanvas.
     else
     {
-      sellCanvas.enabled = false;
-      optionsCanvas.enabled = false;
+      _sellCanvas.enabled = false;
+      _optionsCanvas.enabled = false;
+    }
+    if (GameManager.Instance.currentPlayerCurrency <= 75)
+    {
+      ToggleButton(false);
+    }
+    else
+    {
+      ToggleButton(true);
     }
   }
 }

@@ -6,17 +6,17 @@ using UnityEngine.Tilemaps;
 public class HideColliderMap : MonoBehaviour
 {
 
-  TilemapRenderer tilemapRenderer;
+  TilemapRenderer _tilemapRenderer;
 
   void Awake()
   {
-    tilemapRenderer = GetComponent<TilemapRenderer>();
+    _tilemapRenderer = GetComponent<TilemapRenderer>();
   }
 
   // Start is called before the first frame update
   void Start()
   {
-    tilemapRenderer.enabled = false;
+    _tilemapRenderer.enabled = false;
   }
 
 }

@@ -175,6 +175,15 @@ Tilemap:
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
       m_AllTileFlags: 1073741825
+  - first: {x: -2, y: -7, z: 0}
+    second:
+      serializedVersion: 2
+      m_TileIndex: 21
+      m_TileSpriteIndex: 19
+      m_TileMatrixIndex: 0
+      m_TileColorIndex: 0
+      m_TileObjectToInstantiateIndex: 65535
+      m_AllTileFlags: 1073741825
   - first: {x: 4, y: -7, z: 0}
     second:
       serializedVersion: 2
@@ -318,6 +327,8 @@ Tilemap:
     m_Data: {fileID: 11400000, guid: e83e56a2a9e3ec9708a0f5fe5878da8d, type: 2}
   - m_RefCount: 1
     m_Data: {fileID: 11400000, guid: 0ddb91c941b4a87379c30cf663a52e0c, type: 2}
+  - m_RefCount: 1
+    m_Data: {fileID: 11400000, guid: 5dcc96d53d557791fbe5d3109a5bcdac, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: dd58b11f7c7e66c8ba1b3803d29bc22b, type: 3}
@@ -357,8 +368,10 @@ Tilemap:
     m_Data: {fileID: 21300000, guid: 20012f820daee3e818220d2fcc5fa25b, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: 21300000, guid: b77d04ffa940efde4886e9907ec4951d, type: 3}
+  - m_RefCount: 1
+    m_Data: {fileID: 21300000, guid: e5d68f162dfbaf603aaad313f0ab3179, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 21
+  - m_RefCount: 22
     m_Data:
       e00: 1
       e01: 0
@@ -377,12 +390,12 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 21
+  - m_RefCount: 22
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   - m_RefCount: 0
     m_Data: {r: 0.84925777, g: 0.50252414, b: 0.56066835, a: 1}
   - m_RefCount: 0
-    m_Data: {r: 0.8754097, g: 0.578477, b: 0.6103615, a: 1}
+    m_Data: {r: 0.7339881, g: 0.315121, b: 0.35680616, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -447,7 +460,7 @@ TilemapRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
-  m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
+  m_ChunkCullingBounds: {x: 0, y: 0.25, z: 0}
   m_MaxChunkCount: 16
   m_MaxFrameAge: 16
   m_SortOrder: 3

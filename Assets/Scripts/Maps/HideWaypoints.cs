@@ -5,17 +5,17 @@ using UnityEngine;
 public class HideWaypoints : MonoBehaviour
 {
 
-  SpriteRenderer spriteRenderer;
+  SpriteRenderer _spriteRenderer;
 
   // Start is called before the first frame update
   void Start()
   {
-    spriteRenderer = GetComponent<SpriteRenderer>();
+    _spriteRenderer = GetComponent<SpriteRenderer>();
   }
 
   // Update is called once per frame
   void Update()
   {
-    spriteRenderer.enabled = false;
+    _spriteRenderer.enabled = false;
   }
 }

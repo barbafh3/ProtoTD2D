@@ -6,10 +6,10 @@ using TMPro;
 public class UITextBehaviour : MonoBehaviour
 {
 
-  string healthValue;
-  TextMeshProUGUI healthTextObj = null;
-  string currencyValue;
-  TextMeshProUGUI currencyTextObj = null;
+  string _healthValue;
+  TextMeshProUGUI _healthTextObj = null;
+  string _currencyValue;
+  TextMeshProUGUI _currencyTextObj = null;
 
   void SetInfoTexts()
   {
@@ -19,15 +19,15 @@ public class UITextBehaviour : MonoBehaviour
     // }
     // else
     // {
-    healthTextObj.text = GameManager.Instance.currentPlayerHealth.ToString();
-    currencyTextObj.text = GameManager.Instance.currentPlayerCurrency.ToString();
+    _healthTextObj.text = GameManager.Instance.currentPlayerHealth.ToString();
+    _currencyTextObj.text = GameManager.Instance.currentPlayerCurrency.ToString();
     // }
   }
 
   void LoadTextObjects()
   {
-    healthTextObj = gameObject.transform.Find("HealthValue").GetComponent<TextMeshProUGUI>();
-    currencyTextObj = gameObject.transform.Find("CurrencyValue").GetComponent<TextMeshProUGUI>();
+    _healthTextObj = gameObject.transform.Find("HealthValue").GetComponent<TextMeshProUGUI>();
+    _currencyTextObj = gameObject.transform.Find("CurrencyValue").GetComponent<TextMeshProUGUI>();
   }
 
   // Start is called before the first frame update

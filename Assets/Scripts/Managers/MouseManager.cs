@@ -53,11 +53,11 @@ public class MouseManager : MonoBehaviour
         Debug.Log(hit.collider.gameObject);
         selectedObject = hit.collider.gameObject;
       }
-      //  Set selected to null if no object is hit
-      //   else
-      //   {
-      //     selectedObject = null;
-      //   }
+      // //  Set selected to null if no object is hit
+      // else
+      // {
+      //   selectedObject = null;
+      // }
     }
   }
 
