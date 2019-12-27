@@ -5,6 +5,14 @@ using UnityEngine;
 public class ArcProjectileController : AProjectile
 {
 
+  [SerializeField]
+  float _timer;
+
+  [SerializeField]
+  float areaOfEffect;
+
+  List<GameObject> blastTargets;
+
   public delegate void OnHitEventHandler(float damage);
   public event OnHitEventHandler OnHit;
 
@@ -27,58 +35,89 @@ public class ArcProjectileController : AProjectile
     _particle = projectileInfo.particle;
   }
 
-  void RegisterEventListeners()
+  void FindBlastTargets()
   {
-    // Set enemy script instance to local variable.
-    _enemyController = target.GetComponent<EnemyController>();
-    //  Register local method OnTargetDeath to enemy OnDeath event handler.
-    _enemyController.OnDeath += new EnemyController.OnDeathEventHandler(OnTargetDeath);
-    //  Registers enemy method TakeDamage to local OnHit event handler.
-    OnHit += new OnHitEventHandler(_enemyController.TakeDamage);
+    Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, areaOfEffect);
+    foreach (Collider2D col in colliders)
+    {
+      if (col != null)
+      {
+        blastTargets.Add(col.gameObject);
+      }
+    }
+  }
+
+  void RegisterTargetListeners()
+  {
+    foreach (GameObject obj in blastTargets)
+    {
+      if (obj != null && obj.tag == "Enemy")
+      {
+        OnHit += new OnHitEventHandler(obj.GetComponent<EnemyController>().TakeDamage);
+      }
+    }
+  }
+
+  void ClearListeners()
+  {
+    foreach (GameObject obj in blastTargets)
+    {
+      if (obj != null && obj.tag == "Enemy")
+      {
+        OnHit -= new OnHitEventHandler(obj.GetComponent<EnemyController>().TakeDamage);
+      }
+    }
   }
 
   void OnTargetReached()
   {
-    //  Removes itself from enemy OnDeath event handler.
-    _enemyController.OnDeath -= OnTargetDeath;
+    FindBlastTargets();
+    RegisterTargetListeners();
     //  Calls OnHit event with the damage value to be taken.
     OnHit(_baseDamage);
+    ClearListeners();
     //  Instantiates impact particles.
-    Instantiate(_particle, target.transform.position, Quaternion.identity);
+    Instantiate(_particle, transform.position, Quaternion.identity);
     //  Destroys self.
     Destroy(gameObject);
   }
 
   Vector2 MoveProjectile()
   {
-    var dir = target.transform.position - transform.position;  // get target direction
-    var h = dir.y;  // get height difference
-    dir.y = 0;  // retain only the horizontal direction
-    var dist = dir.magnitude;  // get horizontal distance
-    var a = _angle * Mathf.Deg2Rad;  // convert angle to radians
-    dir.y = dist * Mathf.Tan(a);  // set dir to the elevation angle
-    dist += h / Mathf.Tan(a);  // correct for small height differences
-                               // calculate the velocity magnitude
-    var vel = Mathf.Sqrt(dist * Physics.gravity.magnitude / Mathf.Sin(2 * a));
-    return vel * dir.normalized;
+    float xDistance, yDistance;
+
+    xDistance = target.transform.position.x - transform.position.x;
+    yDistance = target.transform.position.y - transform.position.y;
+
+    float projectileAngle;
+
+    projectileAngle = Mathf.Atan((yDistance + 2f) / xDistance);
+
+    float totalVelocity = xDistance / Mathf.Cos(projectileAngle);
+
+    float xVel, yVel;
+
+    xVel = totalVelocity * Mathf.Cos(projectileAngle);
+    yVel = totalVelocity * Mathf.Sin(projectileAngle);
+
+    return new Vector2(xVel, yVel);
+
   }
 
   // Start is called before the first frame update
   void Start()
   {
     LoadProjectileInfo();
-    RegisterEventListeners();
+    blastTargets = new List<GameObject>();
     // Set projectile RigidBody2D velocity to travelSpeed.
     var projectileBody = GetComponent<Rigidbody2D>();
     projectileBody.velocity = MoveProjectile();
+    Invoke("OnTargetReached", _timer);
   }
 
-  // Update is called once per frame
   void Update()
   {
-    if (gameObject != null && target != null)
-    {
-      MoveProjectile();
-    }
+
   }
+
 }

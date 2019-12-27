@@ -47,6 +47,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileInfo: {fileID: 11400000, guid: 50a61fd6e10faf2b78c2d4e504ce81d2, type: 2}
   target: {fileID: 0}
+  _timer: 0.62
+  areaOfEffect: 1.5
 --- !u!212 &5349487904766349805
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -105,14 +107,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5328127320655577106}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
