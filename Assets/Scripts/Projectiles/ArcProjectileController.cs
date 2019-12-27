@@ -2,20 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileController : MonoBehaviour
+public class ArcProjectileController : AProjectile
 {
-
-  [SerializeField]
-  Projectile projectileInfo;
-
-  public GameObject target;
-
-  EnemyController _enemyController;
-
-  float _baseDamage;
-  float _travelSpeed;
-  float _rotateSpeed;
-  ParticleSystem _particle;
 
   public delegate void OnHitEventHandler(float damage);
   public event OnHitEventHandler OnHit;
@@ -35,6 +23,7 @@ public class ProjectileController : MonoBehaviour
     _baseDamage = projectileInfo.baseDamage;
     _travelSpeed = projectileInfo.travelSpeed;
     _rotateSpeed = projectileInfo.rotateSpeed;
+    _angle = projectileInfo.angle;
     _particle = projectileInfo.particle;
   }
 
@@ -60,27 +49,18 @@ public class ProjectileController : MonoBehaviour
     Destroy(gameObject);
   }
 
-  void MoveProjectile()
+  Vector2 MoveProjectile()
   {
-    transform.position = Vector2.MoveTowards(transform.position, target.transform.position, _travelSpeed * Time.deltaTime);
-
-    Vector3 vectorToTarget = target.transform.position - transform.position;
-    float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
-    Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-    transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * _rotateSpeed);
-
-    if (transform.position == target.transform.position)
-    {
-      OnTargetReached();
-    }
-
-  }
-
-  void Awake()
-  {
-    // Set projectile RigidBody2D velocity to travelSpeed.
-    var projectileBody = GetComponent<Rigidbody2D>();
-    projectileBody.velocity = new Vector2(_travelSpeed, _travelSpeed);
+    var dir = target.transform.position - transform.position;  // get target direction
+    var h = dir.y;  // get height difference
+    dir.y = 0;  // retain only the horizontal direction
+    var dist = dir.magnitude;  // get horizontal distance
+    var a = _angle * Mathf.Deg2Rad;  // convert angle to radians
+    dir.y = dist * Mathf.Tan(a);  // set dir to the elevation angle
+    dist += h / Mathf.Tan(a);  // correct for small height differences
+                               // calculate the velocity magnitude
+    var vel = Mathf.Sqrt(dist * Physics.gravity.magnitude / Mathf.Sin(2 * a));
+    return vel * dir.normalized;
   }
 
   // Start is called before the first frame update
@@ -88,6 +68,9 @@ public class ProjectileController : MonoBehaviour
   {
     LoadProjectileInfo();
     RegisterEventListeners();
+    // Set projectile RigidBody2D velocity to travelSpeed.
+    var projectileBody = GetComponent<Rigidbody2D>();
+    projectileBody.velocity = MoveProjectile();
   }
 
   // Update is called once per frame

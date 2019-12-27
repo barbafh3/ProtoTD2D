@@ -6,7 +6,7 @@ public class TowerController : MonoBehaviour
 {
 
   [SerializeField]
-  Tower _towerInfo;
+  Tower towerInfo;
 
   float _range;
 
@@ -51,16 +51,16 @@ public class TowerController : MonoBehaviour
   void SpawnProjectile()
   {
     var projectileObject = Instantiate<GameObject>(_projectileSprite, transform.position, Quaternion.identity);
-    projectileObject.GetComponent<ProjectileController>().target = _currentTarget;
+    projectileObject.GetComponent<AProjectile>().target = _currentTarget;
   }
 
   void DoDamage()
   {
     if (_currentTarget)
     {
-      var monsterScript = _currentTarget.GetComponent<EnemyController>();
+      var enemyController = _currentTarget.GetComponent<EnemyController>();
       SpawnProjectile();
-      if (monsterScript.currentHealth <= 0)
+      if (enemyController.currentHealth <= 0)
       {
         _currentTarget = null;
       }
@@ -69,10 +69,10 @@ public class TowerController : MonoBehaviour
 
   void LoadTowerInfo()
   {
-    _fireRate = _towerInfo.fireRate;
-    _range = _towerInfo.range;
-    _upgradeList = _towerInfo.upgradeList;
-    _projectileSprite = _towerInfo.projectileSprite;
+    _fireRate = towerInfo.fireRate;
+    _range = towerInfo.range;
+    _upgradeList = towerInfo.upgradeList;
+    _projectileSprite = towerInfo.projectileSprite;
   }
 
   void ShowTowerUI()

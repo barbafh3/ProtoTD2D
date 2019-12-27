@@ -9,12 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d6b06a2240437c54930f9a8de3f8483, type: 3}
-  m_Name: Bomb
+  m_Script: {fileID: 11500000, guid: acfb76362a909583fac380a6b264509a, type: 3}
+  m_Name: FireElemental
   m_EditorClassIdentifier: 
-  baseDamage: 5
-  travelSpeed: 1
-  rotateSpeed: 1
-  damageOverTime: 0
-  particle: {fileID: 4457933933923075556, guid: 9dfc1dc49bd63d541badd089a383f118,
-    type: 3}
+  maxHealth: 30
+  returnedCurrency: 25
+  moveSpeed: 1

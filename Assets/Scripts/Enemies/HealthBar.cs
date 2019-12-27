@@ -5,17 +5,18 @@ using UnityEngine;
 public class HealthBar : MonoBehaviour
 {
   Vector2 _localScale;
-  EnemyController _parentMonster;
+  EnemyController _parentEnemy;
 
   void Start()
   {
     _localScale = transform.localScale;
-    _parentMonster = GetComponentInParent<EnemyController>();
+    _parentEnemy = GetComponentInParent<EnemyController>();
   }
 
   void Update()
   {
-    _localScale.x = Mathf.InverseLerp(0f, _parentMonster.GetMaxHealth(), _parentMonster.currentHealth);
+    //  Normalizes the health to %, giving min, max and current health to Mathf.InveseLerp
+    _localScale.x = Mathf.InverseLerp(0f, _parentEnemy.GetMaxHealth(), _parentEnemy.currentHealth);
     transform.localScale = _localScale;
   }
 }

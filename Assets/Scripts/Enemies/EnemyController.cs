@@ -3,31 +3,26 @@
 public class EnemyController : MonoBehaviour
 {
 
-  public int id;
+  GameObject _mapController;
 
-  GameObject _customTypesObject;
+  float _maxHealth;
 
-  [SerializeField]
-  public float currentHealth { get; set; }
-
-  [SerializeField]
-  float maxHealth;
-
-  [SerializeField]
-  int returnedCurrency = 25;
-
-  [SerializeField]
-  Transform[] waypoints;
-
-  [SerializeField]
-  ParticleSystem damageParticle;
+  int _returnedCurrency = 25;
 
   Animator _animator;
 
   float _moveSpeed;
 
   int _waypointIndex = 0;
+
   bool _targetReached = false;
+
+  Transform[] waypoints;
+
+  public float currentHealth;
+
+  [SerializeField]
+  Enemy enemyInfo;
 
   public delegate void OnDeathEventHandler(GameObject obj, int? value);
   public event OnDeathEventHandler OnDeath;
@@ -38,7 +33,7 @@ public class EnemyController : MonoBehaviour
 
   public float GetMaxHealth()
   {
-    return this.maxHealth;
+    return this._maxHealth;
   }
   public void TakeDamage(float damage)
   {
@@ -68,37 +63,45 @@ public class EnemyController : MonoBehaviour
     Destroy(gameObject);
   }
 
-  void Awake()
-  {
-    _customTypesObject = GameObject.Find("MapController");
-    waypoints = _customTypesObject.GetComponent<Map1>().GetMapNodes();
-    _moveSpeed = 1f;
-    currentHealth = maxHealth;
-    _animator = GetComponent<Animator>();
-  }
-
-  // Start is called before the first frame update
-  void Start()
+  void RegisterEventListeners()
   {
     OnDeath += new OnDeathEventHandler(KillSelf);
     OnDeath += new OnDeathEventHandler(GameManager.Instance.ReceiveCurrency);
     OnTargetReached += new OnTargetReachedEventHandler(GameManager.Instance.PlayerTakeDamage);
-    // transform.position = waypoints[waypointIndex].transform.position;
+  }
+
+  void LoadEnemyInfo()
+  {
+    _maxHealth = enemyInfo.maxHealth;
+    _returnedCurrency = enemyInfo.returnedCurrency;
+    _moveSpeed = enemyInfo.moveSpeed;
+    currentHealth = _maxHealth;
+    _mapController = GameObject.Find("MapController");
+    waypoints = _mapController.GetComponent<Map1>().GetMapNodes();
+  }
+
+  // void Awake()
+  // {
+  //   _animator = GetComponent<Animator>();
+  // }
+
+  // Start is called before the first frame update
+  void Start()
+  {
+    LoadEnemyInfo();
+    RegisterEventListeners();
   }
 
   // Update is called once per frame
   void Update()
   {
-    // transform.position = Vector2.MoveTowards(transform.position,
-    //                                          waypoint.transform.position,
-    //                                          moveSpeed * Time.deltaTime);
-    if (!_targetReached)
+    if (_targetReached == false)
     {
       MoveToWaypoints();
     }
     if (this.currentHealth <= 0)
     {
-      OnDeath(gameObject, returnedCurrency);
+      OnDeath(gameObject, _returnedCurrency);
     }
   }
 }

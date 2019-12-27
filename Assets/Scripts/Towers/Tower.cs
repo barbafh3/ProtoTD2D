@@ -6,6 +6,8 @@ using UnityEngine;
 public class Tower : ScriptableObject
 {
 
+  public Sprite towerSprite;
+
   public float fireRate;
 
   public float range;
