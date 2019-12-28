@@ -50,14 +50,16 @@ public class MouseManager : MonoBehaviour
       //  If the hit exists, set the selected object as the hit collider
       if (hit.collider != null)
       {
-        Debug.Log(hit.collider.gameObject);
-        selectedObject = hit.collider.gameObject;
+        if (hit.collider.gameObject.tag == "Tower")
+        {
+          selectedObject = hit.collider.gameObject;
+        }
       }
-      // //  Set selected to null if no object is hit
-      // else
-      // {
-      //   selectedObject = null;
-      // }
+      //  Set selected to null if no object is hit
+      else
+      {
+        selectedObject = null;
+      }
     }
   }
 

@@ -16,5 +16,6 @@ MonoBehaviour:
   fireRate: 1
   range: 2.2
   upgradeList: []
+  refundValue: 20
   projectileSprite: {fileID: 5284901980819178094, guid: 091a5f144ab05187688e6c4dc9f9376b,
     type: 3}

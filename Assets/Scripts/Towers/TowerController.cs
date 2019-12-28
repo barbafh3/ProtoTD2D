@@ -14,6 +14,8 @@ public class TowerController : MonoBehaviour
 
   float _fireRate;
 
+  public int refundValue { get; private set; }
+
   Tower[] _upgradeList;
 
   GameObject _projectileSprite;
@@ -73,6 +75,7 @@ public class TowerController : MonoBehaviour
     _range = towerInfo.range;
     _upgradeList = towerInfo.upgradeList;
     _projectileSprite = towerInfo.projectileSprite;
+    refundValue = towerInfo.refundValue;
   }
 
   void ShowTowerUI()
@@ -85,7 +88,7 @@ public class TowerController : MonoBehaviour
   {
     LoadTowerInfo();
     InvokeRepeating("FindAndUpdateTarget", 0f, 0.5f);
-    InvokeRepeating("DoDamage", 0f, 1f);
+    InvokeRepeating("DoDamage", 0f, _fireRate);
   }
 
 }

@@ -12,36 +12,9 @@ public class TowerPlacement : MonoBehaviour
   Canvas _sellCanvas;
   Canvas _optionsCanvas;
 
-  GameObject _tower;
+  public GameObject tower { get; set; }
 
-  bool _isSlotAvalable = true;
-
-  public void PlaceTower()
-  {
-    Debug.Log("Place tower clicked");
-    if (GameManager.Instance.currentPlayerCurrency >= 75)
-    {
-      Debug.Log("Placing");
-      GameManager.Instance.SpendCurrency(75);
-      _tower = Instantiate(towerList[0], transform.position, Quaternion.identity);
-      _tower.GetComponent<SpriteRenderer>().sortingOrder = 5;
-      _isSlotAvalable = false;
-      _optionsCanvas.enabled = false;
-      MouseManager.Instance.selectedObject = null;
-    }
-    else
-    {
-      Debug.Log("Not enough gold.");
-    }
-  }
-
-  public void SellTower()
-  {
-    _sellCanvas.enabled = false;
-    _isSlotAvalable = true;
-    Destroy(_tower);
-    MouseManager.Instance.selectedObject = null;
-  }
+  public bool isSlotAvalable = true;
 
   void SetCanvas()
   {
@@ -82,7 +55,7 @@ public class TowerPlacement : MonoBehaviour
     {
       // If current slot is available, opens store
       // and removes current object from selection.
-      if (_isSlotAvalable)
+      if (isSlotAvalable)
       {
         _optionsCanvas.enabled = true;
       }
@@ -97,14 +70,6 @@ public class TowerPlacement : MonoBehaviour
     {
       _sellCanvas.enabled = false;
       _optionsCanvas.enabled = false;
-    }
-    if (GameManager.Instance.currentPlayerCurrency <= 75)
-    {
-      ToggleButton(false);
-    }
-    else
-    {
-      ToggleButton(true);
     }
   }
 }

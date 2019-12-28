@@ -14,6 +14,8 @@ public class Tower : ScriptableObject
 
   public Tower[] upgradeList;
 
+  public int refundValue;
+
   public GameObject projectileSprite;
 
 }

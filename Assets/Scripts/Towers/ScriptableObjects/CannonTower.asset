@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb1660fef7464c998496cf522549f4d, type: 3}
   m_Name: CannonTower
   m_EditorClassIdentifier: 
-  towerSprite: {fileID: 21300000, guid: 2607771dd6c4528c5948f4befed8e9a0, type: 3}
+  towerSprite: {fileID: 21300000, guid: 0d67d40cfe58d315b954e20d5eba3d8d, type: 3}
   fireRate: 1.5
   range: 2.2
   upgradeList: []
+  refundValue: 25
   projectileSprite: {fileID: 5328127320655577106, guid: f0e7611f436b1cf48baa39c38efd6656,
     type: 3}
