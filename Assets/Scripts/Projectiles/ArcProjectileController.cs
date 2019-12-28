@@ -11,6 +11,8 @@ public class ArcProjectileController : AProjectile
   [SerializeField]
   float areaOfEffect;
 
+  Rigidbody2D _projectileBody;
+
   List<GameObject> blastTargets;
 
   public delegate void OnHitEventHandler(float damage);
@@ -82,7 +84,7 @@ public class ArcProjectileController : AProjectile
     Destroy(gameObject);
   }
 
-  Vector2 MoveProjectile()
+  void MoveProjectile()
   {
     float xDistance, yDistance;
 
@@ -91,7 +93,7 @@ public class ArcProjectileController : AProjectile
 
     float projectileAngle;
 
-    projectileAngle = Mathf.Atan((yDistance + 2f) / xDistance);
+    projectileAngle = Mathf.Atan((yDistance + 4f) / xDistance);
 
     float totalVelocity = xDistance / Mathf.Cos(projectileAngle);
 
@@ -100,7 +102,7 @@ public class ArcProjectileController : AProjectile
     xVel = totalVelocity * Mathf.Cos(projectileAngle);
     yVel = totalVelocity * Mathf.Sin(projectileAngle);
 
-    return new Vector2(xVel, yVel);
+    _projectileBody.velocity = new Vector2(xVel, yVel);
 
   }
 
@@ -109,15 +111,18 @@ public class ArcProjectileController : AProjectile
   {
     LoadProjectileInfo();
     blastTargets = new List<GameObject>();
+    _projectileBody = GetComponent<Rigidbody2D>();
+    MoveProjectile();
     // Set projectile RigidBody2D velocity to travelSpeed.
-    var projectileBody = GetComponent<Rigidbody2D>();
-    projectileBody.velocity = MoveProjectile();
     Invoke("OnTargetReached", _timer);
   }
 
   void Update()
   {
-
+    if (transform.position == target.transform.position)
+    {
+      OnTargetReached();
+    }
   }
 
 }
