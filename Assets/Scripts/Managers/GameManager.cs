@@ -7,12 +7,20 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
 
+  public bool isGamePaused = false;
 
   public int currentPlayerHealth { get; set; }
   private int _maxPlayerHealth = 100;
 
   public int currentPlayerCurrency { get; set; }
   private int _startingPlayerCurrency = 200;
+
+  List<GameObject> deployedTowers;
+
+  GameObject pauseMenuCanvas;
+
+  public delegate void OnEnemyDeathEventHandler(GameObject obj);
+  public event OnEnemyDeathEventHandler OnEnemyDeath;
 
   private static GameManager _instance;
 
@@ -34,6 +42,11 @@ public class GameManager : MonoBehaviour
     }
   }
 
+  void OnDisable()
+  {
+    _instance = null;
+  }
+
   void Awake()
   {
     if (_instance != this && _instance != null)
@@ -41,6 +54,7 @@ public class GameManager : MonoBehaviour
       Destroy(gameObject);
     }
     _instance = this;
+    DontDestroyOnLoad(gameObject);
     mapLoadList = new
     {
       mainMenu = new Action(() => { SceneManager.LoadScene("MainMenu"); }),
@@ -50,11 +64,30 @@ public class GameManager : MonoBehaviour
     };
     currentPlayerHealth = _maxPlayerHealth;
     currentPlayerCurrency = _startingPlayerCurrency;
+    deployedTowers = new List<GameObject>();
+    pauseMenuCanvas = GameObject.Find("PauseUI");
+    pauseMenuCanvas.SetActive(false);
   }
 
-  void OnDisable()
+  public void EnemyDied(GameObject enemy, int? value)
   {
-    _instance = null;
+    OnEnemyDeath(enemy);
+  }
+
+  public void RegisterTower(GameObject tower)
+  {
+    var towerScript = tower.GetComponentInChildren<TowerController>();
+    OnEnemyDeath += new OnEnemyDeathEventHandler(towerScript.EnemyDied);
+    deployedTowers.Add(tower);
+  }
+
+  public void UnregisterTower(GameObject tower)
+  {
+    Debug.Log(tower);
+    var towerScript = tower.GetComponentInChildren<TowerController>();
+    Debug.Log(towerScript);
+    OnEnemyDeath -= new OnEnemyDeathEventHandler(towerScript.EnemyDied);
+    deployedTowers.Remove(tower);
   }
 
   private object mapLoadList;
@@ -82,4 +115,22 @@ public class GameManager : MonoBehaviour
       currentPlayerCurrency += (int)value;
     }
   }
+
+  public void Resume()
+  {
+    Time.timeScale = 1f;
+    pauseMenuCanvas.SetActive(false);
+    // pauseMenuCanvas.GetComponentInChildren<BoxCollider2D>().enabled = false;
+    isGamePaused = false;
+  }
+
+  public void Pause()
+  {
+    Time.timeScale = 0f;
+    pauseMenuCanvas.SetActive(true);
+    // pauseMenuCanvas.enabled = true;
+    // pauseMenuCanvas.GetComponentInChildren<BoxCollider2D>().enabled = true;
+    isGamePaused = true;
+  }
+
 }

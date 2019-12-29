@@ -12,63 +12,68 @@ public class TowerButtonController : MonoBehaviour
   [SerializeField]
   GameObject towerPrefab;
 
-  Transform _rootObj;
-  TowerPlacement _rootScript;
-  Canvas _optionsCanvas;
-  Canvas _sellCanvas;
+  Transform rootObj;
+  TowerPlacement rootScript;
+  GameObject optionsCanvas;
+  GameObject sellCanvas;
 
-  Button _button;
+  Button button;
 
-  int _towerCost;
+  int towerCost;
 
   void LoadButtonInfo()
   {
-    _towerCost = buttonInfo.towerCost;
-    _optionsCanvas = GetComponentInParent<Canvas>();
-    _button = GetComponentInChildren<Button>();
-    _rootObj = transform.parent.parent;
-    _rootScript = _rootObj.GetComponent<TowerPlacement>();
+    towerCost = buttonInfo.towerCost;
+    optionsCanvas = transform.parent.gameObject;
+    sellCanvas = transform.parent.parent.Find("SellUI").gameObject;
+    button = GetComponentInChildren<Button>();
+    rootObj = transform.parent.parent;
+    rootScript = rootObj.GetComponent<TowerPlacement>();
   }
 
-  void SetCanvas()
-  {
-    Canvas[] canvasList = _rootObj.GetComponentsInChildren<Canvas>();
-    foreach (Canvas canvas in canvasList)
-    {
-      switch (canvas.name)
-      {
-        case "SellUI":
-          _sellCanvas = canvas;
-          _sellCanvas.enabled = false;
-          break;
-        case "OptionsUI":
-          _optionsCanvas = canvas;
-          _optionsCanvas.enabled = false;
-          break;
-      }
-    }
-  }
+  // void SetCanvas()
+  // {
+  //   Canvas[] canvasList = rootObj.GetComponentsInChildren<Canvas>();
+  //   foreach (Canvas canvas in canvasList)
+  //   {
+  //     switch (canvas.name)
+  //     {
+  //       case "SellUI":
+  //         sellCanvas = canvas;
+  //         sellCanvas.enabled = false;
+  //         break;
+  //       case "OptionsUI":
+  //         optionsCanvas = canvas;
+  //         optionsCanvas.enabled = false;
+  //         break;
+  //     }
+  //   }
+  // }
+
   public void SellTower()
   {
-    _sellCanvas.enabled = false;
-    _rootScript.isSlotAvalable = true;
-    var towerController = _rootScript.tower.GetComponentInChildren<TowerController>();
+    sellCanvas.SetActive(false);
+    rootScript.isSlotAvalable = true;
+    var towerController = rootScript.tower.GetComponentInChildren<TowerController>();
     GameManager.Instance.ReceiveCurrency(null, towerController.refundValue);
-    Destroy(_rootScript.tower);
+    GameManager.Instance.UnregisterTower(rootScript.tower);
+    Destroy(rootScript.tower);
     MouseManager.Instance.selectedObject = null;
   }
 
   public void PlaceTower()
   {
-    if (_rootScript.isSlotAvalable == true)
+    if (rootScript.isSlotAvalable == true)
     {
-      if (GameManager.Instance.currentPlayerCurrency >= _towerCost)
+      if (GameManager.Instance.currentPlayerCurrency >= towerCost)
       {
-        GameManager.Instance.SpendCurrency(_towerCost);
-        _rootScript.tower = Instantiate(towerPrefab, transform.position, Quaternion.identity);
-        _rootScript.tower.GetComponentInChildren<SpriteRenderer>().sortingOrder = 5;
-        _rootScript.isSlotAvalable = false;
-        _optionsCanvas.enabled = false;
+        GameManager.Instance.SpendCurrency(towerCost);
+        GameObject newTower = Instantiate(towerPrefab, transform.position, Quaternion.identity);
+        GameManager.Instance.RegisterTower(newTower);
+        rootScript.tower = newTower;
+        rootScript.tower.GetComponentInChildren<SpriteRenderer>().sortingOrder = 5;
+        rootScript.isSlotAvalable = false;
+        optionsCanvas.SetActive(false);
         MouseManager.Instance.selectedObject = null;
       }
       else
@@ -85,19 +90,18 @@ public class TowerButtonController : MonoBehaviour
   void Start()
   {
     LoadButtonInfo();
-    SetCanvas();
   }
 
   // Update is called once per frame
   void Update()
   {
-    if (GameManager.Instance.currentPlayerCurrency < _towerCost)
+    if (GameManager.Instance.currentPlayerCurrency < towerCost)
     {
-      _button.interactable = false;
+      button.interactable = false;
     }
     else
     {
-      _button.interactable = true;
+      button.interactable = true;
     }
 
   }

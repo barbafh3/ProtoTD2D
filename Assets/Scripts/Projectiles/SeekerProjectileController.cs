@@ -20,10 +20,10 @@ public class SeekerProjectileController : AProjectile
 
   void LoadProjectileInfo()
   {
-    _baseDamage = projectileInfo.baseDamage;
-    _travelSpeed = projectileInfo.travelSpeed;
-    _rotateSpeed = projectileInfo.rotateSpeed;
-    _particle = projectileInfo.particle;
+    baseDamage = projectileInfo.baseDamage;
+    travelSpeed = projectileInfo.travelSpeed;
+    rotateSpeed = projectileInfo.rotateSpeed;
+    particle = projectileInfo.particle;
   }
 
   void RegisterEventListeners()
@@ -41,21 +41,21 @@ public class SeekerProjectileController : AProjectile
     //  Removes itself from enemy OnDeath event handler.
     _enemyController.OnDeath -= OnTargetDeath;
     //  Calls OnHit event with the damage value to be taken.
-    OnHit(_baseDamage);
+    OnHit(baseDamage);
     //  Instantiates impact particles.
-    Instantiate(_particle, target.transform.position, Quaternion.identity);
+    Instantiate(particle, target.transform.position, Quaternion.identity);
     //  Destroys self.
     Destroy(gameObject);
   }
 
   void MoveProjectile()
   {
-    transform.position = Vector2.MoveTowards(transform.position, target.transform.position, _travelSpeed * Time.deltaTime);
+    transform.position = Vector2.MoveTowards(transform.position, target.transform.position, travelSpeed * Time.deltaTime);
 
     Vector3 vectorToTarget = target.transform.position - transform.position;
     float angle = Mathf.Atan2(vectorToTarget.y, vectorToTarget.x) * Mathf.Rad2Deg;
     Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-    transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * _rotateSpeed);
+    transform.rotation = Quaternion.Slerp(transform.rotation, q, Time.deltaTime * rotateSpeed);
 
     if (transform.position == target.transform.position)
     {
@@ -68,7 +68,7 @@ public class SeekerProjectileController : AProjectile
   {
     // Set projectile RigidBody2D velocity to travelSpeed.
     var projectileBody = GetComponent<Rigidbody2D>();
-    projectileBody.velocity = new Vector2(_travelSpeed, _travelSpeed);
+    projectileBody.velocity = new Vector2(travelSpeed, travelSpeed);
   }
 
   // Start is called before the first frame update

@@ -46,10 +46,10 @@ public class MouseManager : MonoBehaviour
       Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
       // Return hit if any object was hit by the ray trace
       RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
-
       //  If the hit exists, set the selected object as the hit collider
       if (hit.collider != null)
       {
+        Debug.Log(hit.collider.gameObject);
         if (hit.collider.gameObject.tag == "Tower")
         {
           selectedObject = hit.collider.gameObject;

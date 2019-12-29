@@ -8,19 +8,19 @@ public class TowerController : MonoBehaviour
   [SerializeField]
   Tower towerInfo;
 
-  float _range;
+  float range;
 
-  float _baseDamage;
+  float baseDamage;
 
-  float _fireRate;
+  float fireRate;
 
   public int refundValue { get; private set; }
 
-  Tower[] _upgradeList;
+  Tower[] upgradeList;
 
-  GameObject _projectileSprite;
+  GameObject projectileSprite;
 
-  private GameObject _currentTarget = null;
+  private GameObject currentTarget = null;
 
   void FindAndUpdateTarget()
   {
@@ -32,63 +32,63 @@ public class TowerController : MonoBehaviour
 
     foreach (GameObject enemy in enemyList)
     {
+      var enemyController = enemy.GetComponent<EnemyController>();
       float distanceToEnemy = Vector3.Distance(enemy.transform.position, transform.position);
-      if (distanceToEnemy < shortestDistance)
+      if (distanceToEnemy < shortestDistance && enemyController.currentHealth > 0)
       {
         shortestDistance = distanceToEnemy;
         nearestEnemy = enemy;
       }
     }
 
-    if (nearestEnemy != null && shortestDistance <= _range)
+    if (nearestEnemy != null && shortestDistance <= range)
     {
-      _currentTarget = nearestEnemy;
+      currentTarget = nearestEnemy;
     }
     else
     {
-      _currentTarget = null;
+      currentTarget = null;
     }
+  }
+
+  public void EnemyDied(GameObject enemy)
+  {
+    currentTarget = null;
   }
 
   void SpawnProjectile()
   {
-    var projectileObject = Instantiate<GameObject>(_projectileSprite, transform.position, Quaternion.identity);
-    projectileObject.GetComponent<AProjectile>().target = _currentTarget;
+    var projectileObject = Instantiate<GameObject>(projectileSprite, transform.position, Quaternion.identity);
+    projectileObject.GetComponent<AProjectile>().target = currentTarget;
   }
 
   void DoDamage()
   {
-    if (_currentTarget)
+    if (currentTarget)
     {
-      var enemyController = _currentTarget.GetComponent<EnemyController>();
+      var enemyController = currentTarget.GetComponent<EnemyController>();
       SpawnProjectile();
       if (enemyController.currentHealth <= 0)
       {
-        _currentTarget = null;
+        currentTarget = null;
       }
     }
   }
 
   void LoadTowerInfo()
   {
-    _fireRate = towerInfo.fireRate;
-    _range = towerInfo.range;
-    _upgradeList = towerInfo.upgradeList;
-    _projectileSprite = towerInfo.projectileSprite;
+    fireRate = towerInfo.fireRate;
+    range = towerInfo.range;
+    upgradeList = towerInfo.upgradeList;
+    projectileSprite = towerInfo.projectileSprite;
     refundValue = towerInfo.refundValue;
-  }
-
-  void ShowTowerUI()
-  {
-    var canvas = GetComponent<Canvas>();
-    canvas.enabled = !canvas.enabled;
   }
 
   void Start()
   {
     LoadTowerInfo();
-    InvokeRepeating("FindAndUpdateTarget", 0f, 0.5f);
-    InvokeRepeating("DoDamage", 0f, _fireRate);
+    InvokeRepeating("FindAndUpdateTarget", 0.5f, 0.1f);
+    InvokeRepeating("DoDamage", 0f, fireRate);
   }
 
 }

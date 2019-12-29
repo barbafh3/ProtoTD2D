@@ -101,6 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05879d85e3a6d181ba8a41a355ec0f47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fadeOutTime: 0.5
   currentHealth: 0
   enemyInfo: {fileID: 11400000, guid: 8109890f2342ae09986e5bc0d69916d0, type: 2}
 --- !u!50 &6123520968613155919

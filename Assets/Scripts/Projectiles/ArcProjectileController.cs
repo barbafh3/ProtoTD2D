@@ -6,12 +6,12 @@ public class ArcProjectileController : AProjectile
 {
 
   [SerializeField]
-  float _timer;
+  float timer;
 
   [SerializeField]
   float areaOfEffect;
 
-  Rigidbody2D _projectileBody;
+  private Rigidbody2D projectileBody;
 
   List<GameObject> blastTargets;
 
@@ -30,11 +30,11 @@ public class ArcProjectileController : AProjectile
 
   void LoadProjectileInfo()
   {
-    _baseDamage = projectileInfo.baseDamage;
-    _travelSpeed = projectileInfo.travelSpeed;
-    _rotateSpeed = projectileInfo.rotateSpeed;
-    _angle = projectileInfo.angle;
-    _particle = projectileInfo.particle;
+    baseDamage = projectileInfo.baseDamage;
+    travelSpeed = projectileInfo.travelSpeed;
+    rotateSpeed = projectileInfo.rotateSpeed;
+    angle = projectileInfo.angle;
+    particle = projectileInfo.particle;
   }
 
   void FindBlastTargets()
@@ -42,9 +42,13 @@ public class ArcProjectileController : AProjectile
     Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, areaOfEffect);
     foreach (Collider2D col in colliders)
     {
-      if (col != null)
+      if (col != null && col.gameObject.tag == "Enemy")
       {
-        blastTargets.Add(col.gameObject);
+        var enemyController = col.gameObject.GetComponentInChildren<EnemyController>();
+        if (enemyController.currentHealth > 0)
+        {
+          blastTargets.Add(col.gameObject);
+        }
       }
     }
   }
@@ -76,10 +80,10 @@ public class ArcProjectileController : AProjectile
     FindBlastTargets();
     RegisterTargetListeners();
     //  Calls OnHit event with the damage value to be taken.
-    OnHit(_baseDamage);
+    OnHit(baseDamage);
     ClearListeners();
     //  Instantiates impact particles.
-    Instantiate(_particle, transform.position, Quaternion.identity);
+    Instantiate(particle, transform.position, Quaternion.identity);
     //  Destroys self.
     Destroy(gameObject);
   }
@@ -102,7 +106,7 @@ public class ArcProjectileController : AProjectile
     xVel = totalVelocity * Mathf.Cos(projectileAngle);
     yVel = totalVelocity * Mathf.Sin(projectileAngle);
 
-    _projectileBody.velocity = new Vector2(xVel, yVel);
+    projectileBody.velocity = new Vector2(xVel, yVel);
 
   }
 
@@ -111,10 +115,10 @@ public class ArcProjectileController : AProjectile
   {
     LoadProjectileInfo();
     blastTargets = new List<GameObject>();
-    _projectileBody = GetComponent<Rigidbody2D>();
+    projectileBody = GetComponent<Rigidbody2D>();
     MoveProjectile();
     // Set projectile RigidBody2D velocity to travelSpeed.
-    Invoke("OnTargetReached", _timer);
+    Invoke("OnTargetReached", timer);
   }
 
   void Update()

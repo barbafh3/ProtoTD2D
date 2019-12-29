@@ -12,9 +12,9 @@ public abstract class AProjectile : MonoBehaviour
 
   protected EnemyController _enemyController;
 
-  protected float _baseDamage;
-  protected float _travelSpeed;
-  protected float _rotateSpeed;
-  protected float _angle;
-  protected ParticleSystem _particle;
+  protected float baseDamage;
+  protected float travelSpeed;
+  protected float rotateSpeed;
+  protected float angle;
+  protected ParticleSystem particle;
 }

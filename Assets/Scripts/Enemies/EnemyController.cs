@@ -1,21 +1,28 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
 
-  GameObject _mapController;
+  GameObject mapController;
 
-  float _maxHealth;
+  float maxHealth;
 
-  int _returnedCurrency = 25;
+  int returnedCurrency = 25;
 
-  Animator _animator;
+  Animator animator;
 
-  float _moveSpeed;
+  float moveSpeed;
 
-  int _waypointIndex = 0;
+  int waypointIndex = 0;
 
-  bool _targetReached = false;
+  bool targetReached = false;
+
+  SpriteRenderer bodyRenderer;
+  SpriteRenderer healthBarRenderer;
+
+  [SerializeField]
+  float fadeOutTime;
 
   Transform[] waypoints;
 
@@ -23,6 +30,8 @@ public class EnemyController : MonoBehaviour
 
   [SerializeField]
   Enemy enemyInfo;
+
+  public bool isDead = false;
 
   public delegate void OnDeathEventHandler(GameObject obj, int? value);
   public event OnDeathEventHandler OnDeath;
@@ -33,7 +42,7 @@ public class EnemyController : MonoBehaviour
 
   public float GetMaxHealth()
   {
-    return this._maxHealth;
+    return this.maxHealth;
   }
   public void TakeDamage(float damage)
   {
@@ -43,47 +52,77 @@ public class EnemyController : MonoBehaviour
   void MoveToWaypoints()
   {
     transform.position = Vector2.MoveTowards(transform.position,
-                                             waypoints[_waypointIndex].transform.position,
-                                             _moveSpeed * Time.deltaTime);
-    if (transform.position == waypoints[_waypointIndex].transform.position)
+                                             waypoints[waypointIndex].transform.position,
+                                             moveSpeed * Time.deltaTime);
+    if (transform.position == waypoints[waypointIndex].transform.position)
     {
-      _waypointIndex += 1;
+      waypointIndex += 1;
     }
-    if (_waypointIndex == waypoints.Length)
+    if (waypointIndex == waypoints.Length)
     {
-      _targetReached = true;
+      targetReached = true;
       OnTargetReached();
+      StartCoroutine(FadeOutAndDie());
       OnDeath(gameObject, null);
-      Destroy(gameObject);
     }
-  }
-
-  void KillSelf(GameObject obj, int? value)
-  {
-    Destroy(gameObject);
   }
 
   void RegisterEventListeners()
   {
-    OnDeath += new OnDeathEventHandler(KillSelf);
     OnDeath += new OnDeathEventHandler(GameManager.Instance.ReceiveCurrency);
     OnTargetReached += new OnTargetReachedEventHandler(GameManager.Instance.PlayerTakeDamage);
   }
 
   void LoadEnemyInfo()
   {
-    _maxHealth = enemyInfo.maxHealth;
-    _returnedCurrency = enemyInfo.returnedCurrency;
-    _moveSpeed = enemyInfo.moveSpeed;
-    currentHealth = _maxHealth;
-    _mapController = GameObject.Find("MapController");
-    waypoints = _mapController.GetComponent<Map1>().GetMapNodes();
+    maxHealth = enemyInfo.maxHealth;
+    returnedCurrency = enemyInfo.returnedCurrency;
+    moveSpeed = enemyInfo.moveSpeed;
+    currentHealth = maxHealth;
+    mapController = GameObject.Find("MapController");
+    waypoints = mapController.GetComponent<Map1>().GetMapNodes();
   }
 
-  // void Awake()
-  // {
-  //   _animator = GetComponent<Animator>();
-  // }
+  IEnumerator FadeOutAndDie()
+  {
+    StartCoroutine(FadeOut(healthBarRenderer));
+    yield return StartCoroutine(FadeOut(bodyRenderer));
+    Destroy(gameObject);
+  }
+
+  IEnumerator FadeOut(SpriteRenderer targetRenderer)
+  {
+    Color color = targetRenderer.material.color;
+    float startOpacity = color.a;
+
+    // Track how many seconds we've been fading.
+    float t = 0;
+
+    while (t < fadeOutTime)
+    {
+      // Step the fade forward one frame.
+      t += Time.deltaTime;
+      // Turn the time into an interpolation factor between 0 and 1.
+      float blend = Mathf.Clamp01(t / fadeOutTime);
+
+      // Blend to the corresponding opacity between start & target.
+      color.a = Mathf.Lerp(startOpacity, 0.0f, blend);
+
+      // Apply the resulting color to the material.
+      targetRenderer.material.color = color;
+
+      // Wait one frame, and repeat.
+      yield return null;
+    }
+
+  }
+
+  void Awake()
+  {
+    OnDeath += new OnDeathEventHandler(GameManager.Instance.EnemyDied);
+    bodyRenderer = transform.Find("Body").GetComponent<SpriteRenderer>();
+    healthBarRenderer = transform.Find("HealthBG").GetComponent<SpriteRenderer>();
+  }
 
   // Start is called before the first frame update
   void Start()
@@ -95,13 +134,18 @@ public class EnemyController : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
-    if (_targetReached == false)
+    if (targetReached == false && currentHealth > 0)
     {
       MoveToWaypoints();
     }
     if (this.currentHealth <= 0)
     {
-      OnDeath(gameObject, _returnedCurrency);
+      if (isDead == false)
+      {
+        isDead = true;
+        StartCoroutine(FadeOutAndDie());
+        OnDeath(gameObject, returnedCurrency);
+      }
     }
   }
 }

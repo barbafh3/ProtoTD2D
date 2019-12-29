@@ -9,8 +9,8 @@ public class TowerPlacement : MonoBehaviour
   [SerializeField]
   List<GameObject> towerList;
 
-  Canvas _sellCanvas;
-  Canvas _optionsCanvas;
+  GameObject sellCanvas;
+  GameObject optionsCanvas;
 
   public GameObject tower { get; set; }
 
@@ -18,27 +18,10 @@ public class TowerPlacement : MonoBehaviour
 
   void SetCanvas()
   {
-    Canvas[] canvasList = gameObject.GetComponentsInChildren<Canvas>();
-    foreach (Canvas canvas in canvasList)
-    {
-      switch (canvas.name)
-      {
-        case "SellUI":
-          _sellCanvas = canvas;
-          _sellCanvas.enabled = false;
-          break;
-        case "OptionsUI":
-          _optionsCanvas = canvas;
-          _optionsCanvas.enabled = false;
-          break;
-      }
-    }
-  }
-
-  void ToggleButton(bool state)
-  {
-    var button = _optionsCanvas.GetComponentInChildren<Button>();
-    button.interactable = state;
+    optionsCanvas = transform.Find("OptionsUI").gameObject;
+    optionsCanvas.SetActive(false);
+    sellCanvas = transform.Find("SellUI").gameObject;
+    sellCanvas.SetActive(false);
   }
 
   void Start()
@@ -57,19 +40,19 @@ public class TowerPlacement : MonoBehaviour
       // and removes current object from selection.
       if (isSlotAvalable)
       {
-        _optionsCanvas.enabled = true;
+        optionsCanvas.SetActive(true);
       }
       // If false, shows sell button instead.
       else
       {
-        _sellCanvas.enabled = true;
+        sellCanvas.SetActive(true);
       }
     }
     // If false, disables sellCanvas.
     else
     {
-      _sellCanvas.enabled = false;
-      _optionsCanvas.enabled = false;
+      optionsCanvas.SetActive(false);
+      sellCanvas.SetActive(false);
     }
   }
 }
