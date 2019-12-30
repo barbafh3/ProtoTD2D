@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
       Destroy(gameObject);
     }
     _instance = this;
-    DontDestroyOnLoad(gameObject);
+    // DontDestroyOnLoad(gameObject);
     mapLoadList = new
     {
       mainMenu = new Action(() => { SceneManager.LoadScene("MainMenu"); }),
@@ -65,13 +65,24 @@ public class GameManager : MonoBehaviour
     currentPlayerHealth = _maxPlayerHealth;
     currentPlayerCurrency = _startingPlayerCurrency;
     deployedTowers = new List<GameObject>();
+    SetPauseCanvas();
+  }
+
+  public void SetPauseCanvas()
+  {
     pauseMenuCanvas = GameObject.Find("PauseUI");
     pauseMenuCanvas.SetActive(false);
   }
 
   public void EnemyDied(GameObject enemy, int? value)
   {
-    OnEnemyDeath(enemy);
+    if (enemy != null)
+    {
+      if (OnEnemyDeath != null)
+      {
+        OnEnemyDeath(enemy);
+      }
+    }
   }
 
   public void RegisterTower(GameObject tower)
@@ -119,17 +130,30 @@ public class GameManager : MonoBehaviour
   public void Resume()
   {
     Time.timeScale = 1f;
-    pauseMenuCanvas.SetActive(false);
-    // pauseMenuCanvas.GetComponentInChildren<BoxCollider2D>().enabled = false;
+    if (pauseMenuCanvas != null)
+    {
+      pauseMenuCanvas.SetActive(false);
+    }
+    else
+    {
+      SetPauseCanvas();
+      pauseMenuCanvas.SetActive(false);
+    }
     isGamePaused = false;
   }
 
   public void Pause()
   {
     Time.timeScale = 0f;
-    pauseMenuCanvas.SetActive(true);
-    // pauseMenuCanvas.enabled = true;
-    // pauseMenuCanvas.GetComponentInChildren<BoxCollider2D>().enabled = true;
+    if (pauseMenuCanvas != null)
+    {
+      pauseMenuCanvas.SetActive(true);
+    }
+    else
+    {
+      SetPauseCanvas();
+      pauseMenuCanvas.SetActive(true);
+    }
     isGamePaused = true;
   }
 

@@ -7,37 +7,38 @@ using UnityEngine.SceneManagement;
 public class SceneLoader : MonoBehaviour
 {
 
-  private static SceneLoader _instance;
+  private static SceneLoader instance;
 
   public static SceneLoader Instance
   {
     get
     {
-      if (_instance == null)
+      if (instance == null)
       {
-        _instance = FindObjectOfType<SceneLoader>();
-        if (_instance == null)
+        instance = FindObjectOfType<SceneLoader>();
+        if (instance == null)
         {
           GameObject obj = new GameObject();
           obj.name = typeof(GameManager).Name;
-          _instance = obj.AddComponent<SceneLoader>();
+          instance = obj.AddComponent<SceneLoader>();
         }
       }
-      return _instance;
+      return instance;
     }
   }
 
   void Awake()
   {
-    if (_instance != this && _instance != null)
+    if (instance != this && instance != null)
     {
       Destroy(gameObject);
     }
+    instance = this;
   }
 
   void OnDisable()
   {
-    _instance = null;
+    instance = null;
   }
 
   public static void LoadScene(GameScenes scene)

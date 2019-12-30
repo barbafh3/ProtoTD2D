@@ -7,34 +7,34 @@ public class MouseManager : MonoBehaviour
 
   public GameObject selectedObject { get; set; }
 
-  private static MouseManager _instance;
+  private static MouseManager instance;
 
   public static MouseManager Instance
   {
     get
     {
-      if (_instance == null)
+      if (instance == null)
       {
-        _instance = FindObjectOfType<MouseManager>();
-        if (_instance == null)
+        instance = FindObjectOfType<MouseManager>();
+        if (instance == null)
         {
           GameObject obj = new GameObject();
           obj.name = typeof(MouseManager).Name;
-          _instance = obj.AddComponent<MouseManager>();
+          instance = obj.AddComponent<MouseManager>();
         }
       }
-      return _instance;
+      return instance;
     }
   }
 
   void Awake()
   {
-    if (_instance != this && _instance != null)
+    if (instance != this && instance != null)
     {
       Destroy(gameObject);
     }
-    _instance = this;
-    DontDestroyOnLoad(gameObject);
+    instance = this;
+    // DontDestroyOnLoad(gameObject);
   }
 
   void Update()
@@ -65,7 +65,7 @@ public class MouseManager : MonoBehaviour
 
   void OnDisable()
   {
-    _instance = null;
+    instance = null;
   }
 
 }

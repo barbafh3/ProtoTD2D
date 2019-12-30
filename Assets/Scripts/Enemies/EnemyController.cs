@@ -62,8 +62,9 @@ public class EnemyController : MonoBehaviour
     {
       targetReached = true;
       OnTargetReached();
-      StartCoroutine(FadeOutAndDie());
       OnDeath(gameObject, null);
+      Debug.Log(gameObject);
+      StartCoroutine(FadeOutAndDie());
     }
   }
 
@@ -143,8 +144,8 @@ public class EnemyController : MonoBehaviour
       if (isDead == false)
       {
         isDead = true;
-        StartCoroutine(FadeOutAndDie());
         OnDeath(gameObject, returnedCurrency);
+        StartCoroutine(FadeOutAndDie());
       }
     }
   }

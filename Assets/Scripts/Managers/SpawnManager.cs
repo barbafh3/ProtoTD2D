@@ -7,6 +7,7 @@ public class SpawnManager : MonoBehaviour
 
   private List<GameObject> spawnedEnemies;
 
+  [SerializeField]
   public int? remainingWaves;
 
   public Transform[] mapNodes;
@@ -42,6 +43,8 @@ public class SpawnManager : MonoBehaviour
     {
       Destroy(gameObject);
     }
+    instance = this;
+    // DontDestroyOnLoad(gameObject);
     spawnedEnemies = new List<GameObject>();
   }
 
@@ -58,11 +61,17 @@ public class SpawnManager : MonoBehaviour
     //  If true, removes it from the list.
     if (spawnedEnemies.Count >= 1)
     {
+      Debug.Log("Count >= 1");
       spawnedEnemies.RemoveAt(spawnedEnemies.Count - 1);
       if (spawnedEnemies.Count <= 0)
       {
+        Debug.Log("Count Zero");
         remainingWaves--;
       }
+    }
+    if (remainingWaves <= 0)
+    {
+      SceneLoader.LoadScene(GameScenes.GameOver);
     }
   }
 
