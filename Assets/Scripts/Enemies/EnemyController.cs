@@ -63,7 +63,6 @@ public class EnemyController : MonoBehaviour
       targetReached = true;
       OnTargetReached();
       OnDeath(gameObject, null);
-      Debug.Log(gameObject);
       StartCoroutine(FadeOutAndDie());
     }
   }
@@ -120,7 +119,7 @@ public class EnemyController : MonoBehaviour
 
   void Awake()
   {
-    OnDeath += new OnDeathEventHandler(GameManager.Instance.EnemyDied);
+    OnDeath += new OnDeathEventHandler(TowerManager.Instance.EnemyDied);
     bodyRenderer = transform.Find("Body").GetComponent<SpriteRenderer>();
     healthBarRenderer = transform.Find("HealthBG").GetComponent<SpriteRenderer>();
   }

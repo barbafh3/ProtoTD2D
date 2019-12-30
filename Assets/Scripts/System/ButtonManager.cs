@@ -7,13 +7,24 @@ public class ButtonManager : MonoBehaviour
 
   public void GoToMap1()
   {
-    GameManager.Instance.Resume();
+    if (GameManager.Instance.isGamePaused)
+    {
+      UIManager.Instance.Resume();
+    }
+    SceneLoader.LoadScene(GameScenes.Map1);
+  }
+
+  public void ReplayMap1()
+  {
     SceneLoader.LoadScene(GameScenes.Map1);
   }
 
   public void GoToMainMenu()
   {
-    GameManager.Instance.Resume();
+    if (GameManager.Instance.isGamePaused)
+    {
+      UIManager.Instance.Resume();
+    }
     SceneLoader.LoadScene(GameScenes.MainMenu);
   }
 
@@ -24,6 +35,9 @@ public class ButtonManager : MonoBehaviour
 
   public void ResumeGame()
   {
-    GameManager.Instance.Resume();
+    if (GameManager.Instance.isGamePaused)
+    {
+      UIManager.Instance.Resume();
+    }
   }
 }

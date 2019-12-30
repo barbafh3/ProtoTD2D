@@ -44,7 +44,6 @@ public class SpawnManager : MonoBehaviour
       Destroy(gameObject);
     }
     instance = this;
-    // DontDestroyOnLoad(gameObject);
     spawnedEnemies = new List<GameObject>();
   }
 

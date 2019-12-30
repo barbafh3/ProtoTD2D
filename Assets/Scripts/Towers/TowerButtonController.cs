@@ -56,9 +56,9 @@ public class TowerButtonController : MonoBehaviour
     rootScript.isSlotAvalable = true;
     var towerController = rootScript.tower.GetComponentInChildren<TowerController>();
     GameManager.Instance.ReceiveCurrency(null, towerController.refundValue);
-    GameManager.Instance.UnregisterTower(rootScript.tower);
+    TowerManager.Instance.UnregisterTower(rootScript.tower);
     Destroy(rootScript.tower);
-    MouseManager.Instance.selectedObject = null;
+    UIManager.Instance.selectedObject = null;
   }
 
   public void PlaceTower()
@@ -68,13 +68,13 @@ public class TowerButtonController : MonoBehaviour
       if (GameManager.Instance.currentPlayerCurrency >= towerCost)
       {
         GameManager.Instance.SpendCurrency(towerCost);
-        GameObject newTower = Instantiate(towerPrefab, transform.position, Quaternion.identity);
-        GameManager.Instance.RegisterTower(newTower);
+        GameObject newTower = Instantiate(towerPrefab, rootObj.position, Quaternion.identity);
+        TowerManager.Instance.RegisterTower(newTower);
         rootScript.tower = newTower;
         rootScript.tower.GetComponentInChildren<SpriteRenderer>().sortingOrder = 5;
         rootScript.isSlotAvalable = false;
         optionsCanvas.SetActive(false);
-        MouseManager.Instance.selectedObject = null;
+        UIManager.Instance.selectedObject = null;
       }
       else
       {

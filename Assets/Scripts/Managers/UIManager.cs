@@ -2,25 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MouseManager : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
+
+  GameObject pauseMenuCanvas;
 
   public GameObject selectedObject { get; set; }
 
-  private static MouseManager instance;
+  private static UIManager instance;
 
-  public static MouseManager Instance
+  public static UIManager Instance
   {
     get
     {
       if (instance == null)
       {
-        instance = FindObjectOfType<MouseManager>();
+        instance = FindObjectOfType<UIManager>();
         if (instance == null)
         {
           GameObject obj = new GameObject();
-          obj.name = typeof(MouseManager).Name;
-          instance = obj.AddComponent<MouseManager>();
+          obj.name = typeof(UIManager).Name;
+          instance = obj.AddComponent<UIManager>();
         }
       }
       return instance;
@@ -34,7 +36,12 @@ public class MouseManager : MonoBehaviour
       Destroy(gameObject);
     }
     instance = this;
-    // DontDestroyOnLoad(gameObject);
+    SetPauseCanvas();
+  }
+
+  void OnDisable()
+  {
+    instance = null;
   }
 
   void Update()
@@ -62,9 +69,23 @@ public class MouseManager : MonoBehaviour
     }
   }
 
-  void OnDisable()
+  public void SetPauseCanvas()
   {
-    instance = null;
+    pauseMenuCanvas = GameObject.Find("PauseUI");
+    pauseMenuCanvas.SetActive(false);
   }
 
+  public void Resume()
+  {
+    Time.timeScale = 1f;
+    pauseMenuCanvas.SetActive(false);
+    GameManager.Instance.isGamePaused = false;
+  }
+
+  public void Pause()
+  {
+    Time.timeScale = 0f;
+    pauseMenuCanvas.SetActive(true);
+    GameManager.Instance.isGamePaused = true;
+  }
 }

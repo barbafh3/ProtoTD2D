@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 164477521}
   - component: {fileID: 164477520}
   m_Layer: 5
-  m_Name: StartButton
+  m_Name: ReplayButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -217,7 +217,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1859833938}
-        m_MethodName: GoToMap1
+        m_MethodName: ReplayMap1
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -10,103 +10,52 @@ public class GameManager : MonoBehaviour
   public bool isGamePaused = false;
 
   public int currentPlayerHealth { get; set; }
-  private int _maxPlayerHealth = 100;
+  private int maxPlayerHealth = 100;
 
   public int currentPlayerCurrency { get; set; }
-  private int _startingPlayerCurrency = 200;
+  private int startingPlayerCurrency = 200;
 
-  List<GameObject> deployedTowers;
-
-  GameObject pauseMenuCanvas;
-
-  public delegate void OnEnemyDeathEventHandler(GameObject obj);
-  public event OnEnemyDeathEventHandler OnEnemyDeath;
-
-  private static GameManager _instance;
+  private static GameManager instance;
 
   public static GameManager Instance
   {
     get
     {
-      if (_instance == null)
+      if (instance == null)
       {
-        _instance = FindObjectOfType<GameManager>();
-        if (_instance == null)
+        instance = FindObjectOfType<GameManager>();
+        if (instance == null)
         {
           GameObject obj = new GameObject();
           obj.name = typeof(GameManager).Name;
-          _instance = obj.AddComponent<GameManager>();
+          instance = obj.AddComponent<GameManager>();
         }
       }
-      return _instance;
+      return instance;
     }
   }
 
   void OnDisable()
   {
-    _instance = null;
+    instance = null;
   }
 
   void Awake()
   {
-    if (_instance != this && _instance != null)
+    if (instance != this && instance != null)
     {
       Destroy(gameObject);
     }
-    _instance = this;
-    // DontDestroyOnLoad(gameObject);
-    mapLoadList = new
-    {
-      mainMenu = new Action(() => { SceneManager.LoadScene("MainMenu"); }),
-      map1 = new Action(() => { SceneManager.LoadScene("Map1"); }),
-      map2 = new Action(() => { SceneManager.LoadScene("Map2"); }),
-      gameOver = new Action(() => { SceneManager.LoadScene("GameOver"); }),
-    };
-    currentPlayerHealth = _maxPlayerHealth;
-    currentPlayerCurrency = _startingPlayerCurrency;
-    deployedTowers = new List<GameObject>();
-    SetPauseCanvas();
+    instance = this;
+    DontDestroyOnLoad(gameObject);
+    currentPlayerHealth = maxPlayerHealth;
+    currentPlayerCurrency = startingPlayerCurrency;
   }
 
-  public void SetPauseCanvas()
+  public void RestartResources()
   {
-    pauseMenuCanvas = GameObject.Find("PauseUI");
-    pauseMenuCanvas.SetActive(false);
-  }
-
-  public void EnemyDied(GameObject enemy, int? value)
-  {
-    if (enemy != null)
-    {
-      if (OnEnemyDeath != null)
-      {
-        OnEnemyDeath(enemy);
-      }
-    }
-  }
-
-  public void RegisterTower(GameObject tower)
-  {
-    var towerScript = tower.GetComponentInChildren<TowerController>();
-    OnEnemyDeath += new OnEnemyDeathEventHandler(towerScript.EnemyDied);
-    deployedTowers.Add(tower);
-  }
-
-  public void UnregisterTower(GameObject tower)
-  {
-    Debug.Log(tower);
-    var towerScript = tower.GetComponentInChildren<TowerController>();
-    Debug.Log(towerScript);
-    OnEnemyDeath -= new OnEnemyDeathEventHandler(towerScript.EnemyDied);
-    deployedTowers.Remove(tower);
-  }
-
-  private object mapLoadList;
-
-  public void LoadNextMap(string name)
-  {
-    Action loadScene = (Action)mapLoadList.GetType().GetProperty(name).GetValue(mapLoadList);
-    loadScene();
+    currentPlayerHealth = maxPlayerHealth;
+    currentPlayerCurrency = startingPlayerCurrency;
   }
 
   public void PlayerTakeDamage()
@@ -127,34 +76,5 @@ public class GameManager : MonoBehaviour
     }
   }
 
-  public void Resume()
-  {
-    Time.timeScale = 1f;
-    if (pauseMenuCanvas != null)
-    {
-      pauseMenuCanvas.SetActive(false);
-    }
-    else
-    {
-      SetPauseCanvas();
-      pauseMenuCanvas.SetActive(false);
-    }
-    isGamePaused = false;
-  }
-
-  public void Pause()
-  {
-    Time.timeScale = 0f;
-    if (pauseMenuCanvas != null)
-    {
-      pauseMenuCanvas.SetActive(true);
-    }
-    else
-    {
-      SetPauseCanvas();
-      pauseMenuCanvas.SetActive(true);
-    }
-    isGamePaused = true;
-  }
 
 }

@@ -47,11 +47,11 @@ public class Map1 : MonoBehaviour
     {
       if (GameManager.Instance.isGamePaused == true)
       {
-        GameManager.Instance.Resume();
+        UIManager.Instance.Resume();
       }
       else
       {
-        GameManager.Instance.Pause();
+        UIManager.Instance.Pause();
       }
     }
   }

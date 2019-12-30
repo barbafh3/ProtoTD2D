@@ -34,7 +34,7 @@ public class TowerPlacement : MonoBehaviour
     // Checks if this object is the current selected object.
     // If true, checks if the current slot is available
     // for construction.
-    if (MouseManager.Instance.selectedObject == gameObject)
+    if (UIManager.Instance.selectedObject == gameObject)
     {
       // If current slot is available, opens store
       // and removes current object from selection.
