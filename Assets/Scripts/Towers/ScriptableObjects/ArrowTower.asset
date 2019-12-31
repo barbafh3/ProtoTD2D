@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bb1660fef7464c998496cf522549f4d, type: 3}
   m_Name: ArrowTower
   m_EditorClassIdentifier: 
-  towerSprite: {fileID: 21300000, guid: a342a5e2ceae88d55ae5c677e17dfe1c, type: 3}
+  towerSprite: {fileID: 21300000, guid: cacdbe6b4e051cab6a4857de4aa96470, type: 3}
+  buttonSprite: {fileID: 21300000, guid: 9108615946a1f97fd9ca2fb56c44c395, type: 3}
+  price: 75
   fireRate: 1
   range: 2.2
   upgradeList: []
