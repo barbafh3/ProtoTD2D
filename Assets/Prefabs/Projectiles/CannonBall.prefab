@@ -49,6 +49,7 @@ MonoBehaviour:
   target: {fileID: 0}
   timer: 0.9
   areaOfEffect: 1.5
+  radius: 0.1
 --- !u!212 &5349487904766349805
 SpriteRenderer:
   m_ObjectHideFlags: 0

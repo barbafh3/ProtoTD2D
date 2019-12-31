@@ -11,6 +11,12 @@ public class ArcProjectileController : AProjectile
   [SerializeField]
   float areaOfEffect;
 
+  [SerializeField]
+  [Range(0f, 2f)]
+  float radius;
+
+  Vector3 targetPosition;
+
   private Rigidbody2D projectileBody;
 
   List<GameObject> blastTargets;
@@ -97,7 +103,7 @@ public class ArcProjectileController : AProjectile
 
     float projectileAngle;
 
-    projectileAngle = Mathf.Atan((yDistance + 4f) / xDistance);
+    projectileAngle = Mathf.Atan((yDistance + 5f) / xDistance);
 
     float totalVelocity = xDistance / Mathf.Cos(projectileAngle);
 
@@ -110,23 +116,30 @@ public class ArcProjectileController : AProjectile
 
   }
 
+
   // Start is called before the first frame update
   void Start()
   {
     LoadProjectileInfo();
+    targetPosition = target.transform.localPosition;
     blastTargets = new List<GameObject>();
     projectileBody = GetComponent<Rigidbody2D>();
     MoveProjectile();
-    // Set projectile RigidBody2D velocity to travelSpeed.
-    Invoke("OnTargetReached", timer);
   }
 
-  void Update()
+  void FixedUpdate()
   {
-    if (transform.position == target.transform.position)
+    var distance = Vector2.Distance(transform.localPosition, targetPosition);
+    Debug.Log(distance);
+    if (distance < radius)
     {
       OnTargetReached();
     }
   }
+
+  // void OnDrawGizmos()
+  // {
+  //   Gizmos.DrawSphere(targetPosition, radius);
+  // }
 
 }

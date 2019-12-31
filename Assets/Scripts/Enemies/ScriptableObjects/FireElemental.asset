@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acfb76362a909583fac380a6b264509a, type: 3}
   m_Name: FireElemental
   m_EditorClassIdentifier: 
-  maxHealth: 30
+  maxHealth: 100000000
   returnedCurrency: 25
   moveSpeed: 0.5
