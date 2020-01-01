@@ -5,8 +5,7 @@ using UnityEngine;
 public class TowerController : MonoBehaviour
 {
 
-  [SerializeField]
-  Tower towerInfo;
+  public Tower towerInfo;
 
   float range;
 
@@ -82,6 +81,7 @@ public class TowerController : MonoBehaviour
     upgradeList = towerInfo.upgradeList;
     projectileSprite = towerInfo.projectileSprite;
     refundValue = towerInfo.refundValue;
+    transform.parent.GetComponentInChildren<SpriteRenderer>().sprite = towerInfo.towerSprite;
   }
 
   void Start()

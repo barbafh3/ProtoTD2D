@@ -13,7 +13,7 @@ public class TowerButtonController : MonoBehaviour
   GameObject towerPrefab;
 
   Transform rootObj;
-  TowerPlacement rootScript;
+  BuildingController rootScript;
   GameObject optionsCanvas;
   GameObject sellCanvas;
 
@@ -28,81 +28,62 @@ public class TowerButtonController : MonoBehaviour
     sellCanvas = transform.parent.parent.Find("SellUI").gameObject;
     button = GetComponentInChildren<Button>();
     rootObj = transform.parent.parent;
-    rootScript = rootObj.GetComponent<TowerPlacement>();
+    rootScript = rootObj.GetComponent<BuildingController>();
   }
-
-  // void SetCanvas()
-  // {
-  //   Canvas[] canvasList = rootObj.GetComponentsInChildren<Canvas>();
-  //   foreach (Canvas canvas in canvasList)
-  //   {
-  //     switch (canvas.name)
-  //     {
-  //       case "SellUI":
-  //         sellCanvas = canvas;
-  //         sellCanvas.enabled = false;
-  //         break;
-  //       case "OptionsUI":
-  //         optionsCanvas = canvas;
-  //         optionsCanvas.enabled = false;
-  //         break;
-  //     }
-  //   }
-  // }
 
   public void SellTower()
   {
-    sellCanvas.SetActive(false);
-    rootScript.isSlotAvalable = true;
-    var towerController = rootScript.tower.GetComponentInChildren<TowerController>();
-    GameManager.Instance.ReceiveCurrency(null, towerController.refundValue);
-    TowerManager.Instance.UnregisterTower(rootScript.tower);
-    Destroy(rootScript.tower);
-    UIManager.Instance.selectedObject = null;
+    // sellCanvas.SetActive(false);
+    // rootScript.isAvalable = true;
+    // var towerController = rootScript.tower.GetComponentInChildren<TowerController>();
+    // GameManager.Instance.ReceiveCurrency(null, towerController.refundValue);
+    // TowerManager.Instance.UnregisterTower(rootScript.tower);
+    // Destroy(rootScript.tower);
+    // UIManager.Instance.selectedObject = null;
   }
 
-  public void PlaceTower()
-  {
-    if (rootScript.isSlotAvalable == true)
-    {
-      if (GameManager.Instance.currentPlayerCurrency >= towerCost)
-      {
-        GameManager.Instance.SpendCurrency(towerCost);
-        GameObject newTower = Instantiate(towerPrefab, rootObj.position, Quaternion.identity);
-        TowerManager.Instance.RegisterTower(newTower);
-        rootScript.tower = newTower;
-        rootScript.tower.GetComponentInChildren<SpriteRenderer>().sortingOrder = 5;
-        rootScript.isSlotAvalable = false;
-        optionsCanvas.SetActive(false);
-        UIManager.Instance.selectedObject = null;
-      }
-      else
-      {
-        Debug.Log("Not enough gold.");
-      }
-    }
-    else
-    {
+  // public void PlaceTower()
+  // {
+  //   if (rootScript.isAvalable == true)
+  //   {
+  //     if (GameManager.Instance.currentPlayerCurrency >= towerCost)
+  //     {
+  //       GameManager.Instance.SpendCurrency(towerCost);
+  //       GameObject newTower = Instantiate(towerPrefab, rootObj.position, Quaternion.identity);
+  //       TowerManager.Instance.RegisterTower(newTower);
+  //       rootScript.tower = newTower;
+  //       rootScript.tower.GetComponentInChildren<SpriteRenderer>().sortingOrder = 5;
+  //       rootScript.isAvalable = false;
+  //       optionsCanvas.SetActive(false);
+  //       UIManager.Instance.selectedObject = null;
+  //     }
+  //     else
+  //     {
+  //       Debug.Log("Not enough gold.");
+  //     }
+  //   }
+  //   else
+  //   {
 
-    }
-  }
+  // }
+  // }
 
   void Start()
   {
-    LoadButtonInfo();
+    // LoadButtonInfo();
   }
 
   // Update is called once per frame
   void Update()
   {
-    if (GameManager.Instance.currentPlayerCurrency < towerCost)
-    {
-      button.interactable = false;
-    }
-    else
-    {
-      button.interactable = true;
-    }
+    // if (GameManager.Instance.currentPlayerCurrency < towerCost)
+    // {
+    //   button.interactable = false;
+    // }
+    // else
+    // {
+    //   button.interactable = true;
+    // }
 
   }
 }

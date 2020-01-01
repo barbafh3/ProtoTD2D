@@ -506,12 +506,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8300589208506263874}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55b50ff32b7aed84f977600ea786359b, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e9fd5ec6490f05a0ad26af17b58fa58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tower: {fileID: 11400000, guid: 76148de9b6bf510608fff667bc361ff9, type: 2}
-  spriteButtonBuy: {fileID: 8300589208541100450}
-  txtPrice: {fileID: 8300589207988895171}
+  spriteButtonBuy: {fileID: 0}
+  txtPrice: {fileID: 0}
 --- !u!1 &8300589208541100455
 GameObject:
   m_ObjectHideFlags: 0
@@ -1053,12 +1053,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8300589209869068737}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55b50ff32b7aed84f977600ea786359b, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e9fd5ec6490f05a0ad26af17b58fa58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   tower: {fileID: 11400000, guid: 7c8dc464fafa55a0fa0a54d415fc064a, type: 2}
-  spriteButtonBuy: {fileID: 8300589208782582974}
-  txtPrice: {fileID: 8300589210095286096}
+  spriteButtonBuy: {fileID: 0}
+  txtPrice: {fileID: 0}
 --- !u!1 &8300589209982740030
 GameObject:
   m_ObjectHideFlags: 0

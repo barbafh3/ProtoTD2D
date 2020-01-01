@@ -7,7 +7,9 @@ public class Tower : ScriptableObject
 {
 
   public Sprite towerSprite;
+
   public Sprite buttonSprite;
+
   public int price;
 
   public float fireRate;
