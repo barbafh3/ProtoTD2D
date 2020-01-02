@@ -37,7 +37,6 @@ public class BuildingController : MonoBehaviour
 
   void Awake()
   {
-    // TowerManager.Instance.OnEnable();
     SetAllButtons();
   }
 
@@ -55,7 +54,7 @@ public class BuildingController : MonoBehaviour
   void SetButtonInfo(TextMeshProUGUI costText, GameObject button, TowerList tower)
   {
     var newSpriteState = new SpriteState();
-    costText.text = TowerManager.GetTowerInfo(tower).price.ToString();
+    costText.text = "$" + TowerManager.GetTowerInfo(tower).price.ToString();
     button.GetComponent<Image>().sprite = TowerManager.GetTowerInfo(tower).buttonBaseSprite;
     newSpriteState.disabledSprite = TowerManager.GetTowerInfo(tower).buttonDisabledSprite;
     newSpriteState.highlightedSprite = TowerManager.GetTowerInfo(tower).buttonHighlightSprite;

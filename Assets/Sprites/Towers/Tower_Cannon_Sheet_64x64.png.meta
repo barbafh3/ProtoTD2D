@@ -1,16 +1,28 @@
 fileFormatVersion: 2
-guid: eebfe1087729a0e30918c14d67d874a9
+guid: 06cc5cd0b7aeea434933eb92fe949b1e
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8271738272640365210
-    second: FireElemental_Base_LeftSide_64x64_Sheet_0
+      213: 6674030995539421062
+    second: Tower_Cannon_Sheet_64x64_0
   - first:
-      213: 2845995191619235926
-    second: FireElemental_Base_LeftSide_64x64_Sheet_1
+      213: 6226874404077219491
+    second: Tower_Cannon_Sheet_64x64_1
   - first:
-      213: -9006192546170409977
-    second: FireElemental_Base_LeftSide_64x64_Sheet_2
+      213: -3983051797566840034
+    second: Tower_Cannon_Sheet_64x64_2
+  - first:
+      213: 3631291803175926233
+    second: Tower_Cannon_Sheet_64x64_3
+  - first:
+      213: -8078684368723471538
+    second: Tower_Cannon_Sheet_64x64_4
+  - first:
+      213: 3224389834988149141
+    second: Tower_Cannon_Sheet_64x64_5
+  - first:
+      213: 155170161247672163
+    second: Tower_Cannon_Sheet_64x64_6
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -72,7 +84,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -84,7 +96,19 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -95,7 +119,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: FireElemental_Base_LeftSide_64x64_Sheet_0
+      name: Tower_Cannon_Sheet_64x64_0
       rect:
         serializedVersion: 2
         x: 0
@@ -109,14 +133,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f0af7a5df4a86c5d18a90d2fcebb2ac6
-      internalID: -8271738272640365210
+      spriteID: 014d6b068488a7996972cb9be33060e0
+      internalID: 6674030995539421062
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FireElemental_Base_LeftSide_64x64_Sheet_1
+      name: Tower_Cannon_Sheet_64x64_1
       rect:
         serializedVersion: 2
         x: 64
@@ -130,14 +154,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5f34f368f853a4765bbac3115ef08386
-      internalID: 2845995191619235926
+      spriteID: ab046c8d22ba3b5959aaf6dc57f5e43f
+      internalID: 6226874404077219491
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: FireElemental_Base_LeftSide_64x64_Sheet_2
+      name: Tower_Cannon_Sheet_64x64_2
       rect:
         serializedVersion: 2
         x: 128
@@ -151,8 +175,92 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cf9c46412b064b222940326d41e7cce7
-      internalID: -9006192546170409977
+      spriteID: 63217691380458114af7a01a7092e302
+      internalID: -3983051797566840034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tower_Cannon_Sheet_64x64_3
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49979e10270a35a338f0658cfd171f91
+      internalID: 3631291803175926233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tower_Cannon_Sheet_64x64_4
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cae8e935d94e964f485c93c851224de1
+      internalID: -8078684368723471538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tower_Cannon_Sheet_64x64_5
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d842899bf227e6203808b304bd6c04ff
+      internalID: 3224389834988149141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tower_Cannon_Sheet_64x64_6
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f92487872cca06fdb37faa6da610239
+      internalID: 155170161247672163
       vertices: []
       indices: 
       edges: []

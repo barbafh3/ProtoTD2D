@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
@@ -8,6 +9,12 @@ public class UIManager : MonoBehaviour
   Transform pauseMenuCanvas;
 
   public GameObject selectedObject { get; set; }
+
+  [SerializeField]
+  TextMeshProUGUI healthText;
+
+  [SerializeField]
+  TextMeshProUGUI currencyText;
 
   private static UIManager instance;
 
@@ -36,6 +43,12 @@ public class UIManager : MonoBehaviour
       Destroy(gameObject);
     }
     instance = this;
+  }
+
+  void Update()
+  {
+    healthText.text = GameManager.Instance.currentPlayerHealth.ToString();
+    currencyText.text = GameManager.Instance.currentPlayerCurrency.ToString();
   }
 
   void OnDisable()

@@ -101,9 +101,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05879d85e3a6d181ba8a41a355ec0f47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeOutTime: 0.5
+  fadeOutTime: 0.7
   currentHealth: 0
   enemyInfo: {fileID: 11400000, guid: 8109890f2342ae09986e5bc0d69916d0, type: 2}
+  isDead: 0
 --- !u!50 &6123520968613155919
 Rigidbody2D:
   serializedVersion: 4
@@ -311,7 +312,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -7420160511152045761, guid: b8dcc7b215c21010cad6b0f0f9003066,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -319,7 +321,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &7685257681056166713
