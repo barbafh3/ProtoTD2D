@@ -13,7 +13,13 @@ MonoBehaviour:
   m_Name: ArrowTower
   m_EditorClassIdentifier: 
   towerSprite: {fileID: 21300000, guid: cacdbe6b4e051cab6a4857de4aa96470, type: 3}
-  buttonSprite: {fileID: 21300000, guid: 9108615946a1f97fd9ca2fb56c44c395, type: 3}
+  buttonBaseSprite: {fileID: 21300000, guid: 9108615946a1f97fd9ca2fb56c44c395, type: 3}
+  buttonHighlightSprite: {fileID: 21300000, guid: 0b11b087fe868477f92b619bf8bc7b20,
+    type: 3}
+  buttonPressedSprite: {fileID: 21300000, guid: 8fcd1122547ca26159900aa1db257f6a,
+    type: 3}
+  buttonDisabledSprite: {fileID: 21300000, guid: 492bd5f0f2f6eed63b821675ae259d90,
+    type: 3}
   price: 75
   fireRate: 1
   range: 2.2

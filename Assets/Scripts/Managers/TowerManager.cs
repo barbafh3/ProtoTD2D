@@ -44,10 +44,6 @@ public class TowerManager : MonoBehaviour
 
   void Awake()
   {
-  }
-
-  public void OnEnable()
-  {
     if (instance != this && instance != null)
     {
       Destroy(gameObject);
