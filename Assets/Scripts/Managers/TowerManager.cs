@@ -1,9 +1,16 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using RotaryHeart.Lib.SerializableDictionary;
 
 public class TowerManager : MonoBehaviour
 {
+
+  [System.Serializable]
+  public class TowerListDict : SerializableDictionaryBase<string, Tower> { }
+
+  [SerializeField]
+  public static TowerListDict towerList;
 
   List<GameObject> deployedTowers;
 
@@ -37,12 +44,37 @@ public class TowerManager : MonoBehaviour
 
   void Awake()
   {
+  }
+
+  public void OnEnable()
+  {
     if (instance != this && instance != null)
     {
       Destroy(gameObject);
     }
     instance = this;
     deployedTowers = new List<GameObject>();
+    towerList = new TowerListDict();
+    FillTowerListDict();
+  }
+
+  public static void LoadTowerManager()
+  {
+    Debug.Log("TowerManager Loaded.");
+  }
+
+  public static Tower GetTowerInfo(TowerList towerName)
+  {
+    return towerList[towerName.ToString()];
+  }
+
+  void FillTowerListDict()
+  {
+    foreach (string towerName in Enum.GetNames(typeof(TowerList)))
+    {
+      var scriptObj = Resources.Load<Tower>("ScriptableObjects/" + towerName);
+      towerList.Add(towerName, scriptObj);
+    }
   }
 
   public void EnemyDied(GameObject enemy, int? value)

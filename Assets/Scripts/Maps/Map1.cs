@@ -37,6 +37,7 @@ public class Map1 : MonoBehaviour
     //  Enables mouse cursor.
     Cursor.visible = true;
     //  Starts the map runtime.
+    TowerManager.LoadTowerManager();
     StartCoroutine(SpawnManager.Instance.SpawnRuntime(enemyWaves, mapNodes, startupDelay, waveDelay, spawnDelay));
     StartCoroutine(CheckForDefeatContidions());
   }

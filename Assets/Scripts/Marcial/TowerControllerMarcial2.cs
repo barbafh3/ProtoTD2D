@@ -19,7 +19,7 @@ public class TowerControllerMarcial2 : MonoBehaviour
     spriteButtonBuy = transform.Find("Button Buy").GetComponent<Image>();
     txtPrice = gameObject.GetComponentInChildren<Text>();
     Debug.Log(tower);
-    spriteButtonBuy.sprite = tower.buttonSprite;
+    spriteButtonBuy.sprite = tower.buttonBaseSprite;
     txtPrice.text = "$ " + tower.price;
   }
 

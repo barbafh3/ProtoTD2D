@@ -8,7 +8,10 @@ public class Tower : ScriptableObject
 
   public Sprite towerSprite;
 
-  public Sprite buttonSprite;
+  public Sprite buttonBaseSprite;
+  public Sprite buttonHighlightSprite;
+  public Sprite buttonPressedSprite;
+  public Sprite buttonDisabledSprite;
 
   public int price;
 

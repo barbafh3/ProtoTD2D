@@ -9,8 +9,6 @@ public class TowerController : MonoBehaviour
 
   float range;
 
-  float baseDamage;
-
   float fireRate;
 
   public int refundValue { get; private set; }
