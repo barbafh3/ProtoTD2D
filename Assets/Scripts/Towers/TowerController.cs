@@ -50,24 +50,9 @@ public class TowerController : MonoBehaviour
     }
   }
 
-  void CheckTowerType()
-  {
-    if (towerInfo.name == TowerList.CannonTower.ToString())
-    {
-      animator.SetBool("isCannonTower", true);
-      animator.SetBool("isArrowTower", false);
-    }
-    if (towerInfo.name == TowerList.ArrowTower.ToString())
-    {
-      animator.SetBool("isCannonTower", false);
-      animator.SetBool("isArrowTower", true);
-    }
-  }
-
   void Start()
   {
     LoadTowerInfo();
-    CheckTowerType();
     InvokeRepeating("FindAndUpdateTarget", 0.5f, 0.1f);
     InvokeRepeating("DoDamage", 0f, fireRate);
   }
@@ -89,10 +74,10 @@ public class TowerController : MonoBehaviour
     {
       var enemyController = currentTarget.GetComponent<EnemyController>();
       SpawnProjectile();
-      if (towerInfo.name == TowerList.CannonTower.ToString())
-      {
-        animator.Play("CannonFire");
-      }
+      // if (towerInfo.name == TowerList.CannonTower.ToString())
+      // {
+      animator.Play("Fire");
+      // }
       if (enemyController.currentHealth <= 0)
       {
         currentTarget = null;
@@ -109,6 +94,7 @@ public class TowerController : MonoBehaviour
     refundValue = towerInfo.refundValue;
     transform.parent.GetComponentInChildren<SpriteRenderer>().sprite = towerInfo.towerSprite;
     animator = transform.parent.GetComponentInChildren<Animator>();
+    animator.runtimeAnimatorController = towerInfo.animator;
   }
 
 }

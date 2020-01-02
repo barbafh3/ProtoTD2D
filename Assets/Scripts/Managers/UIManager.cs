@@ -47,8 +47,11 @@ public class UIManager : MonoBehaviour
 
   void Update()
   {
-    healthText.text = GameManager.Instance.currentPlayerHealth.ToString();
-    currencyText.text = GameManager.Instance.currentPlayerCurrency.ToString();
+    if (healthText != null && currencyText != null)
+    {
+      healthText.text = GameManager.Instance.currentPlayerHealth.ToString();
+      currencyText.text = GameManager.Instance.currentPlayerCurrency.ToString();
+    }
   }
 
   void OnDisable()

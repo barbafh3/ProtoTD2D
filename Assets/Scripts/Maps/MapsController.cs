@@ -3,11 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Map1 : MonoBehaviour
+public class MapsController : MonoBehaviour
 {
 
   [SerializeField]
-  Transform[] mapNodes;
+  Transform[] routeA;
+
+  [SerializeField]
+  Transform[] routeB;
 
   [SerializeField]
   List<Wave> enemyWaves;
@@ -38,7 +41,7 @@ public class Map1 : MonoBehaviour
     Cursor.visible = true;
     //  Starts the map runtime.
     TowerManager.LoadTowerManager();
-    StartCoroutine(SpawnManager.Instance.SpawnRuntime(enemyWaves, mapNodes, startupDelay, waveDelay, spawnDelay));
+    StartCoroutine(SpawnManager.Instance.SpawnRuntime(enemyWaves, routeA, routeB, startupDelay, waveDelay, spawnDelay));
     StartCoroutine(CheckForDefeatContidions());
   }
 
@@ -59,7 +62,7 @@ public class Map1 : MonoBehaviour
 
   public Transform[] GetMapNodes()
   {
-    return mapNodes;
+    return routeA;
   }
 
 }

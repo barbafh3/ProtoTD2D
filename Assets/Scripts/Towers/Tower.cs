@@ -25,4 +25,5 @@ public class Tower : ScriptableObject
 
   public GameObject projectileSprite;
 
+  public RuntimeAnimatorController animator;
 }

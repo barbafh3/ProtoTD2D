@@ -24,7 +24,7 @@ public class EnemyController : MonoBehaviour
   [SerializeField]
   float fadeOutTime;
 
-  Transform[] waypoints;
+  public Transform[] waypoints;
 
   public float currentHealth;
 
@@ -131,7 +131,7 @@ public class EnemyController : MonoBehaviour
     moveSpeed = enemyInfo.moveSpeed;
     currentHealth = maxHealth;
     mapController = GameObject.Find("MapController");
-    waypoints = mapController.GetComponent<Map1>().GetMapNodes();
+    // waypoints = mapController.GetComponent<MapsController>().GetMapNodes();
   }
 
   IEnumerator PlayAnimation()

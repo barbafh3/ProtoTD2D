@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: ArrowTower
+  m_Controller: {fileID: 9100000, guid: caefceb89c63334aa8b6e7129b28a8de, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 50195457d7043af10a136bf7e1a1fea7, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 25956c26293f9cdb7a23429c523eb655, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 68e8f53d35214b6a8ac88ad8707f1fec, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 25956c26293f9cdb7a23429c523eb655, type: 2}

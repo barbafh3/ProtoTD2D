@@ -27,3 +27,4 @@ MonoBehaviour:
   refundValue: 20
   projectileSprite: {fileID: 5284901980819178094, guid: 091a5f144ab05187688e6c4dc9f9376b,
     type: 3}
+  animator: {fileID: 22100000, guid: ced64ee5dc1049ff396433c838eb53ab, type: 2}
