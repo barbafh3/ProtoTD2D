@@ -90,6 +90,12 @@ public class BuildingController : MonoBehaviour
     upgradeContent.SetActive(false);
     GameManager.Instance.ReceiveCurrency(null, currentTower.GetComponentInChildren<TowerController>().refundValue);
     TowerManager.Instance.UnregisterTower(currentTower);
+    var sellAnimation = transform.GetChild(1).Find("SellAnimation");
+    var animator = sellAnimation.GetComponent<Animator>();
+    var text = sellAnimation.gameObject.GetComponentInChildren<TextMeshProUGUI>();
+    text.text = "+" + currentTower.GetComponentInChildren<TowerController>().towerInfo.refundValue.ToString();
+    sellAnimation.GetChild(0).gameObject.SetActive(true);
+    animator.Play("SellTower");
     Destroy(currentTower);
     isAvailable = true;
   }
