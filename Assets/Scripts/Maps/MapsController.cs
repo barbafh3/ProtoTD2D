@@ -35,12 +35,22 @@ public class MapsController : MonoBehaviour
     yield return new WaitForSeconds(1);
   }
 
+  void HideWaypoints(Transform[] list)
+  {
+    foreach (Transform waypoint in list)
+    {
+      waypoint.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+    }
+  }
+
   void Start()
   {
     //  Enables mouse cursor.
     Cursor.visible = true;
     //  Starts the map runtime.
     TowerManager.LoadTowerManager();
+    HideWaypoints(routeA);
+    HideWaypoints(routeB);
     StartCoroutine(SpawnManager.Instance.SpawnRuntime(enemyWaves, routeA, routeB, startupDelay, waveDelay, spawnDelay));
     StartCoroutine(CheckForDefeatContidions());
   }
