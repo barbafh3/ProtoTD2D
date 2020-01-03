@@ -12,6 +12,8 @@ public class UIManager : MonoBehaviour
   [SerializeField]
   TextMeshProUGUI currencyText = null;
 
+  public GameObject selectedObject = null;
+
   private static UIManager instance;
 
   public static UIManager Instance
@@ -32,6 +34,11 @@ public class UIManager : MonoBehaviour
     }
   }
 
+  void OnDisable()
+  {
+    instance = null;
+  }
+
   void Awake()
   {
     if (instance != this && instance != null)
@@ -48,11 +55,36 @@ public class UIManager : MonoBehaviour
       healthText.text = GameManager.Instance.currentPlayerHealth.ToString();
       currencyText.text = GameManager.Instance.currentPlayerCurrency.ToString();
     }
-  }
-
-  void OnDisable()
-  {
-    instance = null;
+    //  If left mouse button was clicked do the following
+    if (Input.GetMouseButtonDown(0))
+    {
+      //  Ray traces from screen to mouse position on click
+      Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+      // Return hit if any object was hit by the ray trace
+      RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
+      //  If the hit exists, set the selected object as the hit collider
+      if (hit.collider != null)
+      {
+        if (hit.collider.gameObject.tag == "Tower")
+        {
+          if (selectedObject != null)
+          {
+            selectedObject.GetComponentInChildren<BuildingController>().HideUI();
+          }
+          selectedObject = hit.collider.gameObject;
+          selectedObject.GetComponentInChildren<BuildingController>().ShowUI();
+        }
+      }
+      //  Set selected to null if no object is hit
+      else
+      {
+        if (selectedObject != null)
+        {
+          selectedObject.GetComponentInChildren<BuildingController>().HideUI();
+        }
+        selectedObject = null;
+      }
+    }
   }
 
   public void Resume()

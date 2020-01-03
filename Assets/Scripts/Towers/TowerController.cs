@@ -5,6 +5,9 @@ using UnityEngine;
 public class TowerController : MonoBehaviour
 {
 
+  [SerializeField]
+  Transform rangeSprite;
+
   public Tower towerInfo = null;
 
   Animator _animator = null;
@@ -50,11 +53,31 @@ public class TowerController : MonoBehaviour
     }
   }
 
+  public void TowerSelected()
+  {
+
+  }
+
   void Start()
   {
     LoadTowerInfo();
+    SetRangeSprite();
     InvokeRepeating("FindAndUpdateTarget", 0.5f, 0.1f);
     InvokeRepeating("DoDamage", 0f, _fireRate);
+  }
+
+  void SetRangeSprite()
+  {
+    var scale = rangeSprite.localScale;
+    scale.x = _range * 4f;
+    scale.y = _range * 4f;
+    rangeSprite.localScale = scale;
+    rangeSprite.GetComponent<SpriteRenderer>().enabled = false;
+  }
+
+  public void SetRangeVisibility(bool state)
+  {
+    rangeSprite.GetComponent<SpriteRenderer>().enabled = state;
   }
 
   public void EnemyDied(GameObject enemy)
@@ -95,6 +118,11 @@ public class TowerController : MonoBehaviour
     transform.parent.GetComponentInChildren<SpriteRenderer>().sprite = towerInfo.towerSprite;
     _animator = transform.parent.GetComponentInChildren<Animator>();
     _animator.runtimeAnimatorController = towerInfo.animator;
+  }
+
+  void OnDrawGizmos()
+  {
+    Gizmos.DrawWireSphere(transform.position, _range);
   }
 
 }

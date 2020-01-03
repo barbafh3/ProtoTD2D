@@ -77,7 +77,6 @@ public class SpawnManager : MonoBehaviour
     if (b.Length != 0)
     {
       int random = Random.Range(0, 2);
-      Debug.Log(random);
       switch (random)
       {
         case 0:

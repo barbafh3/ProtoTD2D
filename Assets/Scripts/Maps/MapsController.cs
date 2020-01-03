@@ -7,10 +7,11 @@ public class MapsController : MonoBehaviour
 {
 
   [SerializeField]
-  Transform[] routeA = null;
+  Transform[] routeA = new Transform[0];
+
 
   [SerializeField]
-  Transform[] routeB = null;
+  Transform[] routeB = new Transform[0];
 
   [SerializeField]
   List<Wave> enemyWaves = null;
@@ -45,9 +46,7 @@ public class MapsController : MonoBehaviour
 
   void Start()
   {
-    //  Enables mouse cursor.
     Cursor.visible = true;
-    //  Starts the map runtime.
     TowerManager.LoadTowerManager();
     HideWaypoints(routeA);
     HideWaypoints(routeB);

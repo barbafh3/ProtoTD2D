@@ -43,6 +43,35 @@ public class BuildingController : MonoBehaviour
   void Update()
   {
     CheckTowerPrice();
+    if (UIManager.Instance.selectedObject == gameObject)
+    {
+    }
+    else
+    {
+    }
+  }
+
+  public void HideUI()
+  {
+    if (_currentTower != null)
+    {
+      _currentTower.GetComponentInChildren<TowerController>().SetRangeVisibility(false);
+    }
+    upgradeContent.SetActive(false);
+    towerContent.SetActive(false);
+  }
+
+  public void ShowUI()
+  {
+    if (isAvailable)
+    {
+      towerContent.SetActive(true);
+    }
+    else
+    {
+      upgradeContent.SetActive(true);
+      _currentTower.GetComponentInChildren<TowerController>().SetRangeVisibility(true);
+    }
   }
 
   void SetAllButtons()
@@ -64,10 +93,6 @@ public class BuildingController : MonoBehaviour
 
   private void OnMouseDown()
   {
-    if (isAvailable)
-      towerContent.SetActive(!towerContent.activeSelf);
-    else
-      upgradeContent.SetActive(!upgradeContent.activeSelf);
   }
 
   public void BuyTower(Tower tower)
