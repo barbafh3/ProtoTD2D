@@ -5,12 +5,11 @@ using UnityEngine;
 public class TowerController : MonoBehaviour
 {
 
-  [SerializeField]
-  Tower towerInfo;
+  public Tower towerInfo;
+
+  Animator animator;
 
   float range;
-
-  float baseDamage;
 
   float fireRate;
 
@@ -51,6 +50,13 @@ public class TowerController : MonoBehaviour
     }
   }
 
+  void Start()
+  {
+    LoadTowerInfo();
+    InvokeRepeating("FindAndUpdateTarget", 0.5f, 0.1f);
+    InvokeRepeating("DoDamage", 0f, fireRate);
+  }
+
   public void EnemyDied(GameObject enemy)
   {
     currentTarget = null;
@@ -68,6 +74,10 @@ public class TowerController : MonoBehaviour
     {
       var enemyController = currentTarget.GetComponent<EnemyController>();
       SpawnProjectile();
+      // if (towerInfo.name == TowerList.CannonTower.ToString())
+      // {
+      animator.Play("Fire");
+      // }
       if (enemyController.currentHealth <= 0)
       {
         currentTarget = null;
@@ -82,13 +92,9 @@ public class TowerController : MonoBehaviour
     upgradeList = towerInfo.upgradeList;
     projectileSprite = towerInfo.projectileSprite;
     refundValue = towerInfo.refundValue;
-  }
-
-  void Start()
-  {
-    LoadTowerInfo();
-    InvokeRepeating("FindAndUpdateTarget", 0.5f, 0.1f);
-    InvokeRepeating("DoDamage", 0f, fireRate);
+    transform.parent.GetComponentInChildren<SpriteRenderer>().sprite = towerInfo.towerSprite;
+    animator = transform.parent.GetComponentInChildren<Animator>();
+    animator.runtimeAnimatorController = towerInfo.animator;
   }
 
 }

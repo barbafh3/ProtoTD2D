@@ -1,13 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class UIManager : MonoBehaviour
 {
 
-  GameObject pauseMenuCanvas;
+  Transform pauseMenuCanvas;
 
   public GameObject selectedObject { get; set; }
+
+  [SerializeField]
+  TextMeshProUGUI healthText;
+
+  [SerializeField]
+  TextMeshProUGUI currencyText;
 
   private static UIManager instance;
 
@@ -36,7 +43,15 @@ public class UIManager : MonoBehaviour
       Destroy(gameObject);
     }
     instance = this;
-    SetPauseCanvas();
+  }
+
+  void Update()
+  {
+    if (healthText != null && currencyText != null)
+    {
+      healthText.text = GameManager.Instance.currentPlayerHealth.ToString();
+      currencyText.text = GameManager.Instance.currentPlayerCurrency.ToString();
+    }
   }
 
   void OnDisable()
@@ -44,48 +59,45 @@ public class UIManager : MonoBehaviour
     instance = null;
   }
 
-  void Update()
-  {
-    //  If left mouse button was clicked do the following
-    if (Input.GetMouseButtonDown(0))
-    {
-      //  Ray traces from screen to mouse position on click
-      Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-      // Return hit if any object was hit by the ray trace
-      RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
-      //  If the hit exists, set the selected object as the hit collider
-      if (hit.collider != null)
-      {
-        if (hit.collider.gameObject.tag == "Tower")
-        {
-          selectedObject = hit.collider.gameObject;
-        }
-      }
-      //  Set selected to null if no object is hit
-      else
-      {
-        selectedObject = null;
-      }
-    }
-  }
-
-  public void SetPauseCanvas()
-  {
-    pauseMenuCanvas = GameObject.Find("PauseUI");
-    pauseMenuCanvas.SetActive(false);
-  }
-
   public void Resume()
   {
     Time.timeScale = 1f;
-    pauseMenuCanvas.SetActive(false);
+    transform.GetChild(0).gameObject.SetActive(false);
     GameManager.Instance.isGamePaused = false;
   }
 
   public void Pause()
   {
     Time.timeScale = 0f;
-    pauseMenuCanvas.SetActive(true);
+    transform.GetChild(0).gameObject.SetActive(true);
     GameManager.Instance.isGamePaused = true;
+  }
+
+  public void GoToMap1()
+  {
+    if (GameManager.Instance.isGamePaused)
+    {
+      UIManager.Instance.Resume();
+    }
+    SceneLoader.LoadScene(GameScenes.Map1);
+  }
+
+  public void ReplayMap1()
+  {
+    SceneLoader.LoadScene(GameScenes.Map1);
+  }
+
+  public void GoToMainMenu()
+  {
+    if (GameManager.Instance.isGamePaused)
+    {
+      UIManager.Instance.Resume();
+    }
+    SceneLoader.LoadScene(GameScenes.MainMenu);
+  }
+
+  public void QuitGame()
+  {
+    Application.Quit();
   }
 }

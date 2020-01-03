@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bb1660fef7464c998496cf522549f4d, type: 3}
+  m_Name: CannonTower
+  m_EditorClassIdentifier: 
+  towerSprite: {fileID: 21300000, guid: 0d67d40cfe58d315b954e20d5eba3d8d, type: 3}
+  buttonBaseSprite: {fileID: 21300000, guid: 787289ba264f2d5fbb31b98fff520cfc, type: 3}
+  buttonHighlightSprite: {fileID: 21300000, guid: d67bbf8fc064cf7d197676efcf21c601,
+    type: 3}
+  buttonPressedSprite: {fileID: 21300000, guid: 34f890538c360f008a3da65cb82c1e5b,
+    type: 3}
+  buttonDisabledSprite: {fileID: 21300000, guid: f978e05a8b60d17cba1d937eeaff8192,
+    type: 3}
+  price: 100
+  fireRate: 1.5
+  range: 2.2
+  upgradeList: []
+  refundValue: 25
+  projectileSprite: {fileID: 5328127320655577106, guid: f0e7611f436b1cf48baa39c38efd6656,
+    type: 3}
+  animator: {fileID: 22100000, guid: f2c00372b183b2e9cbf11e0e033e111a, type: 2}

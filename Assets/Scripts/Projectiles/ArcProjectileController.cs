@@ -130,7 +130,6 @@ public class ArcProjectileController : AProjectile
   void FixedUpdate()
   {
     var distance = Vector2.Distance(transform.localPosition, targetPosition);
-    Debug.Log(distance);
     if (distance < radius)
     {
       OnTargetReached();
