@@ -72,30 +72,37 @@ public class SpawnManager : MonoBehaviour
     }
   }
 
-  Transform[] PickRoute(Transform[] a, Transform[] b)
-  {
-    if (b.Length != 0)
-    {
-      int random = Random.Range(0, 2);
-      Debug.Log(random);
-      switch (random)
-      {
-        case 0:
-          return a;
-        case 1:
-          return b;
-        default:
-          return a;
-      }
-    }
-    else
-    {
-      return a;
-    }
+  // Transform[] PickRoute(Transform[] route)
+  // {
+  //   if (b.Length != 0)
+  //   {
+  //     int random = Random.Range(0, 2);
+  //     Debug.Log(random);
+  //     switch (random)
+  //     {
+  //       case 0:
+  //         return a;
+  //       case 1:
+  //         return b;
+  //       default:
+  //         return a;
+  //     }
+  //   }
+  //   else
+  //   {
+  //     return a;
+  //   }
+  // }
+
+  public Transform[] GetCurrentWaypoints(Waypoints[] waypoints) {
+    var index = Random.Range(0, waypoints.Length);
+
+    return waypoints[index].target;
   }
+
+
   public IEnumerator SpawnRuntime(List<Wave> enemyWaves,
-                                  Transform[] route1,
-                                  Transform[] route2,
+                                  Waypoints[] route,                                  
                                   float startupDelay,
                                   float waveDelay,
                                   float spawnDelay)
@@ -119,7 +126,7 @@ public class SpawnManager : MonoBehaviour
         spawnedEnemies.AddRange(wave.monsterPrefabList);
         foreach (GameObject monster in wave.monsterPrefabList)
         {
-          mapNodes = PickRoute(route1, route2);
+          mapNodes = GetCurrentWaypoints(route);
           var startPosition = mapNodes[0];
           //  Spawns monsters from the wave and sets
           //  the local method OnMonsterDeath as listener

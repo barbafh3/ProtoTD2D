@@ -1,16 +1,24 @@
-using System;
+//using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class Waypoints {
+  public string waypoint;
+  public Transform[] target;
+}
+
 public class MapsController : MonoBehaviour
 {
 
-  [SerializeField]
-  Transform[] routeA;
+  // [SerializeField]
+  // Transform[] routeA;
 
-  [SerializeField]
-  Transform[] routeB;
+  // [SerializeField]
+  // Transform[] routeB;
+
+  public Waypoints[] waypoitns;
 
   [SerializeField]
   List<Wave> enemyWaves;
@@ -37,11 +45,17 @@ public class MapsController : MonoBehaviour
 
   void HideWaypoints(Transform[] list)
   {
-    foreach (Transform waypoint in list)
-    {
-      waypoint.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+    for(int i = 0; i < waypoitns.Length; i++) {
+      for(int j = 0; j < waypoitns[i].target.Length; j++) {
+        waypoitns[i].target[j].GetComponent<SpriteRenderer>().enabled = false;
+      }
     }
+    // foreach (Transform waypoint in list)
+    // {
+    //   waypoint.gameObject.GetComponent<SpriteRenderer>().enabled = false;
+    // }
   }
+
 
   void Start()
   {
@@ -49,9 +63,9 @@ public class MapsController : MonoBehaviour
     Cursor.visible = true;
     //  Starts the map runtime.
     TowerManager.LoadTowerManager();
-    HideWaypoints(routeA);
-    HideWaypoints(routeB);
-    StartCoroutine(SpawnManager.Instance.SpawnRuntime(enemyWaves, routeA, routeB, startupDelay, waveDelay, spawnDelay));
+    // HideWaypoints(routeA);
+    // HideWaypoints(routeB);
+    StartCoroutine(SpawnManager.Instance.SpawnRuntime(enemyWaves, waypoitns, startupDelay, waveDelay, spawnDelay));
     StartCoroutine(CheckForDefeatContidions());
   }
 
@@ -70,9 +84,9 @@ public class MapsController : MonoBehaviour
     }
   }
 
-  public Transform[] GetMapNodes()
-  {
-    return routeA;
-  }
+  // public Transform[] GetMapNodes()
+  // {
+  //   return routeA;
+  // }
 
 }

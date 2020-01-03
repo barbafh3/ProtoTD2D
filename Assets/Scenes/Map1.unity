@@ -26732,15 +26732,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc41079c6bf77c15cb360763f2767d0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  routeA:
-  - {fileID: 401770084}
-  - {fileID: 418748187}
-  - {fileID: 1764313898}
-  - {fileID: 591009992}
-  - {fileID: 741714892}
-  - {fileID: 1549833129}
-  - {fileID: 377460081}
-  routeB: []
+  waypoins:
+  - waypoint: Wayponts
+    target:
+    - {fileID: 401770084}
+    - {fileID: 418748187}
+    - {fileID: 1764313898}
+    - {fileID: 591009992}
+    - {fileID: 741714892}
+    - {fileID: 1549833129}
+    - {fileID: 377460081}
   enemyWaves:
   - {fileID: 11400000, guid: 13dfc560b69865574ab5df7fb488c7ba, type: 2}
   startupDelay: 2

@@ -326,26 +326,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc41079c6bf77c15cb360763f2767d0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  routeA:
-  - {fileID: 810196760}
-  - {fileID: 87448313}
-  - {fileID: 689170570}
-  - {fileID: 152222408}
-  - {fileID: 689455773}
-  - {fileID: 1022328252}
-  - {fileID: 290491474}
-  - {fileID: 1061244039}
-  routeB:
-  - {fileID: 810196760}
-  - {fileID: 87448313}
-  - {fileID: 1308150466}
-  - {fileID: 361663480}
-  - {fileID: 1124869297}
-  - {fileID: 692204745}
-  - {fileID: 506887844}
-  - {fileID: 1872940626}
-  - {fileID: 290491474}
-  - {fileID: 1061244039}
+  routeA: []
+  routeB: []
+  waypoins:
+  - waypoint: Waypont 1
+    target:
+    - {fileID: 810196760}
+    - {fileID: 87448313}
+    - {fileID: 689170570}
+    - {fileID: 152222408}
+    - {fileID: 689455773}
+    - {fileID: 1022328252}
+    - {fileID: 1061244039}
+  - waypoint: Waypont 2
+    target:
+    - {fileID: 810196760}
+    - {fileID: 87448313}
+    - {fileID: 1308150466}
+    - {fileID: 361663480}
+    - {fileID: 1124869297}
+    - {fileID: 692204745}
+    - {fileID: 506887844}
+    - {fileID: 1872940626}
+    - {fileID: 290491474}
+    - {fileID: 1061244039}
   enemyWaves:
   - {fileID: 11400000, guid: 13dfc560b69865574ab5df7fb488c7ba, type: 2}
   startupDelay: 0
