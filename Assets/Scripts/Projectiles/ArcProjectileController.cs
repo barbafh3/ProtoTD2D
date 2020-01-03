@@ -5,21 +5,20 @@ using UnityEngine;
 public class ArcProjectileController : AProjectile
 {
 
-  [SerializeField]
-  float timer;
+  float _timer = 5f;
 
   [SerializeField]
-  float areaOfEffect;
+  float areaOfEffect = 0f;
 
   [SerializeField]
   [Range(0f, 2f)]
-  float radius;
+  float radius = 0f;
 
-  Vector3 targetPosition;
+  Vector3 _targetPosition;
 
-  private Rigidbody2D projectileBody;
+  Rigidbody2D _projectileBody = null;
 
-  List<GameObject> blastTargets;
+  List<GameObject> _blastTargets = null;
 
   public delegate void OnHitEventHandler(float damage);
   public event OnHitEventHandler OnHit;
@@ -53,7 +52,7 @@ public class ArcProjectileController : AProjectile
         var enemyController = col.gameObject.GetComponentInChildren<EnemyController>();
         if (enemyController.currentHealth > 0)
         {
-          blastTargets.Add(col.gameObject);
+          _blastTargets.Add(col.gameObject);
         }
       }
     }
@@ -61,7 +60,7 @@ public class ArcProjectileController : AProjectile
 
   void RegisterTargetListeners()
   {
-    foreach (GameObject obj in blastTargets)
+    foreach (GameObject obj in _blastTargets)
     {
       if (obj != null && obj.tag == "Enemy")
       {
@@ -72,7 +71,7 @@ public class ArcProjectileController : AProjectile
 
   void ClearListeners()
   {
-    foreach (GameObject obj in blastTargets)
+    foreach (GameObject obj in _blastTargets)
     {
       if (obj != null && obj.tag == "Enemy")
       {
@@ -103,7 +102,7 @@ public class ArcProjectileController : AProjectile
 
     float projectileAngle;
 
-    projectileAngle = Mathf.Atan((yDistance + 5f) / xDistance);
+    projectileAngle = Mathf.Atan((yDistance + _timer) / xDistance);
 
     float totalVelocity = xDistance / Mathf.Cos(projectileAngle);
 
@@ -112,7 +111,7 @@ public class ArcProjectileController : AProjectile
     xVel = totalVelocity * Mathf.Cos(projectileAngle);
     yVel = totalVelocity * Mathf.Sin(projectileAngle);
 
-    projectileBody.velocity = new Vector2(xVel, yVel);
+    _projectileBody.velocity = new Vector2(xVel, yVel);
 
   }
 
@@ -121,15 +120,15 @@ public class ArcProjectileController : AProjectile
   void Start()
   {
     LoadProjectileInfo();
-    targetPosition = target.transform.localPosition;
-    blastTargets = new List<GameObject>();
-    projectileBody = GetComponent<Rigidbody2D>();
+    _targetPosition = target.transform.localPosition;
+    _blastTargets = new List<GameObject>();
+    _projectileBody = GetComponent<Rigidbody2D>();
     MoveProjectile();
   }
 
   void FixedUpdate()
   {
-    var distance = Vector2.Distance(transform.localPosition, targetPosition);
+    var distance = Vector2.Distance(transform.localPosition, _targetPosition);
     if (distance < radius)
     {
       OnTargetReached();

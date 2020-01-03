@@ -6,7 +6,7 @@ public class CameraDrag : MonoBehaviour
 {
 
   public float dragSpeed = 0.1f;
-  private Vector3 _dragOrigin;
+  Vector3 _dragOrigin;
 
 
   void LateUpdate()

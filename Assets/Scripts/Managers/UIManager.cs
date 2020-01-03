@@ -6,15 +6,11 @@ using TMPro;
 public class UIManager : MonoBehaviour
 {
 
-  Transform pauseMenuCanvas;
-
-  public GameObject selectedObject { get; set; }
+  [SerializeField]
+  TextMeshProUGUI healthText = null;
 
   [SerializeField]
-  TextMeshProUGUI healthText;
-
-  [SerializeField]
-  TextMeshProUGUI currencyText;
+  TextMeshProUGUI currencyText = null;
 
   private static UIManager instance;
 

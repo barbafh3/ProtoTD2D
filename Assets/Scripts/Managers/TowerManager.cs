@@ -10,9 +10,9 @@ public class TowerManager : MonoBehaviour
   public class TowerListDict : SerializableDictionaryBase<string, Tower> { }
 
   [SerializeField]
-  public static TowerListDict towerList;
+  public static TowerListDict towerList = null;
 
-  List<GameObject> deployedTowers;
+  List<GameObject> _deployedTowers;
 
   public delegate void OnEnemyDeathEventHandler(GameObject obj);
   public event OnEnemyDeathEventHandler OnEnemyDeath;
@@ -49,7 +49,7 @@ public class TowerManager : MonoBehaviour
       Destroy(gameObject);
     }
     instance = this;
-    deployedTowers = new List<GameObject>();
+    _deployedTowers = new List<GameObject>();
     towerList = new TowerListDict();
     FillTowerListDict();
   }
@@ -88,7 +88,7 @@ public class TowerManager : MonoBehaviour
   {
     var towerScript = tower.GetComponentInChildren<TowerController>();
     OnEnemyDeath += new OnEnemyDeathEventHandler(towerScript.EnemyDied);
-    deployedTowers.Add(tower);
+    _deployedTowers.Add(tower);
   }
 
   public void UnregisterTower(GameObject tower)
@@ -97,6 +97,6 @@ public class TowerManager : MonoBehaviour
     var towerScript = tower.GetComponentInChildren<TowerController>();
     Debug.Log(towerScript);
     OnEnemyDeath -= new OnEnemyDeathEventHandler(towerScript.EnemyDied);
-    deployedTowers.Remove(tower);
+    _deployedTowers.Remove(tower);
   }
 }

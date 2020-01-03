@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 public class HideColliderMap : MonoBehaviour
 {
 
-  TilemapRenderer _tilemapRenderer;
+  TilemapRenderer _tilemapRenderer = null;
 
   void Awake()
   {

@@ -4,19 +4,19 @@ using UnityEngine;
 
 public class HealthBar : MonoBehaviour
 {
-  Vector2 localScale;
-  EnemyController parentEnemy;
+  Vector2 _localScale;
+  EnemyController _parentEnemy = null;
 
   void Start()
   {
-    localScale = transform.localScale;
-    parentEnemy = GetComponentInParent<EnemyController>();
+    _localScale = transform.localScale;
+    _parentEnemy = GetComponentInParent<EnemyController>();
   }
 
   void Update()
   {
     //  Normalizes the health to %, giving min, max and current health to Mathf.InveseLerp
-    localScale.x = Mathf.InverseLerp(0f, parentEnemy.GetMaxHealth(), parentEnemy.currentHealth);
-    transform.localScale = localScale;
+    _localScale.x = Mathf.InverseLerp(0f, _parentEnemy.GetMaxHealth(), _parentEnemy.currentHealth);
+    transform.localScale = _localScale;
   }
 }

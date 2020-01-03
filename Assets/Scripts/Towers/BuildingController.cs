@@ -11,27 +11,27 @@ public class BuildingController : MonoBehaviour
 
 
   [SerializeField]
-  GameObject towerContent;
+  GameObject towerContent = null;
 
   [SerializeField]
-  GameObject upgradeContent;
+  GameObject upgradeContent = null;
 
   [SerializeField]
-  GameObject arrowTowerButton;
+  GameObject arrowTowerButton = null;
 
   [SerializeField]
-  TextMeshProUGUI arrowTowerCost;
+  TextMeshProUGUI arrowTowerCost = null;
 
   [SerializeField]
-  GameObject cannonTowerButton;
+  GameObject cannonTowerButton = null;
 
   [SerializeField]
-  TextMeshProUGUI cannonTowerCost;
+  TextMeshProUGUI cannonTowerCost = null;
 
   [SerializeField]
-  GameObject prefab;
+  GameObject prefab = null;
 
-  GameObject currentTower;
+  GameObject _currentTower = null;
 
   public bool isAvailable = true;
 
@@ -74,10 +74,10 @@ public class BuildingController : MonoBehaviour
   {
     if (GameManager.Instance.currentPlayerCurrency >= TowerManager.towerList[tower.name].price)
     {
-      currentTower = Instantiate(prefab, transform.position, Quaternion.identity);
-      currentTower.transform.parent = transform;
-      TowerManager.Instance.RegisterTower(currentTower);
-      currentTower.GetComponentInChildren<TowerController>().towerInfo = TowerManager.towerList[tower.name];
+      _currentTower = Instantiate(prefab, transform.position, Quaternion.identity);
+      _currentTower.transform.parent = transform;
+      TowerManager.Instance.RegisterTower(_currentTower);
+      _currentTower.GetComponentInChildren<TowerController>().towerInfo = TowerManager.towerList[tower.name];
       GameManager.Instance.SpendCurrency(TowerManager.towerList[tower.name].price);
       towerContent.SetActive(false);
       isAvailable = false;
@@ -87,15 +87,15 @@ public class BuildingController : MonoBehaviour
   public void SellTower()
   {
     upgradeContent.SetActive(false);
-    GameManager.Instance.ReceiveCurrency(null, currentTower.GetComponentInChildren<TowerController>().refundValue);
-    TowerManager.Instance.UnregisterTower(currentTower);
+    GameManager.Instance.ReceiveCurrency(null, _currentTower.GetComponentInChildren<TowerController>().refundValue);
+    TowerManager.Instance.UnregisterTower(_currentTower);
     var sellAnimation = transform.GetChild(1).Find("SellAnimation");
     var animator = sellAnimation.GetComponent<Animator>();
     var text = sellAnimation.gameObject.GetComponentInChildren<TextMeshProUGUI>();
-    text.text = "+" + currentTower.GetComponentInChildren<TowerController>().towerInfo.refundValue.ToString();
+    text.text = "+" + _currentTower.GetComponentInChildren<TowerController>().towerInfo.refundValue.ToString();
     sellAnimation.GetChild(0).gameObject.SetActive(true);
     animator.Play("SellTower");
-    Destroy(currentTower);
+    Destroy(_currentTower);
     isAvailable = true;
   }
 

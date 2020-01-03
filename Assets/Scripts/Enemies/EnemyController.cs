@@ -4,36 +4,35 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
 
-  GameObject mapController;
+  GameObject mapController = null;
 
-  float maxHealth;
+  float _maxHealth = 0;
 
-  int returnedCurrency = 25;
+  int _returnedCurrency = 25;
 
-  Animator animator;
+  float _moveSpeed = 0f;
 
-  float moveSpeed;
+  int _waypointIndex = 0;
 
-  int waypointIndex = 0;
+  bool _targetReached = false;
 
-  bool targetReached = false;
+  SpriteRenderer _bodyRenderer = null;
 
-  SpriteRenderer bodyRenderer;
-  SpriteRenderer healthBarRenderer;
+  SpriteRenderer _healthBarRenderer = null;
 
-  [SerializeField]
-  float fadeOutTime;
-
-  public Transform[] waypoints;
-
-  public float currentHealth;
+  Vector2 _direction;
 
   [SerializeField]
-  Enemy enemyInfo;
+  float fadeOutTime = 0f;
+
+  public Transform[] waypoints = null;
+
+  public float currentHealth = 0;
+
+  [SerializeField]
+  Enemy enemyInfo = null;
 
   public bool isDead = false;
-
-  Vector2 direction;
 
   public delegate void OnDeathEventHandler(GameObject obj, int? value);
   public event OnDeathEventHandler OnDeath;
@@ -45,8 +44,8 @@ public class EnemyController : MonoBehaviour
   void Awake()
   {
     OnDeath += new OnDeathEventHandler(TowerManager.Instance.EnemyDied);
-    bodyRenderer = transform.Find("Body").GetComponent<SpriteRenderer>();
-    healthBarRenderer = transform.Find("HealthBG").GetComponent<SpriteRenderer>();
+    _bodyRenderer = transform.Find("Body").GetComponent<SpriteRenderer>();
+    _healthBarRenderer = transform.Find("HealthBG").GetComponent<SpriteRenderer>();
   }
 
   // Start is called before the first frame update
@@ -59,7 +58,7 @@ public class EnemyController : MonoBehaviour
   // Update is called once per frame
   void Update()
   {
-    if (targetReached == false && currentHealth > 0)
+    if (_targetReached == false && currentHealth > 0)
     {
       MoveToWaypoints();
     }
@@ -68,7 +67,7 @@ public class EnemyController : MonoBehaviour
       if (isDead == false)
       {
         isDead = true;
-        OnDeath(gameObject, returnedCurrency);
+        OnDeath(gameObject, _returnedCurrency);
         StartCoroutine(FadeOutAndDie());
       }
     }
@@ -76,7 +75,7 @@ public class EnemyController : MonoBehaviour
 
   public float GetMaxHealth()
   {
-    return this.maxHealth;
+    return this._maxHealth;
   }
   public void TakeDamage(float damage)
   {
@@ -94,24 +93,24 @@ public class EnemyController : MonoBehaviour
   void MoveToWaypoints()
   {
     transform.position = Vector2.MoveTowards(transform.position,
-                                             waypoints[waypointIndex].transform.position,
-                                             moveSpeed * Time.deltaTime);
-    direction = GetDirectionValue(waypoints[waypointIndex].transform, transform);
-    if (direction.x > 0)
+                                             waypoints[_waypointIndex].transform.position,
+                                             _moveSpeed * Time.deltaTime);
+    _direction = GetDirectionValue(waypoints[_waypointIndex].transform, transform);
+    if (_direction.x > 0)
     {
       GetComponent<Animator>().Play("MoveRight");
     }
-    if (direction.x <= 0)
+    if (_direction.x <= 0)
     {
       GetComponent<Animator>().Play("MoveLeft");
     }
-    if (transform.position == waypoints[waypointIndex].transform.position)
+    if (transform.position == waypoints[_waypointIndex].transform.position)
     {
-      waypointIndex += 1;
+      _waypointIndex += 1;
     }
-    if (waypointIndex == waypoints.Length)
+    if (_waypointIndex == waypoints.Length)
     {
-      targetReached = true;
+      _targetReached = true;
       OnTargetReached();
       OnDeath(gameObject, null);
       StartCoroutine(FadeOutAndDie());
@@ -126,10 +125,10 @@ public class EnemyController : MonoBehaviour
 
   void LoadEnemyInfo()
   {
-    maxHealth = enemyInfo.maxHealth;
-    returnedCurrency = enemyInfo.returnedCurrency;
-    moveSpeed = enemyInfo.moveSpeed;
-    currentHealth = maxHealth;
+    _maxHealth = enemyInfo.maxHealth;
+    _returnedCurrency = enemyInfo.returnedCurrency;
+    _moveSpeed = enemyInfo.moveSpeed;
+    currentHealth = _maxHealth;
     mapController = GameObject.Find("MapController");
     // waypoints = mapController.GetComponent<MapsController>().GetMapNodes();
   }
@@ -141,10 +140,10 @@ public class EnemyController : MonoBehaviour
   }
   IEnumerator FadeOutAndDie()
   {
-    StartCoroutine(FadeOut(healthBarRenderer));
+    StartCoroutine(FadeOut(_healthBarRenderer));
     yield return StartCoroutine(PlayAnimation());
     yield return new WaitForSeconds(0.5f);
-    yield return StartCoroutine(FadeOut(bodyRenderer));
+    yield return StartCoroutine(FadeOut(_bodyRenderer));
     Destroy(gameObject);
   }
 

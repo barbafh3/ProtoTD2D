@@ -10,10 +10,10 @@ public class GameManager : MonoBehaviour
   public bool isGamePaused = false;
 
   public int currentPlayerHealth { get; set; }
-  private int maxPlayerHealth = 100;
+  int _maxPlayerHealth = 100;
 
   public int currentPlayerCurrency { get; set; }
-  private int startingPlayerCurrency = 200;
+  int _startingPlayerCurrency = 200;
 
   private static GameManager instance;
 
@@ -48,14 +48,14 @@ public class GameManager : MonoBehaviour
     }
     instance = this;
     DontDestroyOnLoad(gameObject);
-    currentPlayerHealth = maxPlayerHealth;
-    currentPlayerCurrency = startingPlayerCurrency;
+    currentPlayerHealth = _maxPlayerHealth;
+    currentPlayerCurrency = _startingPlayerCurrency;
   }
 
   public void RestartResources()
   {
-    currentPlayerHealth = maxPlayerHealth;
-    currentPlayerCurrency = startingPlayerCurrency;
+    currentPlayerHealth = _maxPlayerHealth;
+    currentPlayerCurrency = _startingPlayerCurrency;
   }
 
   public void PlayerTakeDamage()

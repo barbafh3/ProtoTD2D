@@ -7,22 +7,22 @@ public class MapsController : MonoBehaviour
 {
 
   [SerializeField]
-  Transform[] routeA;
+  Transform[] routeA = null;
 
   [SerializeField]
-  Transform[] routeB;
+  Transform[] routeB = null;
 
   [SerializeField]
-  List<Wave> enemyWaves;
+  List<Wave> enemyWaves = null;
 
   [SerializeField]
-  float startupDelay;
+  float startupDelay = 0f;
 
   [SerializeField]
-  float spawnDelay;
+  float spawnDelay = 0f;
 
   [SerializeField]
-  float waveDelay;
+  float waveDelay = 0f;
 
   IEnumerator CheckForDefeatContidions()
   {

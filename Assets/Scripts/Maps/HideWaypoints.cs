@@ -5,7 +5,7 @@ using UnityEngine;
 public class HideWaypoints : MonoBehaviour
 {
 
-  SpriteRenderer _spriteRenderer;
+  SpriteRenderer _spriteRenderer = null;
 
   // Start is called before the first frame update
   void Start()

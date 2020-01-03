@@ -5,12 +5,12 @@ using UnityEngine;
 public class SpawnManager : MonoBehaviour
 {
 
-  private List<GameObject> spawnedEnemies;
+  List<GameObject> _spawnedEnemies = null;
 
   [SerializeField]
-  public int? remainingWaves;
+  public int? remainingWaves = null;
 
-  public Transform[] mapNodes;
+  public Transform[] mapNodes = null;
 
   private static SpawnManager instance;
 
@@ -44,12 +44,12 @@ public class SpawnManager : MonoBehaviour
       Destroy(gameObject);
     }
     instance = this;
-    spawnedEnemies = new List<GameObject>();
+    _spawnedEnemies = new List<GameObject>();
   }
 
   public void ResetVariables()
   {
-    spawnedEnemies = null;
+    _spawnedEnemies = null;
     remainingWaves = null;
     mapNodes = null;
   }
@@ -58,10 +58,10 @@ public class SpawnManager : MonoBehaviour
   {
     //  Checks if there are any enemies on spawned list.
     //  If true, removes it from the list.
-    if (spawnedEnemies.Count >= 1)
+    if (_spawnedEnemies.Count >= 1)
     {
-      spawnedEnemies.RemoveAt(spawnedEnemies.Count - 1);
-      if (spawnedEnemies.Count <= 0)
+      _spawnedEnemies.RemoveAt(_spawnedEnemies.Count - 1);
+      if (_spawnedEnemies.Count <= 0)
       {
         remainingWaves--;
       }
@@ -116,7 +116,7 @@ public class SpawnManager : MonoBehaviour
         WaitForSeconds waitSpawn = new WaitForSeconds(spawnDelay);
         //  Adds the wave to a control list used to
         //  check if the wave is fully killed.
-        spawnedEnemies.AddRange(wave.monsterPrefabList);
+        _spawnedEnemies.AddRange(wave.monsterPrefabList);
         foreach (GameObject monster in wave.monsterPrefabList)
         {
           mapNodes = PickRoute(route1, route2);

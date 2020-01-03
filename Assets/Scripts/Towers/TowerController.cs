@@ -5,21 +5,21 @@ using UnityEngine;
 public class TowerController : MonoBehaviour
 {
 
-  public Tower towerInfo;
+  public Tower towerInfo = null;
 
-  Animator animator;
+  Animator _animator = null;
 
-  float range;
+  float _range = 0f;
 
-  float fireRate;
+  float _fireRate = 0f;
 
   public int refundValue { get; private set; }
 
-  Tower[] upgradeList;
+  Tower[] _upgradeList = null;
 
-  GameObject projectileSprite;
+  GameObject _projectileSprite = null;
 
-  private GameObject currentTarget = null;
+  GameObject _currentTarget = null;
 
   void FindAndUpdateTarget()
   {
@@ -40,13 +40,13 @@ public class TowerController : MonoBehaviour
       }
     }
 
-    if (nearestEnemy != null && shortestDistance <= range)
+    if (nearestEnemy != null && shortestDistance <= _range)
     {
-      currentTarget = nearestEnemy;
+      _currentTarget = nearestEnemy;
     }
     else
     {
-      currentTarget = null;
+      _currentTarget = null;
     }
   }
 
@@ -54,47 +54,47 @@ public class TowerController : MonoBehaviour
   {
     LoadTowerInfo();
     InvokeRepeating("FindAndUpdateTarget", 0.5f, 0.1f);
-    InvokeRepeating("DoDamage", 0f, fireRate);
+    InvokeRepeating("DoDamage", 0f, _fireRate);
   }
 
   public void EnemyDied(GameObject enemy)
   {
-    currentTarget = null;
+    _currentTarget = null;
   }
 
   void SpawnProjectile()
   {
-    var projectileObject = Instantiate<GameObject>(projectileSprite, transform.position, Quaternion.identity);
-    projectileObject.GetComponent<AProjectile>().target = currentTarget;
+    var projectileObject = Instantiate<GameObject>(_projectileSprite, transform.position, Quaternion.identity);
+    projectileObject.GetComponent<AProjectile>().target = _currentTarget;
   }
 
   void DoDamage()
   {
-    if (currentTarget)
+    if (_currentTarget)
     {
-      var enemyController = currentTarget.GetComponent<EnemyController>();
+      var enemyController = _currentTarget.GetComponent<EnemyController>();
       SpawnProjectile();
       // if (towerInfo.name == TowerList.CannonTower.ToString())
       // {
-      animator.Play("Fire");
+      _animator.Play("Fire");
       // }
       if (enemyController.currentHealth <= 0)
       {
-        currentTarget = null;
+        _currentTarget = null;
       }
     }
   }
 
   void LoadTowerInfo()
   {
-    fireRate = towerInfo.fireRate;
-    range = towerInfo.range;
-    upgradeList = towerInfo.upgradeList;
-    projectileSprite = towerInfo.projectileSprite;
+    _fireRate = towerInfo.fireRate;
+    _range = towerInfo.range;
+    _upgradeList = towerInfo.upgradeList;
+    _projectileSprite = towerInfo.projectileSprite;
     refundValue = towerInfo.refundValue;
     transform.parent.GetComponentInChildren<SpriteRenderer>().sprite = towerInfo.towerSprite;
-    animator = transform.parent.GetComponentInChildren<Animator>();
-    animator.runtimeAnimatorController = towerInfo.animator;
+    _animator = transform.parent.GetComponentInChildren<Animator>();
+    _animator.runtimeAnimatorController = towerInfo.animator;
   }
 
 }
