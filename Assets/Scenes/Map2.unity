@@ -326,10 +326,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc41079c6bf77c15cb360763f2767d0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  routeA: []
-  routeB: []
-  waypoins:
-  - waypoint: Waypont 1
+  waypoitns:
+  - waypoint: Waypoints 1
     target:
     - {fileID: 810196760}
     - {fileID: 87448313}
@@ -337,8 +335,9 @@ MonoBehaviour:
     - {fileID: 152222408}
     - {fileID: 689455773}
     - {fileID: 1022328252}
+    - {fileID: 290491474}
     - {fileID: 1061244039}
-  - waypoint: Waypont 2
+  - waypoint: Waypoints 2
     target:
     - {fileID: 810196760}
     - {fileID: 87448313}

@@ -5,15 +5,15 @@ using UnityEngine;
 public class ArcProjectileController : AProjectile
 {
 
-  [SerializeField]
-  float timer;
+  // [SerializeField]
+  // float timer = 0;
 
   [SerializeField]
-  float areaOfEffect;
+  float areaOfEffect = 0;
 
   [SerializeField]
   [Range(0f, 2f)]
-  float radius;
+  float radius = 0;
 
   Vector3 targetPosition;
 

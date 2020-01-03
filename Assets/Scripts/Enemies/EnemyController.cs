@@ -6,13 +6,13 @@ public class EnemyController : MonoBehaviour
 
   GameObject mapController;
 
-  float maxHealth;
+  float maxHealth = 0;
 
   int returnedCurrency = 25;
 
   Animator animator;
 
-  float moveSpeed;
+  float moveSpeed = 0;
 
   int waypointIndex = 0;
 
@@ -22,14 +22,14 @@ public class EnemyController : MonoBehaviour
   SpriteRenderer healthBarRenderer;
 
   [SerializeField]
-  float fadeOutTime;
+  float fadeOutTime = 0;
 
   public Transform[] waypoints;
 
-  public float currentHealth;
+  public float currentHealth = 0;
 
   [SerializeField]
-  Enemy enemyInfo;
+  Enemy enemyInfo = null;
 
   public bool isDead = false;
 

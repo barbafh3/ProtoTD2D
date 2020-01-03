@@ -11,10 +11,10 @@ public class UIManager : MonoBehaviour
   public GameObject selectedObject { get; set; }
 
   [SerializeField]
-  TextMeshProUGUI healthText;
+  TextMeshProUGUI healthText = null;
 
   [SerializeField]
-  TextMeshProUGUI currencyText;
+  TextMeshProUGUI currencyText = null;
 
   private static UIManager instance;
 

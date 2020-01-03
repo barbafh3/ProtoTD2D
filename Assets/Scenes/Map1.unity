@@ -26732,8 +26732,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc41079c6bf77c15cb360763f2767d0c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waypoins:
-  - waypoint: Wayponts
+  waypoitns:
+  - waypoint: Waypoints
     target:
     - {fileID: 401770084}
     - {fileID: 418748187}

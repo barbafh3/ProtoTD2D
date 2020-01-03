@@ -11,27 +11,27 @@ public class BuildingController : MonoBehaviour
 
 
   [SerializeField]
-  GameObject towerContent;
+  GameObject towerContent = null;
 
   [SerializeField]
-  GameObject upgradeContent;
+  GameObject upgradeContent = null;
 
   [SerializeField]
-  GameObject arrowTowerButton;
+  GameObject arrowTowerButton = null;
 
   [SerializeField]
-  TextMeshProUGUI arrowTowerCost;
+  TextMeshProUGUI arrowTowerCost = null;
 
   [SerializeField]
-  GameObject cannonTowerButton;
+  GameObject cannonTowerButton = null;
 
   [SerializeField]
-  TextMeshProUGUI cannonTowerCost;
+  TextMeshProUGUI cannonTowerCost = null;
 
   [SerializeField]
-  GameObject prefab;
+  GameObject prefab = null;
 
-  GameObject currentTower;
+  GameObject currentTower = null;
 
   public bool isAvailable = true;
 

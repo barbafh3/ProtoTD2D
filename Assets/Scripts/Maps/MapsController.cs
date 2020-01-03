@@ -21,16 +21,16 @@ public class MapsController : MonoBehaviour
   public Waypoints[] waypoitns;
 
   [SerializeField]
-  List<Wave> enemyWaves;
+  List<Wave> enemyWaves = new List<Wave>();
 
   [SerializeField]
-  float startupDelay;
+  float startupDelay = 0;
 
   [SerializeField]
-  float spawnDelay;
+  float spawnDelay = 0;
 
   [SerializeField]
-  float waveDelay;
+  float waveDelay = 0;
 
   IEnumerator CheckForDefeatContidions()
   {
