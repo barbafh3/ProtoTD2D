@@ -6,7 +6,7 @@ public class TowerController : MonoBehaviour
 {
 
   [SerializeField]
-  Transform rangeSprite;
+  Transform rangeSprite = null;
 
   public Tower towerInfo = null;
 

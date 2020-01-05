@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using RotaryHeart.Lib.SerializableDictionary;
 
 public class UIManager : MonoBehaviour
 {
@@ -12,7 +13,31 @@ public class UIManager : MonoBehaviour
   [SerializeField]
   TextMeshProUGUI currencyText = null;
 
+  [SerializeField]
+  TextMeshProUGUI towerNameText = null;
+
+  [SerializeField]
+  TextMeshProUGUI towerRangeText = null;
+
+  [SerializeField]
+  TextMeshProUGUI towerCostText = null;
+
+  [SerializeField]
+  TextMeshProUGUI towerRefundText = null;
+
   public GameObject selectedObject = null;
+
+  [SerializeField]
+  Transform infoPanel = null;
+
+  [SerializeField]
+  Transform pausePanel = null;
+
+  [System.Serializable]
+  public class TowerListDict : SerializableDictionaryBase<string, Tower> { }
+
+  [SerializeField]
+  public TowerListDict towerInfoList = null;
 
   private static UIManager instance;
 
@@ -48,56 +73,121 @@ public class UIManager : MonoBehaviour
     instance = this;
   }
 
+  GameObject GetObjectWithRaycast()
+  {
+    Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
+
+    if (hit.collider != null)
+    {
+      return hit.collider.gameObject;
+    }
+    else
+    {
+      return null;
+    }
+  }
+
+  void GetObjectOnClick()
+  {
+    var newHit = GetObjectWithRaycast();
+
+    if (newHit != null)
+    {
+      if (newHit.gameObject.tag == "Tower")
+      {
+        if (selectedObject != null)
+        {
+          selectedObject.GetComponentInChildren<BuildingController>().HideUI();
+        }
+        selectedObject = newHit.gameObject;
+        selectedObject.GetComponentInChildren<BuildingController>().ShowUI();
+      }
+    }
+    else
+    {
+      if (selectedObject != null)
+      {
+        selectedObject.GetComponentInChildren<BuildingController>().HideUI();
+      }
+      selectedObject = newHit;
+    }
+  }
+
   void Update()
+  {
+    LoadPlayerInfo();
+
+    if (Input.GetMouseButtonDown(0))
+    {
+      GetObjectOnClick();
+    }
+
+    var hoverHit = GetObjectWithRaycast();
+    if (hoverHit != null)
+    {
+      if (hoverHit.tag == "Tower Button")
+      {
+        LoadPanelInfo(towerInfoList[hoverHit.name]);
+        ShowInfoPanel();
+      }
+    }
+    else
+    {
+      HideInfoPanel();
+    }
+  }
+
+  void LoadPlayerInfo()
   {
     if (healthText != null && currencyText != null)
     {
       healthText.text = GameManager.Instance.currentPlayerHealth.ToString();
       currencyText.text = GameManager.Instance.currentPlayerCurrency.ToString();
     }
-    //  If left mouse button was clicked do the following
-    if (Input.GetMouseButtonDown(0))
+  }
+
+  void LoadPanelInfo(Tower tower)
+  {
+    towerNameText.text = tower.name;
+    towerRangeText.text = tower.range.ToString();
+    towerCostText.text = tower.price.ToString();
+    towerRefundText.text = tower.refundValue.ToString();
+  }
+
+  public void ShowInfoPanel()
+  {
+    if (infoPanel != null)
     {
-      //  Ray traces from screen to mouse position on click
-      Vector2 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-      // Return hit if any object was hit by the ray trace
-      RaycastHit2D hit = Physics2D.Raycast(worldPoint, Vector2.zero);
-      //  If the hit exists, set the selected object as the hit collider
-      if (hit.collider != null)
-      {
-        if (hit.collider.gameObject.tag == "Tower")
-        {
-          if (selectedObject != null)
-          {
-            selectedObject.GetComponentInChildren<BuildingController>().HideUI();
-          }
-          selectedObject = hit.collider.gameObject;
-          selectedObject.GetComponentInChildren<BuildingController>().ShowUI();
-        }
-      }
-      //  Set selected to null if no object is hit
-      else
-      {
-        if (selectedObject != null)
-        {
-          selectedObject.GetComponentInChildren<BuildingController>().HideUI();
-        }
-        selectedObject = null;
-      }
+      infoPanel.gameObject.SetActive(true);
+    }
+  }
+
+  public void HideInfoPanel()
+  {
+    if (infoPanel != null)
+    {
+      infoPanel.gameObject.SetActive(false);
     }
   }
 
   public void Resume()
   {
     Time.timeScale = 1f;
-    transform.GetChild(0).gameObject.SetActive(false);
+    if (pausePanel != null)
+    {
+      pausePanel.gameObject.SetActive(false);
+    }
     GameManager.Instance.isGamePaused = false;
   }
 
   public void Pause()
   {
     Time.timeScale = 0f;
-    transform.GetChild(0).gameObject.SetActive(true);
+    if (pausePanel != null)
+    {
+      pausePanel.gameObject.SetActive(true);
+    }
     GameManager.Instance.isGamePaused = true;
   }
 

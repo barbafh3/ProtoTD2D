@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MapsController : MonoBehaviour
 {
@@ -25,23 +26,12 @@ public class MapsController : MonoBehaviour
   [SerializeField]
   float waveDelay = 0f;
 
-  IEnumerator CheckForDefeatContidions()
-  {
-    //  If there are no remaining waves,
-    //  load next map.
-    if (SpawnManager.Instance.remainingWaves == 0)
-    {
-      SceneLoader.LoadScene(GameScenes.GameOver);
-    }
-    yield return new WaitForSeconds(1);
-  }
+  Map _mapInfo = null;
 
-  void HideWaypoints(Transform[] list)
+  void Awake()
   {
-    foreach (Transform waypoint in list)
-    {
-      waypoint.gameObject.GetComponent<SpriteRenderer>().enabled = false;
-    }
+    _mapInfo = GameManager.Instance.GetMapInfo(SceneManager.GetActiveScene().name);
+    SetBuildingSlotsSprite();
   }
 
   void Start()
@@ -66,6 +56,35 @@ public class MapsController : MonoBehaviour
       {
         UIManager.Instance.Pause();
       }
+    }
+  }
+
+  void SetBuildingSlotsSprite()
+  {
+    var slotList = GameObject.FindGameObjectsWithTag("Tower");
+    foreach (GameObject slot in slotList)
+    {
+      var spriteRenderer = slot.transform.Find("TerrainSprite").GetComponent<SpriteRenderer>();
+      spriteRenderer.sprite = _mapInfo.buildingSlot;
+    }
+  }
+
+  IEnumerator CheckForDefeatContidions()
+  {
+    //  If there are no remaining waves,
+    //  load next map.
+    if (SpawnManager.Instance.remainingWaves == 0)
+    {
+      SceneLoader.LoadScene(GameScenes.GameOver);
+    }
+    yield return new WaitForSeconds(1);
+  }
+
+  void HideWaypoints(Transform[] list)
+  {
+    foreach (Transform waypoint in list)
+    {
+      waypoint.gameObject.GetComponent<SpriteRenderer>().enabled = false;
     }
   }
 

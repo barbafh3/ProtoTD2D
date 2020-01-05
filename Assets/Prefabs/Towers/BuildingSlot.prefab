@@ -424,7 +424,7 @@ GameObject:
   - component: {fileID: 6637537867815386248}
   m_Layer: 5
   m_Name: ArrowTowerButton
-  m_TagString: Untagged
+  m_TagString: Tower Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -552,7 +552,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.08886528, y: 0.00012779236}
+  m_Offset: {x: 0.12696457, y: 0.0001296997}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -563,7 +563,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 45.61832, y: 45.79735}
+  m_Size: {x: 48.639984, y: 48.67511}
   m_EdgeRadius: 0
 --- !u!1 &6637537867874738930
 GameObject:
@@ -765,7 +765,7 @@ GameObject:
   - component: {fileID: 6637537868112403209}
   m_Layer: 5
   m_Name: CannonTowerButton
-  m_TagString: Untagged
+  m_TagString: Tower Button
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -893,7 +893,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0000009536743, y: -0.00001335144}
+  m_Offset: {x: 0.07193375, y: -0.07195854}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -904,7 +904,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 46.15159, y: 45.79759}
+  m_Size: {x: 48.885452, y: 49.10703}
   m_EdgeRadius: 0
 --- !u!1 &6637537868909007677
 GameObject:
@@ -1049,7 +1049,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.00024579465, y: 0.00047889352}
+  m_Offset: {x: 0.0012169331, y: 0.0004788041}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -1060,7 +1060,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.9605907, y: 0.29343194}
+  m_Size: {x: 0.46530226, y: 0.46823967}
   m_EdgeRadius: 0
 --- !u!1 &6637537869304474289
 GameObject:
@@ -1621,7 +1621,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 6989cabd12879a0dcaadae0443add3de, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1629,6 +1629,6 @@ SpriteRenderer:
   m_Size: {x: 0.64, y: 0.33}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1

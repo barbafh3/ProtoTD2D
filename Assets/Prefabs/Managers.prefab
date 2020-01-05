@@ -83,4 +83,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38e225eb3c073a932b72a1810e3a1f57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mapsList:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 0
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 0
+    _keyValues:
+    - Map1
+    - Map2
+    _keys:
+    - Map1
+    - Map2
+    _values:
+    - {fileID: 11400000, guid: 93cb5af42b2f186b8ad82b4c7875b71c, type: 2}
+    - {fileID: 11400000, guid: 679d21c2108480999abcc1dfbe18df47, type: 2}
   isGamePaused: 0

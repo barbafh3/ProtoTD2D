@@ -1,43 +1,40 @@
 fileFormatVersion: 2
-guid: 8f6c6cb67bc45bcd792e6dbea22e36e5
+guid: d67fddd027af6691eadb6105200b5fec
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4519870503484916905
-    second: Desert_TileSet_32x64-Sheet_0
+      213: -5610456265182136426
+    second: Desert_TileSet_Sheet_32x64_0
   - first:
-      213: 2647739786566908953
-    second: Desert_TileSet_32x64-Sheet_1
+      213: -4098703526086750965
+    second: Desert_TileSet_Sheet_32x64_1
   - first:
-      213: 8129111774659011970
-    second: Desert_TileSet_32x64-Sheet_2
+      213: 7923871230449241713
+    second: Desert_TileSet_Sheet_32x64_2
   - first:
-      213: -3159883014975711483
-    second: Desert_TileSet_32x64-Sheet_3
+      213: 2761220902319248530
+    second: Desert_TileSet_Sheet_32x64_3
   - first:
-      213: 3212997223277337087
-    second: Desert_TileSet_32x64-Sheet_4
+      213: 8407993470181748303
+    second: Desert_TileSet_Sheet_32x64_4
   - first:
-      213: -8622775075257268221
-    second: Desert_TileSet_32x64-Sheet_5
+      213: 535127355243289716
+    second: Desert_TileSet_Sheet_32x64_5
   - first:
-      213: -8861343311279211045
-    second: Desert_TileSet_32x64-Sheet_6
+      213: -472514809368617973
+    second: Desert_TileSet_Sheet_32x64_6
   - first:
-      213: -2176591863407351128
-    second: Desert_TileSet_32x64-Sheet_7
+      213: 7995044967906139099
+    second: Desert_TileSet_Sheet_32x64_7
   - first:
-      213: -6598350966390707013
-    second: Desert_TileSet_32x64-Sheet_8
+      213: -8213821922882788596
+    second: Desert_TileSet_Sheet_32x64_8
   - first:
-      213: 4509352405552611323
-    second: Desert_TileSet_32x64-Sheet_9
+      213: -2601770673185706313
+    second: Desert_TileSet_Sheet_32x64_9
   - first:
-      213: -5237541847757008413
-    second: Desert_TileSet_32x64-Sheet_10
-  - first:
-      213: -5922033700513907011
-    second: Desert_TileSet_32x64-Sheet_11
+      213: -935843832748092842
+    second: Desert_TileSet_Sheet_32x64_10
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -134,7 +131,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Desert_TileSet_32x64-Sheet_0
+      name: Desert_TileSet_Sheet_32x64_0
       rect:
         serializedVersion: 2
         x: 0
@@ -148,14 +145,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f69c4d09f0e655fab9d100a6f715f689
-      internalID: -4519870503484916905
+      spriteID: ff7d62eb3d9bc0a25842faa4c971bfb3
+      internalID: -5610456265182136426
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Desert_TileSet_32x64-Sheet_1
+      name: Desert_TileSet_Sheet_32x64_1
       rect:
         serializedVersion: 2
         x: 64
@@ -169,14 +166,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cac66cead6a47eaafa07760c57521622
-      internalID: 2647739786566908953
+      spriteID: 336aae3bcb3576cf9bfcbdfc9a66f7c2
+      internalID: -4098703526086750965
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Desert_TileSet_32x64-Sheet_2
+      name: Desert_TileSet_Sheet_32x64_2
       rect:
         serializedVersion: 2
         x: 128
@@ -190,14 +187,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 99e8f5fbd3f0b7f25b0e264d10d330ff
-      internalID: 8129111774659011970
+      spriteID: b26824acc66de7c0d927dcd13e5105ac
+      internalID: 7923871230449241713
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Desert_TileSet_32x64-Sheet_3
+      name: Desert_TileSet_Sheet_32x64_3
       rect:
         serializedVersion: 2
         x: 192
@@ -211,14 +208,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e3f4b6cb96dbe9b47ad9c388412513e6
-      internalID: -3159883014975711483
+      spriteID: c51adf41918dacee78407e89575e252d
+      internalID: 2761220902319248530
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Desert_TileSet_32x64-Sheet_4
+      name: Desert_TileSet_Sheet_32x64_4
       rect:
         serializedVersion: 2
         x: 256
@@ -232,14 +229,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 352f5c887d36e06349517ba542d42feb
-      internalID: 3212997223277337087
+      spriteID: 2294c5b20465ee3968bbd833fc981b67
+      internalID: 8407993470181748303
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Desert_TileSet_32x64-Sheet_5
+      name: Desert_TileSet_Sheet_32x64_5
       rect:
         serializedVersion: 2
         x: 320
@@ -253,14 +250,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3c762091fefa75c548a0eaeb8dbe9129
-      internalID: -8622775075257268221
+      spriteID: 26bcd6fb996d0de5e870fd00b690adaf
+      internalID: 535127355243289716
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Desert_TileSet_32x64-Sheet_6
+      name: Desert_TileSet_Sheet_32x64_6
       rect:
         serializedVersion: 2
         x: 384
@@ -274,14 +271,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 72abf289a1656e9788f84d7b145fecae
-      internalID: -8861343311279211045
+      spriteID: 98bfd3b29648183f0a80c9b0969c7212
+      internalID: -472514809368617973
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Desert_TileSet_32x64-Sheet_7
+      name: Desert_TileSet_Sheet_32x64_7
       rect:
         serializedVersion: 2
         x: 448
@@ -295,14 +292,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db495df0bd548c4458c2577579fbc8ac
-      internalID: -2176591863407351128
+      spriteID: 77f9205e27def5a119b3961f4d8ca1ee
+      internalID: 7995044967906139099
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Desert_TileSet_32x64-Sheet_8
+      name: Desert_TileSet_Sheet_32x64_8
       rect:
         serializedVersion: 2
         x: 512
@@ -316,14 +313,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 70aaf596a6cdfbf6c96c25196e3ad8e3
-      internalID: -6598350966390707013
+      spriteID: 74b021f1aa143caf09c5ac245b06eaa7
+      internalID: -8213821922882788596
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Desert_TileSet_32x64-Sheet_9
+      name: Desert_TileSet_Sheet_32x64_9
       rect:
         serializedVersion: 2
         x: 576
@@ -337,14 +334,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2a9361aa60cfbdb378dbcbc35ebbd7f6
-      internalID: 4509352405552611323
+      spriteID: 4941965f285d74516a32f7504704ddc0
+      internalID: -2601770673185706313
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Desert_TileSet_32x64-Sheet_10
+      name: Desert_TileSet_Sheet_32x64_10
       rect:
         serializedVersion: 2
         x: 640
@@ -358,29 +355,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1844db47cddb260929e7fe949164fcbc
-      internalID: -5237541847757008413
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Desert_TileSet_32x64-Sheet_11
-      rect:
-        serializedVersion: 2
-        x: 704
-        y: 1
-        width: 64
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: daa88c5559151c0d1b8bee2ebf5d0a35
-      internalID: -5922033700513907011
+      spriteID: fc83da1bdb00d6a958263f66f005bc08
+      internalID: -935843832748092842
       vertices: []
       indices: 
       edges: []

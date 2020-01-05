@@ -6,6 +6,7 @@ using UnityEngine;
 public class Map : ScriptableObject
 {
 
+  public Sprite buildingSlot;
   public Transform[] mapNodes;
   public List<Wave> mapWaves;
 

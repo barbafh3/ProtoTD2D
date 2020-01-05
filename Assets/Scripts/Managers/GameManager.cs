@@ -2,10 +2,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using RotaryHeart.Lib.SerializableDictionary;
 
 public class GameManager : MonoBehaviour
 {
+
+  [System.Serializable]
+  public class MapsDict : SerializableDictionaryBase<string, Map> { }
+
+  [SerializeField]
+  public MapsDict mapsList = null;
 
   public bool isGamePaused = false;
 
@@ -52,6 +58,11 @@ public class GameManager : MonoBehaviour
     currentPlayerCurrency = _startingPlayerCurrency;
   }
 
+  public Map GetMapInfo(string mapName)
+  {
+    return mapsList[mapName];
+  }
+
   public void RestartResources()
   {
     currentPlayerHealth = _maxPlayerHealth;
@@ -75,6 +86,4 @@ public class GameManager : MonoBehaviour
       currentPlayerCurrency += (int)value;
     }
   }
-
-
 }

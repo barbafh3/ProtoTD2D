@@ -97,6 +97,7 @@ public class BuildingController : MonoBehaviour
 
   public void BuyTower(Tower tower)
   {
+    Debug.Log("Buy tower " + tower);
     if (GameManager.Instance.currentPlayerCurrency >= TowerManager.towerList[tower.name].price)
     {
       _currentTower = Instantiate(prefab, transform.position, Quaternion.identity);
