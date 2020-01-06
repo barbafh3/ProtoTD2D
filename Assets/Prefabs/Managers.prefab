@@ -59,6 +59,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3343a20516d1e9298ab4d61e748a9cf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  towerList:
+    reorderableList:
+      canAdd: 1
+      canRemove: 1
+      draggable: 1
+      expandable: 1
+      multipleSelection: 1
+      isExpanded: 1
+      label:
+        m_Text: Keys
+        m_Image: {fileID: 0}
+        m_Tooltip: 
+      headerHeight: 18
+      footerHeight: 13
+      slideEasing: 0.15
+      verticalSpacing: 2
+      showDefaultBackground: 1
+      elementDisplayType: 0
+      elementNameProperty: 
+      elementNameOverride: 
+      elementIcon: {fileID: 0}
+    reqReferences: {fileID: 0}
+    isExpanded: 1
+    _keyValues:
+    - ArrowTower
+    - CannonTower
+    - SlowTower
+    _keys:
+    - ArrowTower
+    - CannonTower
+    - SlowTower
+    _values:
+    - {fileID: 11400000, guid: 7c8dc464fafa55a0fa0a54d415fc064a, type: 2}
+    - {fileID: 11400000, guid: 76148de9b6bf510608fff667bc361ff9, type: 2}
+    - {fileID: 11400000, guid: bd1709426394f3c29bf76a6728debddd, type: 2}
 --- !u!114 &9180082156316658432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,7 +125,7 @@ MonoBehaviour:
       draggable: 1
       expandable: 1
       multipleSelection: 1
-      isExpanded: 0
+      isExpanded: 1
       label:
         m_Text: Keys
         m_Image: {fileID: 0}
@@ -105,7 +140,7 @@ MonoBehaviour:
       elementNameOverride: 
       elementIcon: {fileID: 0}
     reqReferences: {fileID: 0}
-    isExpanded: 0
+    isExpanded: 1
     _keyValues:
     - Map1
     - Map2

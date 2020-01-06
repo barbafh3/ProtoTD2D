@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6bb1660fef7464c998496cf522549f4d, type: 3}
-  m_Name: ArrowTower
+  m_Name: SlowTower
   m_EditorClassIdentifier: 
-  towerSprite: {fileID: 21300000, guid: cacdbe6b4e051cab6a4857de4aa96470, type: 3}
+  towerSprite: {fileID: 21300000, guid: aa8396bbb783e2b5e86c59b64cf31db2, type: 3}
   buttonBaseSprite: {fileID: 21300000, guid: 9108615946a1f97fd9ca2fb56c44c395, type: 3}
   buttonHighlightSprite: {fileID: 21300000, guid: 0b11b087fe868477f92b619bf8bc7b20,
     type: 3}
@@ -20,11 +20,11 @@ MonoBehaviour:
     type: 3}
   buttonDisabledSprite: {fileID: 21300000, guid: 492bd5f0f2f6eed63b821675ae259d90,
     type: 3}
-  price: 75
-  fireRate: 1.5
+  price: 125
+  fireRate: 1
   range: 2.2
   upgradeList: []
-  refundValue: 20
-  projectileSprite: {fileID: 5284901980819178094, guid: 091a5f144ab05187688e6c4dc9f9376b,
+  refundValue: 30
+  projectileSprite: {fileID: 4047755673283658678, guid: ce209cdffd93b1278bce9575a498926f,
     type: 3}
-  animator: {fileID: 22100000, guid: ced64ee5dc1049ff396433c838eb53ab, type: 2}
+  animator: {fileID: 22100000, guid: b4617a5d9125cd414b38087c993a6f0a, type: 2}

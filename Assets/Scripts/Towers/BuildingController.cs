@@ -29,6 +29,12 @@ public class BuildingController : MonoBehaviour
   TextMeshProUGUI cannonTowerCost = null;
 
   [SerializeField]
+  GameObject slowTowerButton = null;
+
+  [SerializeField]
+  TextMeshProUGUI slowTowerCost = null;
+
+  [SerializeField]
   GameObject prefab = null;
 
   GameObject _currentTower = null;
@@ -78,16 +84,17 @@ public class BuildingController : MonoBehaviour
   {
     SetButtonInfo(arrowTowerCost, arrowTowerButton, TowerList.ArrowTower);
     SetButtonInfo(cannonTowerCost, cannonTowerButton, TowerList.CannonTower);
+    SetButtonInfo(slowTowerCost, slowTowerButton, TowerList.SlowTower);
   }
 
   void SetButtonInfo(TextMeshProUGUI costText, GameObject button, TowerList tower)
   {
     var newSpriteState = new SpriteState();
-    costText.text = "$" + TowerManager.GetTowerInfo(tower).price.ToString();
-    button.GetComponent<Image>().sprite = TowerManager.GetTowerInfo(tower).buttonBaseSprite;
-    newSpriteState.disabledSprite = TowerManager.GetTowerInfo(tower).buttonDisabledSprite;
-    newSpriteState.highlightedSprite = TowerManager.GetTowerInfo(tower).buttonHighlightSprite;
-    newSpriteState.pressedSprite = TowerManager.GetTowerInfo(tower).buttonPressedSprite;
+    costText.text = "$" + TowerManager.Instance.GetTowerInfo(tower).price.ToString();
+    button.GetComponent<Image>().sprite = TowerManager.Instance.GetTowerInfo(tower).buttonBaseSprite;
+    newSpriteState.disabledSprite = TowerManager.Instance.GetTowerInfo(tower).buttonDisabledSprite;
+    newSpriteState.highlightedSprite = TowerManager.Instance.GetTowerInfo(tower).buttonHighlightSprite;
+    newSpriteState.pressedSprite = TowerManager.Instance.GetTowerInfo(tower).buttonPressedSprite;
     button.GetComponent<Button>().spriteState = newSpriteState;
   }
 
@@ -98,13 +105,13 @@ public class BuildingController : MonoBehaviour
   public void BuyTower(Tower tower)
   {
     Debug.Log("Buy tower " + tower);
-    if (GameManager.Instance.currentPlayerCurrency >= TowerManager.towerList[tower.name].price)
+    if (GameManager.Instance.currentPlayerCurrency >= TowerManager.Instance.towerList[tower.name].price)
     {
       _currentTower = Instantiate(prefab, transform.position, Quaternion.identity);
       _currentTower.transform.parent = transform;
       TowerManager.Instance.RegisterTower(_currentTower);
-      _currentTower.GetComponentInChildren<TowerController>().towerInfo = TowerManager.towerList[tower.name];
-      GameManager.Instance.SpendCurrency(TowerManager.towerList[tower.name].price);
+      _currentTower.GetComponentInChildren<TowerController>().towerInfo = TowerManager.Instance.towerList[tower.name];
+      GameManager.Instance.SpendCurrency(TowerManager.Instance.towerList[tower.name].price);
       towerContent.SetActive(false);
       isAvailable = false;
     }
@@ -142,6 +149,14 @@ public class BuildingController : MonoBehaviour
     else
     {
       cannonTowerButton.GetComponent<Button>().interactable = true;
+    }
+    if (GameManager.Instance.currentPlayerCurrency < 125)
+    {
+      slowTowerButton.GetComponent<Button>().interactable = false;
+    }
+    else
+    {
+      slowTowerButton.GetComponent<Button>().interactable = true;
     }
   }
 

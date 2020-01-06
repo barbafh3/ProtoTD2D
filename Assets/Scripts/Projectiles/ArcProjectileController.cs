@@ -5,26 +5,29 @@ using UnityEngine;
 public class ArcProjectileController : AProjectile
 {
 
-  float _timer = 5f;
+  protected float _timer = 5f;
 
   [SerializeField]
-  float areaOfEffect = 0f;
+  protected float areaOfEffect = 0f;
 
   [SerializeField]
   [Range(0f, 2f)]
-  float radius = 0f;
+  protected float radius = 0f;
 
-  Vector3 _targetPosition;
+  protected Vector3 _targetPosition;
 
-  Rigidbody2D _projectileBody = null;
+  protected Rigidbody2D _projectileBody = null;
 
-  List<GameObject> _blastTargets = null;
+  protected List<GameObject> _blastTargets = null;
 
-  public delegate void OnHitEventHandler(float damage);
+  protected float _duration = 0f;
+  protected float _effectValue = 0f;
+
+  public delegate void OnHitEventHandler(EffectList? effect, EffectParams effectParams);
   public event OnHitEventHandler OnHit;
 
   // Method called on target`s death
-  void OnTargetDeath(GameObject obj, int? value)
+  protected void OnTargetDeath(GameObject obj, int? value)
   {
     if (gameObject != null)
     {
@@ -33,16 +36,18 @@ public class ArcProjectileController : AProjectile
     }
   }
 
-  void LoadProjectileInfo()
+  protected void LoadProjectileInfo()
   {
     baseDamage = projectileInfo.baseDamage;
     travelSpeed = projectileInfo.travelSpeed;
     rotateSpeed = projectileInfo.rotateSpeed;
     angle = projectileInfo.angle;
     particle = projectileInfo.particle;
+    _duration = projectileInfo.effectDuration;
+    _effectValue = projectileInfo.effectValue;
   }
 
-  void FindBlastTargets()
+  protected void FindBlastTargets()
   {
     Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, areaOfEffect);
     foreach (Collider2D col in colliders)
@@ -58,42 +63,39 @@ public class ArcProjectileController : AProjectile
     }
   }
 
-  void RegisterTargetListeners()
+  protected void RegisterTargetListeners()
   {
     foreach (GameObject obj in _blastTargets)
     {
       if (obj != null && obj.tag == "Enemy")
       {
-        OnHit += new OnHitEventHandler(obj.GetComponent<EnemyController>().TakeDamage);
+        OnHit += new OnHitEventHandler(obj.GetComponent<EnemyController>().TakeHit);
       }
     }
   }
 
-  void ClearListeners()
+  protected void ClearListeners()
   {
     foreach (GameObject obj in _blastTargets)
     {
       if (obj != null && obj.tag == "Enemy")
       {
-        OnHit -= new OnHitEventHandler(obj.GetComponent<EnemyController>().TakeDamage);
+        OnHit -= new OnHitEventHandler(obj.GetComponent<EnemyController>().TakeHit);
       }
     }
   }
 
-  void OnTargetReached()
+  protected void OnTargetReached(EffectList effect, EffectParams effectParams)
   {
     FindBlastTargets();
     RegisterTargetListeners();
-    //  Calls OnHit event with the damage value to be taken.
-    OnHit(baseDamage);
+    OnHit(effect, effectParams);
     ClearListeners();
-    //  Instantiates impact particles.
     Instantiate(particle, transform.position, Quaternion.identity);
-    //  Destroys self.
     Destroy(gameObject);
   }
 
-  void MoveProjectile()
+  protected void MoveProjectile()
   {
     float xDistance, yDistance;
 
@@ -126,18 +128,18 @@ public class ArcProjectileController : AProjectile
     MoveProjectile();
   }
 
-  void FixedUpdate()
-  {
-    var distance = Vector2.Distance(transform.localPosition, _targetPosition);
-    if (distance < radius)
-    {
-      OnTargetReached();
-    }
-  }
-
-  // void OnDrawGizmos()
+  // void FixedUpdate()
   // {
-  //   Gizmos.DrawSphere(targetPosition, radius);
+  //   var distance = Vector2.Distance(transform.localPosition, _targetPosition);
+  //   if (distance < radius)
+  //   {
+  //     OnTargetReached();
+  //   }
   // }
+
+  void OnDrawGizmos()
+  {
+    Gizmos.DrawSphere(_targetPosition, radius);
+  }
 
 }

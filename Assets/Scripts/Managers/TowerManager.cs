@@ -10,7 +10,7 @@ public class TowerManager : MonoBehaviour
   public class TowerListDict : SerializableDictionaryBase<string, Tower> { }
 
   [SerializeField]
-  public static TowerListDict towerList = null;
+  public TowerListDict towerList = null;
 
   List<GameObject> _deployedTowers;
 
@@ -50,8 +50,8 @@ public class TowerManager : MonoBehaviour
     }
     instance = this;
     _deployedTowers = new List<GameObject>();
-    towerList = new TowerListDict();
-    FillTowerListDict();
+    // towerList = new TowerListDict();
+    // FillTowerListDict();
   }
 
   public static void LoadTowerManager()
@@ -59,7 +59,7 @@ public class TowerManager : MonoBehaviour
     Debug.Log("TowerManager Loaded.");
   }
 
-  public static Tower GetTowerInfo(TowerList towerName)
+  public Tower GetTowerInfo(TowerList towerName)
   {
     return towerList[towerName.ToString()];
   }

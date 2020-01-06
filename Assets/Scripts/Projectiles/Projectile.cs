@@ -10,7 +10,8 @@ public class Projectile : ScriptableObject
   public float travelSpeed;
   public float rotateSpeed;
   public float angle;
-  public float damageOverTime;
+  public float effectValue;
+  public float effectDuration;
 
   public ParticleSystem particle;
 

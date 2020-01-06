@@ -2432,12 +2432,15 @@ MonoBehaviour:
     _keyValues:
     - ArrowTowerButton
     - CannonTowerButton
+    - SlowTowerButton
     _keys:
     - ArrowTowerButton
     - CannonTowerButton
+    - SlowTowerButton
     _values:
     - {fileID: 11400000, guid: 7c8dc464fafa55a0fa0a54d415fc064a, type: 2}
     - {fileID: 11400000, guid: 76148de9b6bf510608fff667bc361ff9, type: 2}
+    - {fileID: 11400000, guid: bd1709426394f3c29bf76a6728debddd, type: 2}
 --- !u!1 &5589448020796369138
 GameObject:
   m_ObjectHideFlags: 0

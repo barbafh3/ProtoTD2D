@@ -5,7 +5,7 @@ using UnityEngine;
 public class SeekerProjectileController : AProjectile
 {
 
-  public delegate void OnHitEventHandler(float damage);
+  public delegate void OnHitEventHandler(EffectList? effect, EffectParams effectParams);
   public event OnHitEventHandler OnHit;
 
   // Method called on target`s death
@@ -33,7 +33,7 @@ public class SeekerProjectileController : AProjectile
     //  Register local method OnTargetDeath to enemy OnDeath event handler.
     _enemyController.OnDeath += new EnemyController.OnDeathEventHandler(OnTargetDeath);
     //  Registers enemy method TakeDamage to local OnHit event handler.
-    OnHit += new OnHitEventHandler(_enemyController.TakeDamage);
+    OnHit += new OnHitEventHandler(_enemyController.TakeHit);
   }
 
   void OnTargetReached()
@@ -41,7 +41,9 @@ public class SeekerProjectileController : AProjectile
     //  Removes itself from enemy OnDeath event handler.
     _enemyController.OnDeath -= OnTargetDeath;
     //  Calls OnHit event with the damage value to be taken.
-    OnHit(baseDamage);
+    var effectParams = new EffectParams();
+    effectParams.damage = baseDamage;
+    OnHit(EffectList.Damage, effectParams);
     //  Instantiates impact particles.
     Instantiate(particle, target.transform.position, Quaternion.identity);
     //  Destroys self.

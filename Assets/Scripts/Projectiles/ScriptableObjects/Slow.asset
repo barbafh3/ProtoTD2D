@@ -9,8 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e13e59add6f717dc887a9faa5704a828, type: 3}
-  m_Name: Map1-2
+  m_Script: {fileID: 11500000, guid: 4d6b06a2240437c54930f9a8de3f8483, type: 3}
+  m_Name: Slow
   m_EditorClassIdentifier: 
-  monsterPrefabList:
-  - {fileID: 6123520968613155918, guid: 3407ec10cd5df1b36ada6561b255e1f7, type: 3}
+  baseDamage: 1
+  travelSpeed: 1
+  rotateSpeed: 1
+  angle: 30
+  effectValue: 0.3
+  effectDuration: 3
+  particle: {fileID: 3739905355581392012, guid: d0194879af12f785e9f4e10ddc6f675e,
+    type: 3}

@@ -16,6 +16,7 @@ MonoBehaviour:
   travelSpeed: 5
   rotateSpeed: 1
   angle: 30
-  damageOverTime: 0
+  effectValue: 0
+  effectDuration: 0
   particle: {fileID: 4457933933923075556, guid: 9dfc1dc49bd63d541badd089a383f118,
     type: 3}
