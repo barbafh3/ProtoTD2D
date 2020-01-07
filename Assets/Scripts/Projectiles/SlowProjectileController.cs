@@ -10,7 +10,6 @@ public class SlowProjectileController : ArcProjectileController
     var distance = Vector2.Distance(transform.localPosition, _targetPosition);
     if (distance < radius)
     {
-      Debug.Log("Projectile Reached");
       var effectParams = new EffectParams();
       effectParams.damage = baseDamage;
       effectParams.value = _effectValue;

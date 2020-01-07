@@ -118,5 +118,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileInfo: {fileID: 11400000, guid: b4d2bea8df08b8103b683322848eb5c5, type: 2}
   target: {fileID: 0}
-  areaOfEffect: 1.5
+  areaOfEffect: 1
   radius: 0.1

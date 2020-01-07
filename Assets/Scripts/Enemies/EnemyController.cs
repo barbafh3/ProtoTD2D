@@ -8,12 +8,12 @@ public class EnemyController : MonoBehaviour
 {
 
   [System.Serializable]
-  public class EffectDict : SerializableDictionaryBase<string, Action<EffectParams>> { }
+  public class EffectDict : SerializableDictionaryBase<string, Func<IEnumerator, EffectParams>> { }
 
   EffectDict _effectList = null;
 
   [SerializeField]
-  Rigidbody2D rigidBody;
+  Rigidbody2D rigidBody = null;
 
   GameObject mapController = null;
 
@@ -29,6 +29,7 @@ public class EnemyController : MonoBehaviour
 
   bool _targetReached = false;
 
+  [SerializeField]
   SpriteRenderer _bodyRenderer = null;
 
   SpriteRenderer _healthBarRenderer = null;
@@ -49,6 +50,12 @@ public class EnemyController : MonoBehaviour
 
   Transform _currentTarget = null;
 
+  float _radius = 0.1f;
+
+  float _slowTimer = 9f;
+
+  float _slowDuration = 0f;
+
   public delegate void OnDeathEventHandler(GameObject obj, int? value);
   public event OnDeathEventHandler OnDeath;
 
@@ -59,7 +66,7 @@ public class EnemyController : MonoBehaviour
   void Awake()
   {
     OnDeath += new OnDeathEventHandler(TowerManager.Instance.EnemyDied);
-    _bodyRenderer = transform.Find("Body").GetComponent<SpriteRenderer>();
+    // _bodyRenderer = transform.Find("Body").GetComponent<SpriteRenderer>();
     _healthBarRenderer = transform.Find("HealthBG").GetComponent<SpriteRenderer>();
   }
 
@@ -68,12 +75,18 @@ public class EnemyController : MonoBehaviour
   {
     LoadEnemyInfo();
     RegisterEventListeners();
-    LoadEffects();
   }
 
   // Update is called once per frame
   void Update()
   {
+    _slowTimer += Time.deltaTime;
+    if (_slowTimer >= _slowDuration)
+    {
+      _currentMoveSpeed = _defaultMoveSpeed;
+      _slowDuration = 0f;
+      _bodyRenderer.color = Color.white;
+    }
     MoveToWaypoints();
     if (this.currentHealth <= 0)
     {
@@ -86,37 +99,25 @@ public class EnemyController : MonoBehaviour
     }
   }
 
-  void LoadEffects()
+  // public IEnumerator SlowEffect(EffectParams effectParams)
+  // {
+  //   for (var i = effectParams.duration; i > 0; i++)
+  //   {
+  //     _currentMoveSpeed = _defaultMoveSpeed - (_defaultMoveSpeed * effectParams.value);
+  //     yield return new WaitForSecondsRealtime(1f);
+  //   }
+  //   _currentMoveSpeed = _defaultMoveSpeed;
+  //   _isSlowed = false;
+  //   yield return null;
+  // }
+
+  public IEnumerator OverTimeEffect(EffectParams effectParams)
   {
-    _effectList = new EffectDict();
-    _effectList.Add("Slow", (EffectParams effectParams) =>
+    for (var i = effectParams.duration; i > 0; i++)
     {
       currentHealth -= effectParams.damage;
-      for (var i = effectParams.duration; i >= 0; i--)
-      {
-        if (i == effectParams.duration)
-        {
-          _currentMoveSpeed -= _defaultMoveSpeed * effectParams.value;
-          MoveToWaypoints();
-        }
-        if (i == 0)
-        {
-          _currentMoveSpeed = _defaultMoveSpeed;
-          MoveToWaypoints();
-        }
-      }
-    });
-    _effectList.Add("Dot", (EffectParams effectParams) =>
-    {
-      for (var i = effectParams.duration; i > 0; i--)
-      {
-        currentHealth -= effectParams.damage;
-      }
-    });
-    _effectList.Add("Damage", (EffectParams effectParams) =>
-    {
-      currentHealth -= effectParams.damage;
-    });
+      yield return new WaitForSecondsRealtime(1f);
+    }
   }
 
   public float GetMaxHealth()
@@ -125,8 +126,24 @@ public class EnemyController : MonoBehaviour
   }
   public void TakeHit(EffectList? effect, EffectParams effectParams)
   {
-    Action<EffectParams> hit = _effectList[effect.ToString()];
-    hit(effectParams);
+    // Action<EffectParams> hit = _effectList[effect.ToString()];
+    // hit(effectParams);
+    if (effect == EffectList.Slow)
+    {
+      _bodyRenderer.color = Color.gray;
+      _slowDuration = effectParams.duration;
+      _slowTimer = 0f;
+      currentHealth -= effectParams.damage;
+      _currentMoveSpeed = _defaultMoveSpeed - (_defaultMoveSpeed * effectParams.value);
+    }
+    if (effect == EffectList.Damage)
+    {
+      currentHealth -= effectParams.damage;
+    }
+    if (effect == EffectList.Dot)
+    {
+      StartCoroutine(OverTimeEffect(effectParams));
+    }
   }
 
   Vector2 GetDirectionValue(Transform target, Transform location)
@@ -143,11 +160,8 @@ public class EnemyController : MonoBehaviour
     {
       _currentTarget = waypoints[_waypointIndex].transform;
       var normalized = (_currentTarget.position - transform.position).normalized;
-      // transform.position = Vector2.MoveTowards(transform.position,
-      //                                          waypoints[_waypointIndex].transform.position,
-      //                                          _currentMoveSpeed * Time.deltaTime);
-      var step = normalized * _currentMoveSpeed * Time.deltaTime;
-      transform.position += step;
+      // Debug.Log(_currentMoveSpeed);
+      rigidBody.velocity = normalized * _currentMoveSpeed;
       _direction = GetDirectionValue(_currentTarget, transform);
       if (_direction.x > 0)
       {
@@ -157,7 +171,8 @@ public class EnemyController : MonoBehaviour
       {
         GetComponent<Animator>().Play("MoveLeft");
       }
-      if (transform.position == _currentTarget.position)
+      var distance = Vector2.Distance(transform.localPosition, _currentTarget.position);
+      if (distance <= _radius)
       {
         _waypointIndex += 1;
       }
@@ -226,6 +241,10 @@ public class EnemyController : MonoBehaviour
       // Wait one frame, and repeat.
       yield return null;
     }
-
   }
+
+  // void OnDrawGizmos()
+  // {
+  //   Gizmos.DrawSphere(_currentTarget.position, _radius);
+  // }
 }

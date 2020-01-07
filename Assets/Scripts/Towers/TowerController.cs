@@ -27,7 +27,12 @@ public class TowerController : MonoBehaviour
   void FindAndUpdateTarget()
   {
     //  Retrieves a list of all objects with tag 'Enemy'.
-    GameObject[] enemyList = GameObject.FindGameObjectsWithTag("Enemy");
+    List<GameObject> enemyList = new List<GameObject>();
+    enemyList.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
+    if (towerInfo.name == TowerList.ArrowTower.ToString())
+    {
+      enemyList.AddRange(GameObject.FindGameObjectsWithTag("Air"));
+    }
     //  Sets initial shortest distance to infinity.
     float shortestDistance = Mathf.Infinity;
     GameObject nearestEnemy = null;
