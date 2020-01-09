@@ -32,6 +32,7 @@ public class MapsController : MonoBehaviour
   {
     _mapInfo = GameManager.Instance.GetMapInfo(SceneManager.GetActiveScene().name);
     SetBuildingSlotsSprite();
+    UIManager.Instance.LoadUIManager();
   }
 
   void Start()

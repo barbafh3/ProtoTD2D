@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -33,11 +33,7 @@ public class UIManager : MonoBehaviour
   [SerializeField]
   Transform pausePanel = null;
 
-  [System.Serializable]
-  public class TowerListDict : SerializableDictionaryBase<string, Tower> { }
-
-  [SerializeField]
-  public TowerListDict towerInfoList = null;
+  Dictionary<string, Tower> towerInfoList = null;
 
   private static UIManager instance;
 
@@ -71,6 +67,24 @@ public class UIManager : MonoBehaviour
       Destroy(gameObject);
     }
     instance = this;
+    towerInfoList = new Dictionary<string, Tower>();
+    LoadTowerButtonList();
+  }
+
+  public void LoadUIManager() { }
+
+  void LoadTowerButtonList()
+  {
+
+    foreach (string towerName in Enum.GetNames(typeof(TowerButtons)))
+    {
+      var scriptObj = Resources.Load<TowerButton>("ScriptableObjects/Buttons/" + towerName);
+      towerInfoList.Add(towerName, scriptObj.towerInfo);
+    }
+    foreach (KeyValuePair<string, Tower> towerButton in towerInfoList)
+    {
+      Debug.Log(towerButton);
+    }
   }
 
   GameObject GetObjectWithRaycast()
@@ -128,6 +142,7 @@ public class UIManager : MonoBehaviour
     {
       if (hoverHit.tag == "Tower Button")
       {
+        Debug.Log(hoverHit.name);
         LoadPanelInfo(towerInfoList[hoverHit.name]);
         ShowInfoPanel();
       }

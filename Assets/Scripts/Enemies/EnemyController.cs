@@ -7,10 +7,7 @@ using RotaryHeart.Lib.SerializableDictionary;
 public class EnemyController : MonoBehaviour
 {
 
-  [System.Serializable]
-  public class EffectDict : SerializableDictionaryBase<string, Action<EffectParams>> { }
-
-  EffectDict _effectList = null;
+  Dictionary<string, Action<EffectParams>> _effectList = null;
 
   [SerializeField]
   Rigidbody2D rigidBody = null;
@@ -109,7 +106,7 @@ public class EnemyController : MonoBehaviour
 
   private void LoadEffectList()
   {
-    _effectList = new EffectDict();
+    _effectList = new Dictionary<string, Action<EffectParams>>();
     _effectList.Add(Effects.Slow.ToString(), (EffectParams effectParams) =>
     {
       _bodyRenderer.color = Color.gray;

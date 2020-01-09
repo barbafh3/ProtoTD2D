@@ -1,3 +1,9 @@
+public enum Maps
+{
+  Map1,
+  Map2
+}
+
 public enum Towers
 {
   ArrowTower,
@@ -9,7 +15,7 @@ public enum TowerButtons
 {
   ArrowTowerButton,
   CannonTowerButton,
-  SlowTower
+  SlowTowerButton
 }
 
 public enum Effects

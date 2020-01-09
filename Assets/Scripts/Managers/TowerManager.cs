@@ -6,11 +6,8 @@ using RotaryHeart.Lib.SerializableDictionary;
 public class TowerManager : MonoBehaviour
 {
 
-  [System.Serializable]
-  public class TowerListDict : SerializableDictionaryBase<string, Tower> { }
-
   [SerializeField]
-  public TowerListDict towerList = null;
+  public Dictionary<string, Tower> towerList;
 
   List<GameObject> _deployedTowers;
 
@@ -50,13 +47,18 @@ public class TowerManager : MonoBehaviour
     }
     instance = this;
     _deployedTowers = new List<GameObject>();
-    // towerList = new TowerListDict();
-    // FillTowerListDict();
+    Debug.Log("TowerManager Awaken.");
+    towerList = new Dictionary<string, Tower>();
+    FillTowerListDict();
   }
 
   public void LoadTowerManager()
   {
-    Debug.Log("TowerManager Loaded.");
+  }
+
+  public Tower GetTowerInfoByName(Tower tower)
+  {
+    return towerList[tower.name];
   }
 
   public Tower GetTowerInfo(Towers towerName)
@@ -68,7 +70,7 @@ public class TowerManager : MonoBehaviour
   {
     foreach (string towerName in Enum.GetNames(typeof(Towers)))
     {
-      var scriptObj = Resources.Load<Tower>("ScriptableObjects/" + towerName);
+      var scriptObj = Resources.Load<Tower>("ScriptableObjects/Towers/" + towerName);
       towerList.Add(towerName, scriptObj);
     }
   }

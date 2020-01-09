@@ -20,6 +20,7 @@ MonoBehaviour:
     type: 3}
   buttonDisabledSprite: {fileID: 21300000, guid: f978e05a8b60d17cba1d937eeaff8192,
     type: 3}
+  buttonUnavailableSprite: {fileID: 0}
   price: 100
   fireRate: 1.5
   range: 2.2

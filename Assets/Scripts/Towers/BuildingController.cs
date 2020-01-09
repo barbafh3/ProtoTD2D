@@ -43,12 +43,12 @@ public class BuildingController : MonoBehaviour
 
   void Awake()
   {
+    TowerManager.Instance.LoadTowerManager();
     SetAllButtons();
   }
 
   void Start()
   {
-    TowerManager.Instance.LoadTowerManager();
     if (SceneManager.GetActiveScene().name == GameScenes.Map1.ToString())
     {
       var slowButton = slowTowerButton.GetComponent<Button>();
@@ -111,8 +111,9 @@ public class BuildingController : MonoBehaviour
 
   public void BuyTower(Tower tower)
   {
-    Debug.Log("Buy tower " + tower);
-    if (GameManager.Instance.currentPlayerCurrency >= TowerManager.Instance.towerList[tower.name].price)
+    Debug.Log("Buy tower " + tower.name);
+    Debug.Log(TowerManager.Instance.GetTowerInfoByName(tower));
+    if (GameManager.Instance.currentPlayerCurrency >= TowerManager.Instance.GetTowerInfoByName(tower).price)
     {
       _currentTower = Instantiate(prefab, transform.position, Quaternion.identity);
       _currentTower.transform.parent = transform;

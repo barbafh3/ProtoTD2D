@@ -26008,8 +26008,6 @@ MonoBehaviour:
   routeB: []
   enemyWaves:
   - {fileID: 11400000, guid: 13dfc560b69865574ab5df7fb488c7ba, type: 2}
-  - {fileID: 11400000, guid: a73dca3b07f9a51b3a8eaacb7ffa91d2, type: 2}
-  - {fileID: 11400000, guid: a4d4ae1fff653229e8dc95edc7346dcc, type: 2}
   startupDelay: 2
   spawnDelay: 1
   waveDelay: 60
@@ -26121,6 +26119,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1778331291 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5589448020789219075, guid: 1e90b4aa44aa5de7eb23611bd689b4cb,
+    type: 3}
+  m_PrefabInstance: {fileID: 5589448020046147320}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a02703714a40257d6aa4e45abd8adeeb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1914766812
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -26589,6 +26599,16 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5589448019628412824, guid: 1e90b4aa44aa5de7eb23611bd689b4cb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1778331291}
+    - target: {fileID: 5589448019628412824, guid: 1e90b4aa44aa5de7eb23611bd689b4cb,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: GoToMainMenu
+      objectReference: {fileID: 0}
     - target: {fileID: 5589448020789219074, guid: 1e90b4aa44aa5de7eb23611bd689b4cb,
         type: 3}
       propertyPath: m_Name
@@ -26855,6 +26875,16 @@ PrefabInstance:
       propertyPath: _startingPlayerCurrency
       value: 175
       objectReference: {fileID: 0}
+    - target: {fileID: 9180082156316658459, guid: 2358cdaa15744fb07a058422b46286cc,
+        type: 3}
+      propertyPath: mapsList.isExpanded
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180082156316658459, guid: 2358cdaa15744fb07a058422b46286cc,
+        type: 3}
+      propertyPath: mapsList.reorderableList.isExpanded
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9180082156316658460, guid: 2358cdaa15744fb07a058422b46286cc,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -26908,6 +26938,16 @@ PrefabInstance:
     - target: {fileID: 9180082156316658460, guid: 2358cdaa15744fb07a058422b46286cc,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180082156316658462, guid: 2358cdaa15744fb07a058422b46286cc,
+        type: 3}
+      propertyPath: towerList.isExpanded
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9180082156316658462, guid: 2358cdaa15744fb07a058422b46286cc,
+        type: 3}
+      propertyPath: towerList.reorderableList.isExpanded
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
