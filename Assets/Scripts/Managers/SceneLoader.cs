@@ -44,7 +44,13 @@ public class SceneLoader : MonoBehaviour
   public static void LoadScene(GameScenes scene)
   {
     Debug.Log("Load Scene");
-    GameManager.Instance.RestartResources();
     SceneManager.LoadScene(scene.ToString());
   }
+
+  public static void LoadScene(string name)
+  {
+    // GameManager.Instance.RestartResources();
+    SceneManager.LoadScene(name);
+  }
+
 }

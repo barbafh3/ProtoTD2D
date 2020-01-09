@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: FireElemental
   m_EditorClassIdentifier: 
   maxHealth: 35
-  returnedCurrency: 10
-  moveSpeed: 0.5
+  returnedCurrency: 8
+  moveSpeed: 0.8

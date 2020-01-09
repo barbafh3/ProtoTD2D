@@ -95,7 +95,6 @@ public class TowerManager : MonoBehaviour
 
   public void UnregisterTower(GameObject tower)
   {
-    Debug.Log(tower);
     var towerScript = tower.GetComponentInChildren<TowerController>();
     Debug.Log(towerScript);
     OnEnemyDeath -= new OnEnemyDeathEventHandler(towerScript.EnemyDied);

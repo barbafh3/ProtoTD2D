@@ -13,6 +13,20 @@ public class SpawnManager : MonoBehaviour
 
   public Transform[] mapNodes = null;
 
+  float _waveDelay = 0f;
+
+  float _spawnDelay = 0f;
+
+  bool _waveEnded = false;
+
+  List<Wave> _enemyWaves = null;
+
+  Transform[] _routeA = null;
+  Transform[] _routeB = null;
+
+  [SerializeField]
+  float victoryTimer = 5f;
+
   private static SpawnManager instance;
 
   public static SpawnManager Instance
@@ -48,6 +62,14 @@ public class SpawnManager : MonoBehaviour
     _spawnedEnemies = new List<GameObject>();
   }
 
+  void Update()
+  {
+    if (UIManager.Instance.timer <= 0)
+    {
+      _waveEnded = false;
+    }
+  }
+
   public void ResetVariables()
   {
     _spawnedEnemies = null;
@@ -55,28 +77,71 @@ public class SpawnManager : MonoBehaviour
     mapNodes = null;
   }
 
+  void LoadMap1()
+  {
+    SceneLoader.LoadScene(GameScenes.Map1);
+  }
+
+  void LoadMap2()
+  {
+    SceneLoader.LoadScene(GameScenes.Map2);
+  }
+
+  void ShowVictory()
+  {
+    UIManager.Instance.ToggleVictoryPanel(true);
+  }
+
+  void HideVictory()
+  {
+    UIManager.Instance.ToggleVictoryPanel(false);
+  }
+
+  void LoadGameOver()
+  {
+    SceneLoader.LoadScene(GameScenes.GameOver);
+  }
+
+  void WaveEnded()
+  {
+    _waveEnded = true;
+  }
+
   void OnMonsterDeath(GameObject obj, int? value)
   {
-    //  Checks if there are any enemies on spawned list.
-    //  If true, removes it from the list.
     if (_spawnedEnemies.Count >= 1)
     {
       _spawnedEnemies.RemoveAt(_spawnedEnemies.Count - 1);
       if (_spawnedEnemies.Count <= 0)
       {
         remainingWaves--;
+        if (_enemyWaves.Count > 0)
+        {
+          UIManager.Instance.ToggleTimer(true, _waveDelay, _enemyWaves[0]);
+        }
+        else
+        {
+          EndRound();
+        }
       }
     }
     if (remainingWaves <= 0)
     {
-      if (SceneManager.GetActiveScene().name == "Map1")
-      {
-        SceneLoader.LoadScene(GameScenes.Map2);
-      }
-      else
-      {
-        SceneLoader.LoadScene(GameScenes.GameOver);
-      }
+      EndRound();
+    }
+  }
+
+  private void EndRound()
+  {
+    ShowVictory();
+    GameManager.Instance.gameEnded = true;
+    if (SceneManager.GetActiveScene().name == "Map1")
+    {
+      Invoke("LoadMap2", victoryTimer);
+    }
+    else
+    {
+      Invoke("LoadGameOver", victoryTimer);
     }
   }
 
@@ -100,6 +165,7 @@ public class SpawnManager : MonoBehaviour
       return a;
     }
   }
+
   public IEnumerator SpawnRuntime(List<Wave> enemyWaves,
                                   Transform[] route1,
                                   Transform[] route2,
@@ -107,41 +173,73 @@ public class SpawnManager : MonoBehaviour
                                   float waveDelay,
                                   float spawnDelay)
   {
-    if (enemyWaves.Count == 0)
-    {
-      Debug.Log("No waves in wave list");
-    }
-    else
-    {
-
-      remainingWaves = enemyWaves.Count;
-      WaitForSeconds waitStart = new WaitForSeconds(startupDelay);
-      yield return waitStart;
-      WaitForSeconds waitWave = new WaitForSeconds(waveDelay);
-      foreach (Wave wave in enemyWaves)
-      {
-        WaitForSeconds waitSpawn = new WaitForSeconds(spawnDelay);
-        //  Adds the wave to a control list used to
-        //  check if the wave is fully killed.
-        _spawnedEnemies.AddRange(wave.monsterPrefabList);
-        foreach (GameObject monster in wave.monsterPrefabList)
-        {
-          mapNodes = PickRoute(route1, route2);
-          var startPosition = mapNodes[0];
-          //  Spawns monsters from the wave and sets
-          //  the local method OnMonsterDeath as listener
-          //  to the monster OnDeath event handler.
-          var monsterInstance = Instantiate(monster,
-                                            new Vector2(startPosition.position.x, startPosition.position.y),
-                                            Quaternion.identity);
-          var enemyController = monsterInstance.GetComponent<EnemyController>();
-          enemyController.OnDeath += new EnemyController.OnDeathEventHandler(OnMonsterDeath);
-          enemyController.waypoints = mapNodes;
-          yield return waitSpawn;
-        };
-        yield return waitWave;
-
-      }
-    }
+    remainingWaves = enemyWaves.Count;
+    yield return new WaitForSeconds(startupDelay);
+    _enemyWaves = enemyWaves;
+    _waveDelay = waveDelay;
+    _spawnDelay = spawnDelay;
+    _routeA = route1;
+    _routeB = route2;
+    StartCoroutine(SpawnWave(_enemyWaves[0]));
+    yield return null;
   }
+
+  public IEnumerator SpawnWave(Wave wave)
+  {
+    _spawnedEnemies.AddRange(wave.monsterPrefabList);
+    foreach (GameObject monster in wave.monsterPrefabList)
+    {
+      mapNodes = PickRoute(_routeA, _routeB);
+      var startPosition = mapNodes[0];
+      var monsterInstance = Instantiate(monster,
+                                        new Vector2(startPosition.position.x, startPosition.position.y),
+                                        Quaternion.identity);
+      var enemyController = monsterInstance.GetComponent<EnemyController>();
+      enemyController.OnDeath += new EnemyController.OnDeathEventHandler(OnMonsterDeath);
+      enemyController.waypoints = mapNodes;
+      yield return new WaitForSeconds(_spawnDelay);
+    };
+    _enemyWaves.Remove(wave);
+  }
+
+  // public IEnumerator SpawnRuntime(List<Wave> enemyWaves,
+  //                                 Transform[] route1,
+  //                                 Transform[] route2,
+  //                                 float startupDelay,
+  //                                 float waveDelay,
+  //                                 float spawnDelay)
+  // {
+  //   if (enemyWaves.Count == 0)
+  //   {
+  //     Debug.Log("No waves in wave list");
+  //   }
+  //   else
+  //   {
+  //     _waveDelay = waveDelay;
+  //     remainingWaves = enemyWaves.Count;
+  //     yield return new WaitForSeconds(startupDelay);
+  //     foreach (Wave wave in enemyWaves)
+  //     {
+  //       _waveEnded = false;
+  //       _spawnedEnemies.AddRange(wave.monsterPrefabList);
+  //       foreach (GameObject monster in wave.monsterPrefabList)
+  //       {
+  //         mapNodes = PickRoute(route1, route2);
+  //         var startPosition = mapNodes[0];
+  //         var monsterInstance = Instantiate(monster,
+  //                                           new Vector2(startPosition.position.x, startPosition.position.y),
+  //                                           Quaternion.identity);
+  //         var enemyController = monsterInstance.GetComponent<EnemyController>();
+  //         enemyController.OnDeath += new EnemyController.OnDeathEventHandler(OnMonsterDeath);
+  //         enemyController.waypoints = mapNodes;
+  //         yield return new WaitForSeconds(spawnDelay);
+  //       };
+  //       yield return new WaitUntil(() => _waveEnded);
+  //       // while (!_waveEnded)
+  //       // { }
+  //       // _waveEnded = false;
+  //     }
+  //   }
+  // }
+
 }

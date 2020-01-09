@@ -8,6 +8,9 @@ public class MapsController : MonoBehaviour
 {
 
   [SerializeField]
+  Scene nextScene;
+
+  [SerializeField]
   Transform[] routeA = new Transform[0];
 
 

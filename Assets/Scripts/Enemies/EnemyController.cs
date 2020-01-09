@@ -87,10 +87,14 @@ public class EnemyController : MonoBehaviour
     MoveToWaypoints();
     if (_waypointIndex == waypoints.Length)
     {
-      _targetReached = true;
-      OnTargetReached();
-      OnDeath(gameObject, null);
-      StartCoroutine(FadeOutAndDie());
+      if (!_targetReached)
+      {
+        _targetReached = true;
+        rigidBody.velocity = new Vector2(0f, 0f);
+        OnTargetReached();
+        OnDeath(gameObject, null);
+        StartCoroutine(FadeOutAndDie());
+      }
     }
     if (this.currentHealth <= 0)
     {

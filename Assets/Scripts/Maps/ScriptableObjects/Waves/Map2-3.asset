@@ -10,21 +10,26 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e13e59add6f717dc887a9faa5704a828, type: 3}
-  m_Name: Map2-1
+  m_Name: Map2-3
   m_EditorClassIdentifier: 
   monsterPrefabList:
   - {fileID: 6123520968613155918, guid: 3407ec10cd5df1b36ada6561b255e1f7, type: 3}
+  - {fileID: 6123520968613155918, guid: 186cc4487e7ec5357988618fdbae0e80, type: 3}
   - {fileID: 6123520968613155918, guid: 3407ec10cd5df1b36ada6561b255e1f7, type: 3}
+  - {fileID: 6123520968613155918, guid: 186cc4487e7ec5357988618fdbae0e80, type: 3}
   - {fileID: 6123520968613155918, guid: 3407ec10cd5df1b36ada6561b255e1f7, type: 3}
+  - {fileID: 6123520968613155918, guid: 186cc4487e7ec5357988618fdbae0e80, type: 3}
   - {fileID: 6123520968613155918, guid: 3407ec10cd5df1b36ada6561b255e1f7, type: 3}
+  - {fileID: 6123520968613155918, guid: 186cc4487e7ec5357988618fdbae0e80, type: 3}
   - {fileID: 6123520968613155918, guid: 3407ec10cd5df1b36ada6561b255e1f7, type: 3}
+  - {fileID: 6123520968613155918, guid: 186cc4487e7ec5357988618fdbae0e80, type: 3}
   - {fileID: 6123520968613155918, guid: 3407ec10cd5df1b36ada6561b255e1f7, type: 3}
+  - {fileID: 6123520968613155918, guid: 186cc4487e7ec5357988618fdbae0e80, type: 3}
   - {fileID: 6123520968613155918, guid: 3407ec10cd5df1b36ada6561b255e1f7, type: 3}
+  - {fileID: 6123520968613155918, guid: 186cc4487e7ec5357988618fdbae0e80, type: 3}
   - {fileID: 6123520968613155918, guid: 3407ec10cd5df1b36ada6561b255e1f7, type: 3}
+  - {fileID: 6123520968613155918, guid: 186cc4487e7ec5357988618fdbae0e80, type: 3}
   - {fileID: 6123520968613155918, guid: 3407ec10cd5df1b36ada6561b255e1f7, type: 3}
+  - {fileID: 6123520968613155918, guid: 186cc4487e7ec5357988618fdbae0e80, type: 3}
   - {fileID: 6123520968613155918, guid: 3407ec10cd5df1b36ada6561b255e1f7, type: 3}
-  - {fileID: 6123520968613155918, guid: 3407ec10cd5df1b36ada6561b255e1f7, type: 3}
-  - {fileID: 6123520968613155918, guid: 3407ec10cd5df1b36ada6561b255e1f7, type: 3}
-  - {fileID: 6123520968613155918, guid: 3407ec10cd5df1b36ada6561b255e1f7, type: 3}
-  - {fileID: 6123520968613155918, guid: 3407ec10cd5df1b36ada6561b255e1f7, type: 3}
-  - {fileID: 6123520968613155918, guid: 3407ec10cd5df1b36ada6561b255e1f7, type: 3}
+  - {fileID: 6123520968613155918, guid: 186cc4487e7ec5357988618fdbae0e80, type: 3}

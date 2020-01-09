@@ -1,8 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
-using RotaryHeart.Lib.SerializableDictionary;
 
 public class UIManager : MonoBehaviour
 {
@@ -25,7 +26,14 @@ public class UIManager : MonoBehaviour
   [SerializeField]
   TextMeshProUGUI towerRefundText = null;
 
-  public GameObject selectedObject = null;
+  [SerializeField]
+  TextMeshProUGUI timerText = null;
+
+  [SerializeField]
+  GameObject victoryPanel = null;
+
+  [SerializeField]
+  GameObject timerPanel = null;
 
   [SerializeField]
   Transform infoPanel = null;
@@ -33,7 +41,11 @@ public class UIManager : MonoBehaviour
   [SerializeField]
   Transform pausePanel = null;
 
+  public GameObject selectedObject = null;
+
   Dictionary<string, Tower> towerInfoList = null;
+
+  public float timer = 0f;
 
   private static UIManager instance;
 
@@ -71,6 +83,61 @@ public class UIManager : MonoBehaviour
     LoadTowerButtonList();
   }
 
+  // void Start()
+  // {
+  //   StartCoroutine("SetTimer");
+  // }
+
+  void Update()
+  {
+    LoadPlayerInfo();
+    if (Input.GetMouseButtonDown(0))
+    {
+      GetObjectOnClick();
+    }
+
+    var hoverHit = GetObjectWithRaycast();
+    if (hoverHit != null)
+    {
+      if (hoverHit.tag == "Tower Button")
+      {
+        LoadPanelInfo(towerInfoList[hoverHit.name]);
+        ShowInfoPanel();
+      }
+    }
+    else
+    {
+      HideInfoPanel();
+    }
+  }
+
+  IEnumerator SetTimer(Wave wave)
+  {
+    while (timer > 0f)
+    {
+      timerText.text = timer + "s";
+      timer--;
+      yield return new WaitForSeconds(1f);
+    }
+    // else if (timer == 0f)
+    // {
+    timerPanel.SetActive(false);
+    StartCoroutine(SpawnManager.Instance.SpawnWave(wave));
+    // }
+  }
+
+  public void ToggleTimer(bool state, float time, Wave wave)
+  {
+    timerPanel.SetActive(true);
+    timer = time;
+    StartCoroutine(SetTimer(wave));
+  }
+
+  public void ToggleVictoryPanel(bool state)
+  {
+    victoryPanel.SetActive(state);
+  }
+
   public void LoadUIManager() { }
 
   void LoadTowerButtonList()
@@ -80,10 +147,6 @@ public class UIManager : MonoBehaviour
     {
       var scriptObj = Resources.Load<TowerButton>("ScriptableObjects/Buttons/" + towerName);
       towerInfoList.Add(towerName, scriptObj.towerInfo);
-    }
-    foreach (KeyValuePair<string, Tower> towerButton in towerInfoList)
-    {
-      Debug.Log(towerButton);
     }
   }
 
@@ -128,30 +191,6 @@ public class UIManager : MonoBehaviour
     }
   }
 
-  void Update()
-  {
-    LoadPlayerInfo();
-
-    if (Input.GetMouseButtonDown(0))
-    {
-      GetObjectOnClick();
-    }
-
-    var hoverHit = GetObjectWithRaycast();
-    if (hoverHit != null)
-    {
-      if (hoverHit.tag == "Tower Button")
-      {
-        Debug.Log(hoverHit.name);
-        LoadPanelInfo(towerInfoList[hoverHit.name]);
-        ShowInfoPanel();
-      }
-    }
-    else
-    {
-      HideInfoPanel();
-    }
-  }
 
   void LoadPlayerInfo()
   {
@@ -215,9 +254,10 @@ public class UIManager : MonoBehaviour
     SceneLoader.LoadScene(GameScenes.Map1);
   }
 
-  public void ReplayMap1()
+  public void ReplayMap()
   {
-    SceneLoader.LoadScene(GameScenes.Map1);
+    var sceneName = SceneManager.GetActiveScene().name.ToString();
+    SceneLoader.LoadScene(sceneName);
   }
 
   public void GoToMainMenu()

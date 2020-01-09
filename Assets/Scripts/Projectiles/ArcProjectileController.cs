@@ -69,7 +69,10 @@ public class ArcProjectileController : AProjectile
     {
       if (obj != null && obj.tag == "Enemy")
       {
-        OnHit += new OnHitEventHandler(obj.GetComponent<EnemyController>().TakeHit);
+        var objController = obj.GetComponent<EnemyController>();
+        OnHit += new OnHitEventHandler(objController.TakeHit);
+        objController.OnDeath += new EnemyController.OnDeathEventHandler(TargetMissing);
+
       }
     }
   }
@@ -80,9 +83,16 @@ public class ArcProjectileController : AProjectile
     {
       if (obj != null && obj.tag == "Enemy")
       {
-        OnHit -= new OnHitEventHandler(obj.GetComponent<EnemyController>().TakeHit);
+        var objController = obj.GetComponent<EnemyController>();
+        OnHit -= new OnHitEventHandler(objController.TakeHit);
+        objController.OnDeath -= new EnemyController.OnDeathEventHandler(TargetMissing);
       }
     }
+  }
+
+  void TargetMissing(GameObject obj, int? value)
+  {
+    OnHit -= new OnHitEventHandler(obj.GetComponent<EnemyController>().TakeHit);
   }
 
   protected void OnTargetReached(Effects effect, EffectParams effectParams)

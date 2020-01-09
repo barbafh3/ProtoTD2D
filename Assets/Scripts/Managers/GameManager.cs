@@ -22,6 +22,8 @@ public class GameManager : MonoBehaviour
   [SerializeField]
   int _startingPlayerCurrency = 200;
 
+  public bool gameEnded = false;
+
   private static GameManager instance;
 
   public static GameManager Instance
@@ -53,8 +55,9 @@ public class GameManager : MonoBehaviour
     {
       Destroy(gameObject);
     }
+    Time.timeScale = 1f;
     instance = this;
-    DontDestroyOnLoad(gameObject);
+    // DontDestroyOnLoad(gameObject);
     currentPlayerHealth = _maxPlayerHealth;
     currentPlayerCurrency = _startingPlayerCurrency;
     mapsList = new Dictionary<string, Map>();

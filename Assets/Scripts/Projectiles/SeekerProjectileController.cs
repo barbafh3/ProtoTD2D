@@ -43,7 +43,10 @@ public class SeekerProjectileController : AProjectile
     //  Calls OnHit event with the damage value to be taken.
     var effectParams = new EffectParams();
     effectParams.damage = baseDamage;
-    OnHit(Effects.Damage, effectParams);
+    if (target != null)
+    {
+      OnHit(Effects.Damage, effectParams);
+    }
     //  Instantiates impact particles.
     Instantiate(particle, target.transform.position, Quaternion.identity);
     //  Destroys self.
@@ -86,6 +89,11 @@ public class SeekerProjectileController : AProjectile
     if (gameObject != null && target != null)
     {
       MoveProjectile();
+    }
+    if (GameManager.Instance.gameEnded)
+    {
+      Instantiate(particle, target.transform.position, Quaternion.identity);
+      Destroy(gameObject);
     }
   }
 }

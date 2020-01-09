@@ -5,6 +5,16 @@ using UnityEngine;
 public class SlowProjectileController : ArcProjectileController
 {
 
+  void Update()
+  {
+    if (GameManager.Instance.gameEnded)
+    {
+      ClearListeners();
+      Instantiate(particle, transform.position, Quaternion.identity);
+      Destroy(gameObject);
+    }
+  }
+
   void FixedUpdate()
   {
     var distance = Vector2.Distance(transform.localPosition, _targetPosition);

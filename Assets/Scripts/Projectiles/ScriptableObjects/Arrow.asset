@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d6b06a2240437c54930f9a8de3f8483, type: 3}
   m_Name: Arrow
   m_EditorClassIdentifier: 
-  baseDamage: 15
+  baseDamage: 12
   travelSpeed: 5
   rotateSpeed: 100
   angle: 0
