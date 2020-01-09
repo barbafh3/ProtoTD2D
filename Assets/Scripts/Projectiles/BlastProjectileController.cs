@@ -11,7 +11,7 @@ public class BlastProjectileController : ArcProjectileController
     {
       var effectParams = new EffectParams();
       effectParams.damage = baseDamage;
-      OnTargetReached(EffectList.Damage, effectParams);
+      OnTargetReached(Effects.Damage, effectParams);
     }
   }
 }

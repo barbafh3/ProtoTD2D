@@ -1,18 +1,18 @@
-public enum TowerList
+public enum Towers
 {
   ArrowTower,
   CannonTower,
   SlowTower
 }
 
-public enum TowerButtonList
+public enum TowerButtons
 {
   ArrowTowerButton,
   CannonTowerButton,
   SlowTower
 }
 
-public enum EffectList
+public enum Effects
 {
   Slow,
   Dot,

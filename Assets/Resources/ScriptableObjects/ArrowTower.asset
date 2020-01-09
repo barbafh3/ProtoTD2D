@@ -20,8 +20,9 @@ MonoBehaviour:
     type: 3}
   buttonDisabledSprite: {fileID: 21300000, guid: 492bd5f0f2f6eed63b821675ae259d90,
     type: 3}
+  buttonUnavailableSprite: {fileID: 0}
   price: 75
-  fireRate: 1.5
+  fireRate: 1
   range: 2.2
   upgradeList: []
   refundValue: 20

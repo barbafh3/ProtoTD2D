@@ -16,9 +16,13 @@ public class GameManager : MonoBehaviour
   public bool isGamePaused = false;
 
   public int currentPlayerHealth { get; set; }
+
+  [SerializeField]
   int _maxPlayerHealth = 100;
 
   public int currentPlayerCurrency { get; set; }
+
+  [SerializeField]
   int _startingPlayerCurrency = 200;
 
   private static GameManager instance;

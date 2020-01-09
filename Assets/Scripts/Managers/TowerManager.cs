@@ -54,19 +54,19 @@ public class TowerManager : MonoBehaviour
     // FillTowerListDict();
   }
 
-  public static void LoadTowerManager()
+  public void LoadTowerManager()
   {
     Debug.Log("TowerManager Loaded.");
   }
 
-  public Tower GetTowerInfo(TowerList towerName)
+  public Tower GetTowerInfo(Towers towerName)
   {
     return towerList[towerName.ToString()];
   }
 
   void FillTowerListDict()
   {
-    foreach (string towerName in Enum.GetNames(typeof(TowerList)))
+    foreach (string towerName in Enum.GetNames(typeof(Towers)))
     {
       var scriptObj = Resources.Load<Tower>("ScriptableObjects/" + towerName);
       towerList.Add(towerName, scriptObj);

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using TMPro;
 
 
@@ -46,15 +46,22 @@ public class BuildingController : MonoBehaviour
     SetAllButtons();
   }
 
+  void Start()
+  {
+    TowerManager.Instance.LoadTowerManager();
+    if (SceneManager.GetActiveScene().name == GameScenes.Map1.ToString())
+    {
+      var slowButton = slowTowerButton.GetComponent<Button>();
+      var sprState = new SpriteState();
+      slowButton.interactable = false;
+      sprState.disabledSprite = TowerManager.Instance.GetTowerInfo(Towers.SlowTower).buttonUnavailableSprite;
+      slowButton.spriteState = sprState;
+    }
+  }
+
   void Update()
   {
-    CheckTowerPrice();
-    if (UIManager.Instance.selectedObject == gameObject)
-    {
-    }
-    else
-    {
-    }
+    SetButtonsInteractable();
   }
 
   public void HideUI()
@@ -82,12 +89,12 @@ public class BuildingController : MonoBehaviour
 
   void SetAllButtons()
   {
-    SetButtonInfo(arrowTowerCost, arrowTowerButton, TowerList.ArrowTower);
-    SetButtonInfo(cannonTowerCost, cannonTowerButton, TowerList.CannonTower);
-    SetButtonInfo(slowTowerCost, slowTowerButton, TowerList.SlowTower);
+    SetButtonInfo(arrowTowerCost, arrowTowerButton, Towers.ArrowTower);
+    SetButtonInfo(cannonTowerCost, cannonTowerButton, Towers.CannonTower);
+    SetButtonInfo(slowTowerCost, slowTowerButton, Towers.SlowTower);
   }
 
-  void SetButtonInfo(TextMeshProUGUI costText, GameObject button, TowerList tower)
+  void SetButtonInfo(TextMeshProUGUI costText, GameObject button, Towers tower)
   {
     var newSpriteState = new SpriteState();
     costText.text = "$" + TowerManager.Instance.GetTowerInfo(tower).price.ToString();
@@ -132,32 +139,20 @@ public class BuildingController : MonoBehaviour
     isAvailable = true;
   }
 
-  void CheckTowerPrice()
+  void SetButtonsInteractable()
   {
-    if (GameManager.Instance.currentPlayerCurrency < 75)
+
+    arrowTowerButton.GetComponent<Button>().interactable = CheckTowerPrice(75);
+    cannonTowerButton.GetComponent<Button>().interactable = CheckTowerPrice(100);
+    if (SceneManager.GetActiveScene().name != GameScenes.Map1.ToString())
     {
-      arrowTowerButton.GetComponent<Button>().interactable = false;
+      slowTowerButton.GetComponent<Button>().interactable = CheckTowerPrice(125);
     }
-    else
-    {
-      arrowTowerButton.GetComponent<Button>().interactable = true;
-    }
-    if (GameManager.Instance.currentPlayerCurrency < 100)
-    {
-      cannonTowerButton.GetComponent<Button>().interactable = false;
-    }
-    else
-    {
-      cannonTowerButton.GetComponent<Button>().interactable = true;
-    }
-    if (GameManager.Instance.currentPlayerCurrency < 125)
-    {
-      slowTowerButton.GetComponent<Button>().interactable = false;
-    }
-    else
-    {
-      slowTowerButton.GetComponent<Button>().interactable = true;
-    }
+  }
+
+  bool CheckTowerPrice(int price)
+  {
+    return (GameManager.Instance.currentPlayerCurrency >= price);
   }
 
 }

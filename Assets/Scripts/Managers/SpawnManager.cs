@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -68,7 +69,14 @@ public class SpawnManager : MonoBehaviour
     }
     if (remainingWaves <= 0)
     {
-      SceneLoader.LoadScene(GameScenes.GameOver);
+      if (SceneManager.GetActiveScene().name == "Map1")
+      {
+        SceneLoader.LoadScene(GameScenes.Map2);
+      }
+      else
+      {
+        SceneLoader.LoadScene(GameScenes.GameOver);
+      }
     }
   }
 

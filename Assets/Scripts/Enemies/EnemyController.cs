@@ -8,7 +8,7 @@ public class EnemyController : MonoBehaviour
 {
 
   [System.Serializable]
-  public class EffectDict : SerializableDictionaryBase<string, Func<IEnumerator, EffectParams>> { }
+  public class EffectDict : SerializableDictionaryBase<string, Action<EffectParams>> { }
 
   EffectDict _effectList = null;
 
@@ -66,7 +66,6 @@ public class EnemyController : MonoBehaviour
   void Awake()
   {
     OnDeath += new OnDeathEventHandler(TowerManager.Instance.EnemyDied);
-    // _bodyRenderer = transform.Find("Body").GetComponent<SpriteRenderer>();
     _healthBarRenderer = transform.Find("HealthBG").GetComponent<SpriteRenderer>();
   }
 
@@ -74,6 +73,7 @@ public class EnemyController : MonoBehaviour
   void Start()
   {
     LoadEnemyInfo();
+    LoadEffectList();
     RegisterEventListeners();
   }
 
@@ -88,10 +88,18 @@ public class EnemyController : MonoBehaviour
       _bodyRenderer.color = Color.white;
     }
     MoveToWaypoints();
+    if (_waypointIndex == waypoints.Length)
+    {
+      _targetReached = true;
+      OnTargetReached();
+      OnDeath(gameObject, null);
+      StartCoroutine(FadeOutAndDie());
+    }
     if (this.currentHealth <= 0)
     {
       if (isDead == false)
       {
+        rigidBody.velocity = new Vector2(0f, 0f);
         isDead = true;
         OnDeath(gameObject, _returnedCurrency);
         StartCoroutine(FadeOutAndDie());
@@ -99,17 +107,26 @@ public class EnemyController : MonoBehaviour
     }
   }
 
-  // public IEnumerator SlowEffect(EffectParams effectParams)
-  // {
-  //   for (var i = effectParams.duration; i > 0; i++)
-  //   {
-  //     _currentMoveSpeed = _defaultMoveSpeed - (_defaultMoveSpeed * effectParams.value);
-  //     yield return new WaitForSecondsRealtime(1f);
-  //   }
-  //   _currentMoveSpeed = _defaultMoveSpeed;
-  //   _isSlowed = false;
-  //   yield return null;
-  // }
+  private void LoadEffectList()
+  {
+    _effectList = new EffectDict();
+    _effectList.Add(Effects.Slow.ToString(), (EffectParams effectParams) =>
+    {
+      _bodyRenderer.color = Color.gray;
+      _slowDuration = effectParams.duration;
+      _slowTimer = 0f;
+      currentHealth -= effectParams.damage;
+      _currentMoveSpeed = _defaultMoveSpeed - (_defaultMoveSpeed * effectParams.value);
+    });
+    _effectList.Add(Effects.Dot.ToString(), (EffectParams effectParams) =>
+    {
+      StartCoroutine(OverTimeEffect(effectParams));
+    });
+    _effectList.Add(Effects.Damage.ToString(), (EffectParams effectParams) =>
+    {
+      currentHealth -= effectParams.damage;
+    });
+  }
 
   public IEnumerator OverTimeEffect(EffectParams effectParams)
   {
@@ -124,26 +141,10 @@ public class EnemyController : MonoBehaviour
   {
     return this._maxHealth;
   }
-  public void TakeHit(EffectList? effect, EffectParams effectParams)
+  public void TakeHit(Effects? effect, EffectParams effectParams)
   {
-    // Action<EffectParams> hit = _effectList[effect.ToString()];
-    // hit(effectParams);
-    if (effect == EffectList.Slow)
-    {
-      _bodyRenderer.color = Color.gray;
-      _slowDuration = effectParams.duration;
-      _slowTimer = 0f;
-      currentHealth -= effectParams.damage;
-      _currentMoveSpeed = _defaultMoveSpeed - (_defaultMoveSpeed * effectParams.value);
-    }
-    if (effect == EffectList.Damage)
-    {
-      currentHealth -= effectParams.damage;
-    }
-    if (effect == EffectList.Dot)
-    {
-      StartCoroutine(OverTimeEffect(effectParams));
-    }
+    Action<EffectParams> runEffect = _effectList[effect.ToString()];
+    runEffect(effectParams);
   }
 
   Vector2 GetDirectionValue(Transform target, Transform location)
@@ -159,30 +160,27 @@ public class EnemyController : MonoBehaviour
     if (_targetReached == false && currentHealth > 0)
     {
       _currentTarget = waypoints[_waypointIndex].transform;
-      var normalized = (_currentTarget.position - transform.position).normalized;
-      // Debug.Log(_currentMoveSpeed);
-      rigidBody.velocity = normalized * _currentMoveSpeed;
-      _direction = GetDirectionValue(_currentTarget, transform);
-      if (_direction.x > 0)
-      {
-        GetComponent<Animator>().Play("MoveRight");
-      }
-      if (_direction.x <= 0)
-      {
-        GetComponent<Animator>().Play("MoveLeft");
-      }
+      rigidBody.velocity = (_currentTarget.position - transform.position).normalized * _currentMoveSpeed;
+      ChangeAnimationByDirection();
       var distance = Vector2.Distance(transform.localPosition, _currentTarget.position);
       if (distance <= _radius)
       {
         _waypointIndex += 1;
       }
-      if (_waypointIndex == waypoints.Length)
-      {
-        _targetReached = true;
-        OnTargetReached();
-        OnDeath(gameObject, null);
-        StartCoroutine(FadeOutAndDie());
-      }
+
+    }
+  }
+
+  private void ChangeAnimationByDirection()
+  {
+    _direction = GetDirectionValue(_currentTarget, transform);
+    if (_direction.x > 0)
+    {
+      GetComponent<Animator>().Play("MoveRight");
+    }
+    if (_direction.x <= 0)
+    {
+      GetComponent<Animator>().Play("MoveLeft");
     }
   }
 
@@ -200,7 +198,6 @@ public class EnemyController : MonoBehaviour
     _defaultMoveSpeed = enemyInfo.moveSpeed;
     currentHealth = _maxHealth;
     mapController = GameObject.Find("MapController");
-    // waypoints = mapController.GetComponent<MapsController>().GetMapNodes();
   }
 
   IEnumerator PlayAnimation()

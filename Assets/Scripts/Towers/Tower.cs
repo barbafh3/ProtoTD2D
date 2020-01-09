@@ -12,6 +12,7 @@ public class Tower : ScriptableObject
   public Sprite buttonHighlightSprite;
   public Sprite buttonPressedSprite;
   public Sprite buttonDisabledSprite;
+  public Sprite buttonUnavailableSprite;
 
   public int price;
 

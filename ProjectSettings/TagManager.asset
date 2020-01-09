@@ -8,6 +8,7 @@ TagManager:
   - Projectile
   - Tower
   - Tower Button
+  - Air
   layers:
   - Default
   - TransparentFX

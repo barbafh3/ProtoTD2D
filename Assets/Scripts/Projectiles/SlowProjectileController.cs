@@ -14,7 +14,7 @@ public class SlowProjectileController : ArcProjectileController
       effectParams.damage = baseDamage;
       effectParams.value = _effectValue;
       effectParams.duration = _duration;
-      OnTargetReached(EffectList.Slow, effectParams);
+      OnTargetReached(Effects.Slow, effectParams);
     }
   }
 }

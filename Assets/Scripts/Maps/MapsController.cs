@@ -37,7 +37,7 @@ public class MapsController : MonoBehaviour
   void Start()
   {
     Cursor.visible = true;
-    TowerManager.LoadTowerManager();
+    TowerManager.Instance.LoadTowerManager();
     HideWaypoints(routeA);
     HideWaypoints(routeB);
     StartCoroutine(SpawnManager.Instance.SpawnRuntime(enemyWaves, routeA, routeB, startupDelay, waveDelay, spawnDelay));

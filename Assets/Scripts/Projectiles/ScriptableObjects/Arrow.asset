@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d6b06a2240437c54930f9a8de3f8483, type: 3}
   m_Name: Arrow
   m_EditorClassIdentifier: 
-  baseDamage: 10
+  baseDamage: 15
   travelSpeed: 5
   rotateSpeed: 100
-  damageOverTime: 0
+  angle: 0
+  effectValue: 0
+  effectDuration: 0
   particle: {fileID: 3739905355581392012, guid: d0194879af12f785e9f4e10ddc6f675e,
     type: 3}

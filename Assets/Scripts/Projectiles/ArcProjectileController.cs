@@ -23,7 +23,7 @@ public class ArcProjectileController : AProjectile
   protected float _duration = 0f;
   protected float _effectValue = 0f;
 
-  public delegate void OnHitEventHandler(EffectList? effect, EffectParams effectParams);
+  public delegate void OnHitEventHandler(Effects? effect, EffectParams effectParams);
   public event OnHitEventHandler OnHit;
 
   // Method called on target`s death
@@ -85,7 +85,7 @@ public class ArcProjectileController : AProjectile
     }
   }
 
-  protected void OnTargetReached(EffectList effect, EffectParams effectParams)
+  protected void OnTargetReached(Effects effect, EffectParams effectParams)
   {
     FindBlastTargets();
     RegisterTargetListeners();

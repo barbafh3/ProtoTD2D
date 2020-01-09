@@ -29,7 +29,7 @@ public class TowerController : MonoBehaviour
     //  Retrieves a list of all objects with tag 'Enemy'.
     List<GameObject> enemyList = new List<GameObject>();
     enemyList.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
-    if (towerInfo.name == TowerList.ArrowTower.ToString())
+    if (towerInfo.name == Towers.ArrowTower.ToString())
     {
       enemyList.AddRange(GameObject.FindGameObjectsWithTag("Air"));
     }
