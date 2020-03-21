@@ -7,7 +7,6 @@ using RotaryHeart.Lib.SerializableDictionary;
 public class GameManager : MonoBehaviour
 {
 
-  [SerializeField]
   public Dictionary<string, Map> mapsList = null;
 
   public bool isGamePaused = false;
@@ -64,10 +63,13 @@ public class GameManager : MonoBehaviour
     LoadMapsList();
   }
 
+  public void LoadManager() { }
+
   void LoadMapsList()
   {
     foreach (string mapName in Enum.GetNames(typeof(Maps)))
     {
+      Debug.Log("Loading map info: " + mapName);
       var scriptObj = Resources.Load<Map>("ScriptableObjects/Maps/" + mapName);
       mapsList.Add(mapName, scriptObj);
     }
@@ -75,6 +77,7 @@ public class GameManager : MonoBehaviour
 
   public Map GetMapInfo(string mapName)
   {
+    Debug.Log("Get map info: " + mapName);
     return mapsList[mapName];
   }
 

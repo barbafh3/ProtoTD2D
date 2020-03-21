@@ -33,13 +33,14 @@ public class MapsController : MonoBehaviour
 
   void Awake()
   {
-    _mapInfo = GameManager.Instance.GetMapInfo(SceneManager.GetActiveScene().name);
-    SetBuildingSlotsSprite();
+    GameManager.Instance.LoadManager();
     UIManager.Instance.LoadUIManager();
   }
 
   void Start()
   {
+    _mapInfo = GameManager.Instance.GetMapInfo(SceneManager.GetActiveScene().name);
+    SetBuildingSlotsSprite();
     Cursor.visible = true;
     TowerManager.Instance.LoadTowerManager();
     HideWaypoints(routeA);
